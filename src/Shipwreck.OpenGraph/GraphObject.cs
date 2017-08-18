@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
@@ -17,23 +18,48 @@ namespace Shipwreck.OpenGraph
         internal virtual bool IsRoot => false;
 
         [DefaultValue(null)]
-        public string Title { get; set; }
+        public string Title
+        {
+            get => GetLocalProperty("title");
+            set => SetLocalProperty("title", value);
+        }
 
         [DefaultValue(null)]
-        public string Url { get; set; }
+        public string Url
+        {
+            get => GetLocalProperty("url");
+            set => SetLocalProperty("url", value);
+        }
 
         [DefaultValue(null)]
-        public string Description { get; set; }
+        public string Description
+        {
+            get => GetLocalProperty("description");
+            set => SetLocalProperty("description", value);
+        }
 
         [DefaultValue(null)]
-        public string Determiner { get; set; }
+        public string Determiner
+        {
+            get => GetLocalProperty("determiner");
+            set => SetLocalProperty("determiner", value);
+        }
 
         [DefaultValue(null)]
-        public string Locale { get; set; }
+        public string Locale
+        {
+            get => GetLocalProperty("locale");
+            set => SetLocalProperty("locale", value);
+        }
 
         [DefaultValue(null)]
-        public string SiteName { get; set; }
+        public string SiteName
+        {
+            get => GetLocalProperty("site_name");
+            set => SetLocalProperty("site_name", value);
+        }
 
+        // TODO: rename LocalProperties
         public IList<GraphProperty> ExtraProperties
             => _ExtraProperties ?? (_ExtraProperties = new List<GraphProperty>());
 
@@ -107,34 +133,7 @@ namespace Shipwreck.OpenGraph
             }
 
             child = null;
-            if (property.MachesChildPath(Path, "title"))
-            {
-                if (Title == null)
-                {
-                    Title = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "description"))
-            {
-                if (Description == null)
-                {
-                    Description = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "determiner"))
-            {
-                if (Determiner == null)
-                {
-                    Determiner = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "url"))
+            if (property.MachesChildPath(Path, "url"))
             {
                 if (Url == null)
                 {
@@ -143,27 +142,9 @@ namespace Shipwreck.OpenGraph
                 }
                 return false;
             }
-            else if (property.MachesChildPath(Path, "locale"))
-            {
-                if (Locale == null)
-                {
-                    Locale = content;
-                }
-
-                return true;
-            }
             else if (property.MachesChildPath(Path, "locale:alternate"))
             {
                 AlternateLocales.Add(content);
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "site_name"))
-            {
-                if (SiteName == null)
-                {
-                    SiteName = content;
-                }
 
                 return true;
             }
@@ -171,6 +152,27 @@ namespace Shipwreck.OpenGraph
             ExtraProperties.Add(new GraphProperty(property, content));
 
             return true;
+        }
+
+        public string GetLocalProperty(string property)
+            => _ExtraProperties?.FirstOrDefault(kv => kv.Property.MachesChildPath(Path, property)).Content;
+
+        public void SetLocalProperty(string property, string content)
+        {
+            if (_ExtraProperties != null)
+            {
+                for (int i = _ExtraProperties.Count - 1; i >= 0; i--)
+                {
+                    if (_ExtraProperties[i].Property.MachesChildPath(Path, property))
+                    {
+                        _ExtraProperties.RemoveAt(i);
+                    }
+                }
+            }
+            if (content != null)
+            {
+                ExtraProperties.Add(new GraphProperty(Path + ":" + property, content));
+            }
         }
     }
 }
