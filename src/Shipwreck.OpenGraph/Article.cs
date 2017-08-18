@@ -34,12 +34,11 @@ namespace Shipwreck.OpenGraph
                 child = null;
                 return false;
             }
-            if (property.StartsWithChildPath(Path, "author"))
+            if (property.StartsWithChildPath(Path, "author", out var matched))
             {
                 var a = new Profile(Path + ":author");
                 Authors.Add(a);
-                a.TryAddMetadata(property, content, out child);
-                child = child ?? a;
+                child = a.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 
