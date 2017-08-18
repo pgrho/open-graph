@@ -154,11 +154,21 @@ namespace Shipwreck.OpenGraph
 
                         if (_TypeObject != null && ShouldSerializeExtraProperties())
                         {
-                            _TypeObject.LoadProperties(ExtraProperties.Where(kv => kv.Property.MachesPath(_TypeObject.Path)));
+                            _TypeObject.LoadProperties(ExtraProperties.Where(kv =>
+                            {
+                                if (kv.Property == _TypeObject.Path)
+                                {
+                                    _TypeObject.Url = _TypeObject.Url ?? kv.Content;
+                                    return false;
+                                }
+                                return kv.Property.MachesPath(_TypeObject.Path);
+                            }));
 
                             for (var i = ExtraProperties.Count - 1; i >= 0; i--)
                             {
-                                if (ExtraProperties[i].Property.MachesPath(_TypeObject.Path))
+                                var p = ExtraProperties[i].Property;
+                                if (p.MachesPath(_TypeObject.Path)
+                                    || p == _TypeObject.Path)
                                 {
                                     ExtraProperties.RemoveAt(i);
                                 }
@@ -170,9 +180,16 @@ namespace Shipwreck.OpenGraph
                 }
             }
 
-            if (_TypeObject?.TryAddMetadata(property, content, out child) == true)
+            if (_TypeObject != null)
             {
-                return true;
+                if (_TypeObject.TryAddMetadata(property, content, out child) == true)
+                {
+                    return true;
+                }
+                if (property == _TypeObject.Path)
+                {
+                    _TypeObject.Url = _TypeObject.Url ?? content;
+                }
             }
 
             return base.TryAddMetadata(property, content, out child);
