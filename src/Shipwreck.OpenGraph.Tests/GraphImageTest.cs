@@ -121,7 +121,7 @@ namespace Shipwreck.OpenGraph
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal(new[] { 1 }, target.Images?.Select(i => i.Width));
+            Assert.Equal(new int? [] { 1 }, target.Images?.Select(i => i.Width));
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace Shipwreck.OpenGraph
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal(new[] { 2 }, target.Images?.Select(i => i.Width));
+            Assert.Equal(new int?[] { 2 }, target.Images?.Select(i => i.Width));
         }
 
         #endregion Width
@@ -155,7 +155,7 @@ namespace Shipwreck.OpenGraph
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal(new[] { 1 }, target.Images?.Select(i => i.Height));
+            Assert.Equal(new int?[] { 1 }, target.Images?.Select(i => i.Height));
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace Shipwreck.OpenGraph
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal(new[] { 2 }, target.Images?.Select(i => i.Height));
+            Assert.Equal(new int?[] { 2 }, target.Images?.Select(i => i.Height));
         }
 
         #endregion Height

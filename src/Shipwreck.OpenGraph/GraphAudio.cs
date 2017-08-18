@@ -15,38 +15,17 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public string SecureUrl { get; set; }
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
 
         [DefaultValue(null)]
-        public string Type { get; set; }
-
-        internal override bool TryAddMetadata(string property, string content, out GraphObject child)
+        public string Type
         {
-            child = null;
-            if (!property.MachesPath(Path))
-            {
-                return false;
-            }
-            if (property.MachesChildPath(Path, "type"))
-            {
-                if (Type == null)
-                {
-                    Type = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "secure_url"))
-            {
-                if (SecureUrl == null)
-                {
-                    SecureUrl = content;
-                }
-
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content, out child);
+            get => GetLocalProperty("type");
+            set => SetLocalProperty("type", value);
         }
     }
 }

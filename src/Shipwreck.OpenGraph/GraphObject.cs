@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -174,5 +175,18 @@ namespace Shipwreck.OpenGraph
                 ExtraProperties.Add(new GraphProperty(Path + ":" + property, content));
             }
         }
+
+        public int? GetLocalPropertyAsInt32(string property)
+            => int.TryParse(GetLocalProperty(property), out int i) ? i : (int?)null;
+
+        public void SetLocalProperty(string property, int? value)
+            => SetLocalProperty(property, value?.ToString("R"));
+
+
+        public DateTime? GetLocalPropertyAsDateTime(string property)
+            => DateTime.TryParse(GetLocalProperty(property), out DateTime i) ? i : (DateTime?)null;
+
+        public void SetLocalProperty(string property, DateTime? value)
+            => SetLocalProperty(property, value?.ToString("o"));
     }
 }

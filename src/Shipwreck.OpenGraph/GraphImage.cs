@@ -15,74 +15,38 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public string SecureUrl { get; set; }
-
-        [DefaultValue(null)]
-        public string Type { get; set; }
-
-        [DefaultValue(0)]
-        public int Width { get; set; }
-
-        [DefaultValue(0)]
-        public int Height { get; set; }
-
-        [DefaultValue(null)]
-        public string Alt { get; set; }
-
-        internal override bool TryAddMetadata(string property, string content, out GraphObject child)
+        public string SecureUrl
         {
-            child = null;
-            if (!property.MachesPath(Path))
-            {
-                return false;
-            }
-            if (property.MachesChildPath(Path, "type"))
-            {
-                if (Type == null)
-                {
-                    Type = content;
-                }
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
 
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "secure_url"))
-            {
-                if (SecureUrl == null)
-                {
-                    SecureUrl = content;
-                }
+        [DefaultValue(null)]
+        public string Type
+        {
+            get => GetLocalProperty("type");
+            set => SetLocalProperty("type", value);
+        }
 
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "width"))
-            {
-                if (Width == 0 && int.TryParse(content, out int i))
-                {
-                    Width = i;
-                }
+        [DefaultValue(null)]
+        public int? Width
+        {
+            get => GetLocalPropertyAsInt32("width");
+            set => SetLocalProperty("width", value);
+        }
 
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "height"))
-            {
-                if (Height == 0 && int.TryParse(content, out int i))
-                {
-                    Height = i;
-                }
+        [DefaultValue(null)]
+        public int? Height
+        {
+            get => GetLocalPropertyAsInt32("height");
+            set => SetLocalProperty("height", value);
+        }
 
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "alt"))
-            {
-                if (Alt == null)
-                {
-                    Alt = content;
-                }
-
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content, out child);
+        [DefaultValue(null)]
+        public string Alt
+        {
+            get => GetLocalProperty("alt");
+            set => SetLocalProperty("alt", value);
         }
     }
 }

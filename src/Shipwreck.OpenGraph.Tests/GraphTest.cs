@@ -504,7 +504,7 @@ namespace Shipwreck.OpenGraph
 
             Assert.NotNull(target.MusicSong);
             Assert.Equal("The Rock", target.MusicSong.Title);
-            Assert.Equal(1, target.ExtraProperties.Count);
+            Assert.Equal(2, target.ExtraProperties.Count);
             Assert.Equal("The piyo", target.ExtraProperties[0].Content);
         }
 

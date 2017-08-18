@@ -20,7 +20,11 @@ namespace Shipwreck.OpenGraph
         internal override bool IsRoot => true;
 
         [DefaultValue(null)]
-        public string Type { get; set; }
+        public string Type
+        {
+            get => GetLocalProperty("type");
+            set => SetLocalProperty("type", value);
+        }
 
         public GraphObject TypeObject => _TypeObject;
 
