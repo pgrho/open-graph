@@ -1,0 +1,82 @@
+<#@ template language="C#" debug="True" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ output extension="cs" #>
+<#
+
+var properties = new []
+{
+    new { Name = "Title", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "Type", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "Url", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "Description", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "Determiner", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "Locale", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
+    new { Name = "SiteName", Plural = (string)null, Type = typeof(string).FullName },
+};
+
+#>
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+
+namespace Shipwreck.OpenGraph
+{
+    partial class Graph
+    {
+<#
+
+foreach (var p in properties)
+{
+    var type = Type.GetType(p.Type);
+    var N = p.Name;
+    var PL = p.Plural ?? (N + 's');
+    var T = p.Type;
+    var isMscorlib = type?.Assembly == typeof(int).Assembly;
+#>
+#region <#= N #>
+
+        private Collection<<#= T #>> _<#= PL #>;
+        
+        public <#= T #> <#= N #>
+        {
+            get => _<#= PL #>?.FirstOrDefault() ?? default(<#= T #>);
+            set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
+        }
+
+        public Collection<<#= T #>> <#= PL #>
+        {
+            get => CollectionHelper.GetCollection(ref _<#= PL #>);
+            set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
+        }
+
+        public bool ShouldSerialize<#= N #>()
+<#
+    if (isMscorlib) {
+#>
+            => _<#= PL #>?.Count == 1;
+<#
+    } else {
+#>
+            => false;
+<#
+    }
+#>
+
+        public bool ShouldSerialize<#= PL #>()
+            => _<#= PL #>?.Count > <#= isMscorlib ? 1 : 0 #>;
+
+        public void Reset<#= N #>()
+            => _<#= PL #>?.Clear();
+
+        public void Reset<#= PL #>()
+            => _<#= PL #>?.Clear();
+
+#endregion <#= N #>
+
+<#
+}
+
+#>
+    }
+}
