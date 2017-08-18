@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Shipwreck.OpenGraph
 {
     public abstract partial class GraphObject
     {
+        private Dictionary<string, string> _ExtraProperties;
+
         internal GraphObject(string path)
         {
             Path = path;
@@ -28,6 +31,15 @@ namespace Shipwreck.OpenGraph
 
         [DefaultValue(null)]
         public string SiteName { get; set; }
+
+        public Dictionary<string, string> ExtraProperties
+            => _ExtraProperties ?? (_ExtraProperties = new Dictionary<string, string>());
+
+        public bool ShouldSerializeExtraProperties()
+            => _ExtraProperties?.Count > 0;
+
+        public void ResetExtraProperties()
+            => _ExtraProperties?.Clear();
 
         internal virtual bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -65,7 +77,7 @@ namespace Shipwreck.OpenGraph
                 else
                 {
                     audio.TryAddMetadata(property, content, out child);
-                                        child = child ?? audio;
+                    child = child ?? audio;
                 }
                 return true;
             }
@@ -147,7 +159,10 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            return false;
+
+            ExtraProperties[property] = content;
+
+            return true;
         }
     }
 }
