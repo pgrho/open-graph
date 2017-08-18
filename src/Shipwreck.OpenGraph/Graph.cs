@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Xml.XPath;
 
 namespace Shipwreck.OpenGraph
 {
@@ -164,6 +165,17 @@ namespace Shipwreck.OpenGraph
             }
         }
 #endif
+
+        public static Graph FromXPathNavigable(IXPathNavigable xPathNavigable)
+            => FromXPathNavigator(xPathNavigable.CreateNavigator());
+
+        public static Graph FromXPathNavigator(XPathNavigator xPathNavigable)
+        {
+            using (var r = xPathNavigable.ReadSubtree())
+            {
+                return FromXmlReader(r);
+            }
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
