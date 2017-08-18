@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>shipwreck.jp</Authors>
+    <Company />
+    <Description>Open Graph Protocol Reader for .NET</Description>
+    <PackageProjectUrl>https://github.com/pgrho/open-graph</PackageProjectUrl>
+    <Copyright>https://opensource.org/licenses/MIT</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
