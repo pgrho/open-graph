@@ -21,6 +21,8 @@ namespace Shipwreck.OpenGraph
         [DefaultValue(null)]
         public string Type { get; set; }
 
+        public GraphObject TypeObject => _TypeObject;
+
         public static Graph FromXml(string xml)
         {
             using (var sr = new StringReader(xml))
