@@ -19,8 +19,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Title);
-            Assert.True(target.ShouldSerializeTitle());
-            Assert.False(target.ShouldSerializeTitles());
         }
 
         [Fact]
@@ -36,9 +34,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Title);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Titles);
-            Assert.False(target.ShouldSerializeTitle());
-            Assert.True(target.ShouldSerializeTitles());
         }
 
         #endregion Title
@@ -57,8 +52,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Type);
-            Assert.True(target.ShouldSerializeType());
-            Assert.False(target.ShouldSerializeTypes());
         }
 
         [Fact]
@@ -74,9 +67,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Type);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Types);
-            Assert.False(target.ShouldSerializeType());
-            Assert.True(target.ShouldSerializeTypes());
         }
 
         #endregion Type
@@ -95,8 +85,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Url);
-            Assert.True(target.ShouldSerializeUrl());
-            Assert.False(target.ShouldSerializeUrls());
         }
 
         [Fact]
@@ -112,9 +100,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Url);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Urls);
-            Assert.False(target.ShouldSerializeUrl());
-            Assert.True(target.ShouldSerializeUrls());
         }
 
         #endregion Url
@@ -133,8 +118,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Description);
-            Assert.True(target.ShouldSerializeDescription());
-            Assert.False(target.ShouldSerializeDescriptions());
         }
 
         [Fact]
@@ -150,9 +133,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Description);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Descriptions);
-            Assert.False(target.ShouldSerializeDescription());
-            Assert.True(target.ShouldSerializeDescriptions());
         }
 
         #endregion Description
@@ -171,8 +151,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Determiner);
-            Assert.True(target.ShouldSerializeDeterminer());
-            Assert.False(target.ShouldSerializeDeterminers());
         }
 
         [Fact]
@@ -188,9 +166,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Determiner);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Determiners);
-            Assert.False(target.ShouldSerializeDeterminer());
-            Assert.True(target.ShouldSerializeDeterminers());
         }
 
         #endregion Determiner
@@ -209,8 +184,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Locale);
-            Assert.True(target.ShouldSerializeLocale());
-            Assert.False(target.ShouldSerializeLocales());
         }
 
         [Fact]
@@ -226,9 +199,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.Locale);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Locales);
-            Assert.False(target.ShouldSerializeLocale());
-            Assert.True(target.ShouldSerializeLocales());
         }
 
         #endregion Locale
@@ -285,8 +255,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.SiteName);
-            Assert.True(target.ShouldSerializeSiteName());
-            Assert.False(target.ShouldSerializeSiteNames());
         }
 
         [Fact]
@@ -302,9 +270,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.SiteName);
-            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.SiteNames);
-            Assert.False(target.ShouldSerializeSiteName());
-            Assert.True(target.ShouldSerializeSiteNames());
         }
 
         #endregion SiteName

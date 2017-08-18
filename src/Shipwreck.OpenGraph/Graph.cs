@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 
@@ -11,6 +12,9 @@ namespace Shipwreck.OpenGraph
             : base("og")
         {
         }
+
+        [DefaultValue(null)]
+        public string Type { get; set; }
 
         public static Graph FromXml(string xml)
         {
@@ -102,96 +106,22 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (property.StartsWith("og:image:"))
-            {
-                var img = new GraphImage();
-                Images.Add(img);
-                child = img;
-                child.TryAddMetadata(property, content, out _);
-                return true;
-            }
-
-            if (property.StartsWith("og:video:"))
-            {
-                var v = new GraphVideo();
-                Videos.Add(v);
-                child = v;
-                child.TryAddMetadata(property, content, out _);
-                return true;
-            }
-
-            if (property.StartsWith("og:audio:"))
-            {
-                var a = new GraphAudio();
-                Audios.Add(a);
-                child = a;
-                child.TryAddMetadata(property, content, out _);
-                return true;
-            }
-
-            switch (property)
-            {
-                case "og:title":
-                    Titles.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:type":
-                    Types.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:audio":
-                    var a = new GraphAudio() { Url = content };
-                    Audios.Add(a);
-                    child = a;
-                    return true;
-
-                case "og:description":
-                    Descriptions.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:determiner":
-                    Determiners.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:url":
-                    Urls.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:image":
-                    var img = new GraphImage() { Url = content };
-                    Images.Add(img);
-                    child = img;
-                    return true;
-
-                case "og:locale":
-                    Locales.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:locale:alternate":
-                    AlternateLocales.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:site_name":
-                    SiteNames.Add(content);
-                    child = null;
-                    return true;
-
-                case "og:video":
-                    var v = new GraphVideo() { Url = content };
-                    Videos.Add(v);
-                    child = v;
-                    return true;
-            }
-
             child = null;
-            return false;
+            if (!property.MachesPath(Path))
+            {
+                return false;
+            }
+            if (property.MachesChildPath(Path, "type"))
+            {
+                if (Type == null)
+                {
+                    Type = content;
+                }
+
+                return true;
+            }
+
+            return base.TryAddMetadata(property, content, out child);
         }
     }
 }

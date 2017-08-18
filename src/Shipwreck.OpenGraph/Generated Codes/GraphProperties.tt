@@ -7,17 +7,10 @@
 
 var properties = new []
 {
-    new { Class = "Graph", Name = "Title", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Type", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Url", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Description", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Determiner", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Locale", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "SiteName", Plural = (string)null, Type = typeof(string).FullName },
-    new { Class = "Graph", Name = "Image", Plural = (string)null, Type = "GraphImage" },
-    new { Class = "Graph", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
-    new { Class = "Graph", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
+    new { Class = "GraphObject", Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "GraphObject", Name = "Image", Plural = (string)null, Type = "GraphImage" },
+    new { Class = "GraphObject", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
+    new { Class = "GraphObject", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
     
     new { Class = "MusicSong", Name = "Album", Plural = (string)null, Type = "MusicSongAlbum" },
     new { Class = "MusicSong", Name = "Musician", Plural = (string)null, Type = "Profile" },

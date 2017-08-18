@@ -15,9 +15,6 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public string Url { get; set; }
-
-        [DefaultValue(null)]
         public string SecureUrl { get; set; }
 
         [DefaultValue(null)]
@@ -26,36 +23,30 @@ namespace Shipwreck.OpenGraph
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             child = null;
-            switch (property)
+            if (!property.MachesPath(Path))
             {
-                case "og:audio:url":
-                    if (string.IsNullOrEmpty(Url))
-                    {
-                        Url = content;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                    return true;
+                return false;
+            }
+            if (property.MachesChildPath(Path, "type"))
+            {
+                if (Type == null)
+                {
+                    Type = content;
+                }
 
-                case "og:audio:secure_url":
-                    if (string.IsNullOrEmpty(SecureUrl))
-                    {
-                        SecureUrl = content;
-                    }
-                    return true;
+                return true;
+            }
+            else if (property.MachesChildPath(Path, "secure_url"))
+            {
+                if (SecureUrl == null)
+                {
+                    SecureUrl = content;
+                }
 
-                case "og:audio:type":
-                    if (string.IsNullOrEmpty(Type))
-                    {
-                        Type = content;
-                    }
-                    return true;
+                return true;
             }
 
-            child = null;
-            return false;
+            return base.TryAddMetadata(property, content, out child);
         }
     }
 }

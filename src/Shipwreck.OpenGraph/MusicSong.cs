@@ -42,7 +42,6 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            child = null;
             if (property.MachesChildPath(Path, "duration"))
             {
                 if (Duration == 0 && int.TryParse(content, out int i))
@@ -50,10 +49,11 @@ namespace Shipwreck.OpenGraph
                     Duration = i;
                 }
 
+                child = null;
                 return true;
             }
 
-            return false;
+            return base.TryAddMetadata(property, content, out child);
         }
     }
 }

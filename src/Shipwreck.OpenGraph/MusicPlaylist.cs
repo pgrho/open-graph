@@ -44,8 +44,7 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            child = null;
-            return false;
+            return base.TryAddMetadata(property, content, out child);
         }
     }
 }

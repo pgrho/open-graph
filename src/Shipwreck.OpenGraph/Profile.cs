@@ -70,7 +70,7 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            return false;
+            return base.TryAddMetadata(property, content, out child);
         }
     }
 }
