@@ -306,5 +306,35 @@ namespace Shipwreck.OpenGraph
 
 #endregion Video
 
+#region Audio
+
+        private Collection<GraphAudio> _Audios;
+        
+        public GraphAudio Audio
+        {
+            get => _Audios?.FirstOrDefault() ?? default(GraphAudio);
+            set => CollectionHelper.SetCollection(ref _Audios, value);
+        }
+
+        public Collection<GraphAudio> Audios
+        {
+            get => CollectionHelper.GetCollection(ref _Audios);
+            set => CollectionHelper.SetCollection(ref _Audios, value);
+        }
+
+        public bool ShouldSerializeAudio()
+            => false;
+
+        public bool ShouldSerializeAudios()
+            => _Audios?.Count > 0;
+
+        public void ResetAudio()
+            => _Audios?.Clear();
+
+        public void ResetAudios()
+            => _Audios?.Clear();
+
+#endregion Audio
+
     }
 }

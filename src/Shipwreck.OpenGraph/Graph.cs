@@ -108,9 +108,18 @@ namespace Shipwreck.OpenGraph
 
             if (property.StartsWith("og:video:"))
             {
-                var img = new GraphVideo();
-                Videos.Add(img);
-                child = img;
+                var v = new GraphVideo();
+                Videos.Add(v);
+                child = v;
+                child.TryAddMetadata(property, content, out _);
+                return true;
+            }
+
+            if (property.StartsWith("og:audio:"))
+            {
+                var a = new GraphAudio();
+                Audios.Add(a);
+                child = a;
                 child.TryAddMetadata(property, content, out _);
                 return true;
             }
@@ -125,6 +134,12 @@ namespace Shipwreck.OpenGraph
                 case "og:type":
                     Types.Add(content);
                     child = null;
+                    return true;
+
+                case "og:audio":
+                    var a = new GraphAudio() { Url = content };
+                    Audios.Add(a);
+                    child = a;
                     return true;
 
                 case "og:description":

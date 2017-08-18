@@ -17,6 +17,7 @@ var properties = new []
     new { Class = "Graph", Name = "SiteName", Plural = (string)null, Type = typeof(string).FullName },
     new { Class = "Graph", Name = "Image", Plural = (string)null, Type = "GraphImage" },
     new { Class = "Graph", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
+    new { Class = "Graph", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
 };
 
 #>
