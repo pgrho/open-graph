@@ -18,6 +18,26 @@ var properties = new []
     new { Class = "Graph", Name = "Image", Plural = (string)null, Type = "GraphImage" },
     new { Class = "Graph", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
     new { Class = "Graph", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
+    
+    new { Class = "MusicSong", Name = "Album", Plural = (string)null, Type = "MusicSongAlbum" },
+    new { Class = "MusicSong", Name = "Musician", Plural = (string)null, Type = "Profile" },
+    
+    new { Class = "MusicAlbum", Name = "Song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicAlbum", Name = "Musician", Plural = (string)null, Type = "Profile" },
+    
+    new { Class = "MusicPlaylist", Name = "Song", Plural = (string)null, Type = "MusicAlbumSong" },
+    
+    new { Class = "VideoObject", Name = "Actor", Plural = (string)null, Type = "Actor" },
+    new { Class = "VideoObject", Name = "Director", Plural = (string)null, Type = "Profile" },
+    new { Class = "VideoObject", Name = "Writer", Plural = (string)null, Type = "Profile" },
+    new { Class = "VideoObject", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
+    
+    new { Class = "Article", Name = "Author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Article", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
+    
+    new { Class = "Book", Name = "Author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Book", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
+    
 };
 
 #>

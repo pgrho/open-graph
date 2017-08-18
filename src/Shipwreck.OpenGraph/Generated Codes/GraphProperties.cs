@@ -337,4 +337,412 @@ namespace Shipwreck.OpenGraph
 #endregion Audio
 
     }
+    partial class MusicSong
+    {
+#region Album
+
+        private Collection<MusicSongAlbum> _Albums;
+        
+        public MusicSongAlbum Album
+        {
+            get => _Albums?.FirstOrDefault() ?? default(MusicSongAlbum);
+            set => CollectionHelper.SetCollection(ref _Albums, value);
+        }
+
+        public Collection<MusicSongAlbum> Albums
+        {
+            get => CollectionHelper.GetCollection(ref _Albums);
+            set => CollectionHelper.SetCollection(ref _Albums, value);
+        }
+
+        public bool ShouldSerializeAlbum()
+            => false;
+
+        public bool ShouldSerializeAlbums()
+            => _Albums?.Count > 0;
+
+        public void ResetAlbum()
+            => _Albums?.Clear();
+
+        public void ResetAlbums()
+            => _Albums?.Clear();
+
+#endregion Album
+
+#region Musician
+
+        private Collection<Profile> _Musicians;
+        
+        public Profile Musician
+        {
+            get => _Musicians?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Musicians, value);
+        }
+
+        public Collection<Profile> Musicians
+        {
+            get => CollectionHelper.GetCollection(ref _Musicians);
+            set => CollectionHelper.SetCollection(ref _Musicians, value);
+        }
+
+        public bool ShouldSerializeMusician()
+            => false;
+
+        public bool ShouldSerializeMusicians()
+            => _Musicians?.Count > 0;
+
+        public void ResetMusician()
+            => _Musicians?.Clear();
+
+        public void ResetMusicians()
+            => _Musicians?.Clear();
+
+#endregion Musician
+
+    }
+    partial class MusicAlbum
+    {
+#region Song
+
+        private Collection<MusicAlbumSong> _Songs;
+        
+        public MusicAlbumSong Song
+        {
+            get => _Songs?.FirstOrDefault() ?? default(MusicAlbumSong);
+            set => CollectionHelper.SetCollection(ref _Songs, value);
+        }
+
+        public Collection<MusicAlbumSong> Songs
+        {
+            get => CollectionHelper.GetCollection(ref _Songs);
+            set => CollectionHelper.SetCollection(ref _Songs, value);
+        }
+
+        public bool ShouldSerializeSong()
+            => false;
+
+        public bool ShouldSerializeSongs()
+            => _Songs?.Count > 0;
+
+        public void ResetSong()
+            => _Songs?.Clear();
+
+        public void ResetSongs()
+            => _Songs?.Clear();
+
+#endregion Song
+
+#region Musician
+
+        private Collection<Profile> _Musicians;
+        
+        public Profile Musician
+        {
+            get => _Musicians?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Musicians, value);
+        }
+
+        public Collection<Profile> Musicians
+        {
+            get => CollectionHelper.GetCollection(ref _Musicians);
+            set => CollectionHelper.SetCollection(ref _Musicians, value);
+        }
+
+        public bool ShouldSerializeMusician()
+            => false;
+
+        public bool ShouldSerializeMusicians()
+            => _Musicians?.Count > 0;
+
+        public void ResetMusician()
+            => _Musicians?.Clear();
+
+        public void ResetMusicians()
+            => _Musicians?.Clear();
+
+#endregion Musician
+
+    }
+    partial class MusicPlaylist
+    {
+#region Song
+
+        private Collection<MusicAlbumSong> _Songs;
+        
+        public MusicAlbumSong Song
+        {
+            get => _Songs?.FirstOrDefault() ?? default(MusicAlbumSong);
+            set => CollectionHelper.SetCollection(ref _Songs, value);
+        }
+
+        public Collection<MusicAlbumSong> Songs
+        {
+            get => CollectionHelper.GetCollection(ref _Songs);
+            set => CollectionHelper.SetCollection(ref _Songs, value);
+        }
+
+        public bool ShouldSerializeSong()
+            => false;
+
+        public bool ShouldSerializeSongs()
+            => _Songs?.Count > 0;
+
+        public void ResetSong()
+            => _Songs?.Clear();
+
+        public void ResetSongs()
+            => _Songs?.Clear();
+
+#endregion Song
+
+    }
+    partial class VideoObject
+    {
+#region Actor
+
+        private Collection<Actor> _Actors;
+        
+        public Actor Actor
+        {
+            get => _Actors?.FirstOrDefault() ?? default(Actor);
+            set => CollectionHelper.SetCollection(ref _Actors, value);
+        }
+
+        public Collection<Actor> Actors
+        {
+            get => CollectionHelper.GetCollection(ref _Actors);
+            set => CollectionHelper.SetCollection(ref _Actors, value);
+        }
+
+        public bool ShouldSerializeActor()
+            => false;
+
+        public bool ShouldSerializeActors()
+            => _Actors?.Count > 0;
+
+        public void ResetActor()
+            => _Actors?.Clear();
+
+        public void ResetActors()
+            => _Actors?.Clear();
+
+#endregion Actor
+
+#region Director
+
+        private Collection<Profile> _Directors;
+        
+        public Profile Director
+        {
+            get => _Directors?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Directors, value);
+        }
+
+        public Collection<Profile> Directors
+        {
+            get => CollectionHelper.GetCollection(ref _Directors);
+            set => CollectionHelper.SetCollection(ref _Directors, value);
+        }
+
+        public bool ShouldSerializeDirector()
+            => false;
+
+        public bool ShouldSerializeDirectors()
+            => _Directors?.Count > 0;
+
+        public void ResetDirector()
+            => _Directors?.Clear();
+
+        public void ResetDirectors()
+            => _Directors?.Clear();
+
+#endregion Director
+
+#region Writer
+
+        private Collection<Profile> _Writers;
+        
+        public Profile Writer
+        {
+            get => _Writers?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Writers, value);
+        }
+
+        public Collection<Profile> Writers
+        {
+            get => CollectionHelper.GetCollection(ref _Writers);
+            set => CollectionHelper.SetCollection(ref _Writers, value);
+        }
+
+        public bool ShouldSerializeWriter()
+            => false;
+
+        public bool ShouldSerializeWriters()
+            => _Writers?.Count > 0;
+
+        public void ResetWriter()
+            => _Writers?.Clear();
+
+        public void ResetWriters()
+            => _Writers?.Clear();
+
+#endregion Writer
+
+#region Tag
+
+        private Collection<System.String> _Tags;
+        
+        public System.String Tag
+        {
+            get => _Tags?.FirstOrDefault() ?? default(System.String);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public Collection<System.String> Tags
+        {
+            get => CollectionHelper.GetCollection(ref _Tags);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => _Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => _Tags?.Count > 1;
+
+        public void ResetTag()
+            => _Tags?.Clear();
+
+        public void ResetTags()
+            => _Tags?.Clear();
+
+#endregion Tag
+
+    }
+    partial class Article
+    {
+#region Author
+
+        private Collection<Profile> _Authors;
+        
+        public Profile Author
+        {
+            get => _Authors?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Authors, value);
+        }
+
+        public Collection<Profile> Authors
+        {
+            get => CollectionHelper.GetCollection(ref _Authors);
+            set => CollectionHelper.SetCollection(ref _Authors, value);
+        }
+
+        public bool ShouldSerializeAuthor()
+            => false;
+
+        public bool ShouldSerializeAuthors()
+            => _Authors?.Count > 0;
+
+        public void ResetAuthor()
+            => _Authors?.Clear();
+
+        public void ResetAuthors()
+            => _Authors?.Clear();
+
+#endregion Author
+
+#region Tag
+
+        private Collection<System.String> _Tags;
+        
+        public System.String Tag
+        {
+            get => _Tags?.FirstOrDefault() ?? default(System.String);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public Collection<System.String> Tags
+        {
+            get => CollectionHelper.GetCollection(ref _Tags);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => _Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => _Tags?.Count > 1;
+
+        public void ResetTag()
+            => _Tags?.Clear();
+
+        public void ResetTags()
+            => _Tags?.Clear();
+
+#endregion Tag
+
+    }
+    partial class Book
+    {
+#region Author
+
+        private Collection<Profile> _Authors;
+        
+        public Profile Author
+        {
+            get => _Authors?.FirstOrDefault() ?? default(Profile);
+            set => CollectionHelper.SetCollection(ref _Authors, value);
+        }
+
+        public Collection<Profile> Authors
+        {
+            get => CollectionHelper.GetCollection(ref _Authors);
+            set => CollectionHelper.SetCollection(ref _Authors, value);
+        }
+
+        public bool ShouldSerializeAuthor()
+            => false;
+
+        public bool ShouldSerializeAuthors()
+            => _Authors?.Count > 0;
+
+        public void ResetAuthor()
+            => _Authors?.Clear();
+
+        public void ResetAuthors()
+            => _Authors?.Clear();
+
+#endregion Author
+
+#region Tag
+
+        private Collection<System.String> _Tags;
+        
+        public System.String Tag
+        {
+            get => _Tags?.FirstOrDefault() ?? default(System.String);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public Collection<System.String> Tags
+        {
+            get => CollectionHelper.GetCollection(ref _Tags);
+            set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => _Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => _Tags?.Count > 1;
+
+        public void ResetTag()
+            => _Tags?.Clear();
+
+        public void ResetTags()
+            => _Tags?.Clear();
+
+#endregion Tag
+
+    }
 }
