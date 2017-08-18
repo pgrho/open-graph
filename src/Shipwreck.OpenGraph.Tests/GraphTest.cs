@@ -310,5 +310,204 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion Image
+
+        #region _TypeObject
+
+        [Fact]
+        public void MusicSongTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.song' />
+<meta property='music:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicSong);
+            Assert.Equal("The Rock", target.MusicSong.Title);
+        }
+
+        [Fact]
+        public void MusicAlbumTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.album' />
+<meta property='music:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicAlbum);
+            Assert.Equal("The Rock", target.MusicAlbum.Title);
+        }
+
+        [Fact]
+        public void MusicPlaylistTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.playlist' />
+<meta property='music:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicPlaylist);
+            Assert.Equal("The Rock", target.MusicPlaylist.Title);
+        }
+
+        [Fact]
+        public void MusicRadioStationTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.radio_station' />
+<meta property='music:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicRadioStation);
+            Assert.Equal("The Rock", target.MusicRadioStation.Title);
+        }
+
+        [Fact]
+        public void VideoMovieTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='video.movie' />
+<meta property='video:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.VideoMovie);
+            Assert.Equal("The Rock", target.VideoMovie.Title);
+        }
+
+        [Fact]
+        public void VideoEpisodeTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='video.episode' />
+<meta property='video:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.VideoEpisode);
+            Assert.Equal("The Rock", target.VideoEpisode.Title);
+        }
+
+        [Fact]
+        public void VideoTVShowTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='video.tv_show' />
+<meta property='video:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.VideoTVShow);
+            Assert.Equal("The Rock", target.VideoTVShow.Title);
+        }
+
+        [Fact]
+        public void VideoOtherTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='video.other' />
+<meta property='video:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.VideoOther);
+            Assert.Equal("The Rock", target.VideoOther.Title);
+        }
+
+        [Fact]
+        public void ArticleTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='article' />
+<meta property='article:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.Article);
+            Assert.Equal("The Rock", target.Article.Title);
+        }
+
+        [Fact]
+        public void BookTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='book' />
+<meta property='book:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.Book);
+            Assert.Equal("The Rock", target.Book.Title);
+        }
+
+        [Fact]
+        public void ProfileTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='profile' />
+<meta property='profile:title' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.Profile);
+            Assert.Equal("The Rock", target.Profile.Title);
+        }
+
+        [Fact]
+        public void DelayedMusicSongTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='hoge:title' content='The piyo' />
+<meta property='music:title' content='The Rock' />
+<meta property='og:type' content='music.song' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicSong);
+            Assert.Equal("The Rock", target.MusicSong.Title);
+            Assert.Equal(1, target.ExtraProperties.Count);
+            Assert.Equal("The piyo", target.ExtraProperties[0].Content);
+        }
+
+        #endregion _TypeObject
     }
 }

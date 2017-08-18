@@ -97,78 +97,77 @@ namespace Shipwreck.OpenGraph
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             child = null;
-            if (!property.MachesPath(Path))
+            if (property.MachesPath(Path))
             {
-                return false;
-            }
-            if (property.MachesChildPath(Path, "type"))
-            {
-                if (Type == null)
+                if (property.MachesChildPath(Path, "type"))
                 {
-                    Type = content;
-
-                    switch (content)
+                    if (Type == null)
                     {
-                        case "music.song":
-                            MusicSong = new MusicSong();
-                            break;
+                        Type = content;
 
-                        case "musicalbum":
-                            MusicAlbum = new MusicAlbum();
-                            break;
-
-                        case "music.playlist":
-                            MusicPlaylist = new MusicPlaylist();
-                            break;
-
-                        case "music.radio_station":
-                            MusicRadioStation = new MusicRadioStation();
-                            break;
-
-                        case "video.movie":
-                            VideoMovie = new VideoMovie();
-                            break;
-
-                        case "video.episode":
-                            VideoEpisode = new VideoEpisode();
-                            break;
-
-                        case "video.tv_show":
-                            VideoTVShow = new VideoTVShow();
-                            break;
-
-                        case "video.other":
-                            VideoOther = new VideoOther();
-                            break;
-
-                        case "article":
-                            Article = new Article();
-                            break;
-
-                        case "book":
-                            Book = new Book();
-                            break;
-
-                        case "profile":
-                            Profile = new Profile();
-                            break;
-                    }
-
-                    if (_TypeObject != null && ShouldSerializeExtraProperties())
-                    {
-                        _TypeObject.LoadProperties(ExtraProperties.Where(kv => kv.Property.MachesPath(_TypeObject.Path)));
-
-                        for (var i = ExtraProperties.Count - 1; i >= 0; i--)
+                        switch (content)
                         {
-                            if (ExtraProperties[i].Property.MachesPath(_TypeObject.Path))
+                            case "music.song":
+                                MusicSong = new MusicSong();
+                                break;
+
+                            case "music.album":
+                                MusicAlbum = new MusicAlbum();
+                                break;
+
+                            case "music.playlist":
+                                MusicPlaylist = new MusicPlaylist();
+                                break;
+
+                            case "music.radio_station":
+                                MusicRadioStation = new MusicRadioStation();
+                                break;
+
+                            case "video.movie":
+                                VideoMovie = new VideoMovie();
+                                break;
+
+                            case "video.episode":
+                                VideoEpisode = new VideoEpisode();
+                                break;
+
+                            case "video.tv_show":
+                                VideoTVShow = new VideoTVShow();
+                                break;
+
+                            case "video.other":
+                                VideoOther = new VideoOther();
+                                break;
+
+                            case "article":
+                                Article = new Article();
+                                break;
+
+                            case "book":
+                                Book = new Book();
+                                break;
+
+                            case "profile":
+                                Profile = new Profile();
+                                break;
+                        }
+
+                        if (_TypeObject != null && ShouldSerializeExtraProperties())
+                        {
+                            _TypeObject.LoadProperties(ExtraProperties.Where(kv => kv.Property.MachesPath(_TypeObject.Path)));
+
+                            for (var i = ExtraProperties.Count - 1; i >= 0; i--)
                             {
-                                ExtraProperties.RemoveAt(i);
+                                if (ExtraProperties[i].Property.MachesPath(_TypeObject.Path))
+                                {
+                                    ExtraProperties.RemoveAt(i);
+                                }
                             }
                         }
                     }
-                }
 
-                return true;
+                    return true;
+                }
             }
 
             if (_TypeObject?.TryAddMetadata(property, content, out child) == true)
