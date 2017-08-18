@@ -26,20 +26,19 @@ namespace Shipwreck.OpenGraph
                 return false;
             }
 
-            if (property.StartsWithChildPath(Path, "song"))
+            bool matched;
+            if (property.StartsWithChildPath(Path, "song", out matched))
             {
                 var s = new MusicAlbumSong(Path + ":song");
                 Songs.Add(s);
-                s.TryAddMetadata(property, content, out child);
-                child = child ?? s;
+                child = s.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "musician"))
+            else if (property.StartsWithChildPath(Path, "musician", out matched))
             {
                 var m = new Profile(Path + ":musician");
                 Musicians.Add(m);
-                m.TryAddMetadata(property, content, out child);
-                child = child ?? m;
+                child = m.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

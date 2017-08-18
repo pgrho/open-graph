@@ -25,14 +25,13 @@ namespace Shipwreck.OpenGraph
                 return false;
             }
 
-            if (property.StartsWithChildPath(Path, "creator"))
+            if (property.StartsWithChildPath(Path, "creator", out var matched))
             {
                 if (Creator == null)
                 {
                     Creator = new Profile(Path + ":creator");
                 }
-                Creator.TryAddMetadata(property, content, out child);
-                child = child ?? Creator;
+                child = Creator.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

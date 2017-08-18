@@ -25,22 +25,21 @@ namespace Shipwreck.OpenGraph
                 return false;
             }
 
-            if (property.StartsWithChildPath(Path, "song"))
+            bool matched;
+            if (property.StartsWithChildPath(Path, "song", out matched))
             {
                 var s = new MusicAlbumSong(Path + ":song");
                 Songs.Add(s);
-                s.TryAddMetadata(property, content, out child);
-                child = child ?? s;
+                child = s.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "creator"))
+            else if (property.StartsWithChildPath(Path, "creator", out matched))
             {
                 if (Creator == null)
                 {
                     Creator = new Profile(Path + ":creator");
                 }
-                Creator.TryAddMetadata(property, content, out child);
-                child = child ?? Creator;
+                child = Creator.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

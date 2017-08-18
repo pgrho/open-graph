@@ -29,28 +29,26 @@ namespace Shipwreck.OpenGraph
                 return false;
             }
 
-            if (property.StartsWithChildPath(Path, "actor"))
+            bool matched;
+            if (property.StartsWithChildPath(Path, "actor", out matched))
             {
                 var a = new Actor(Path + ":actor");
                 Actors.Add(a);
-                a.TryAddMetadata(property, content, out child);
-                child = child ?? a;
+                child = a.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "director"))
+            else if (property.StartsWithChildPath(Path, "director", out matched))
             {
                 var d = new Profile(Path + ":director");
                 Directors.Add(d);
-                d.TryAddMetadata(property, content, out child);
-                child = child ?? d;
+                child = d.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "writer"))
+            else if (property.StartsWithChildPath(Path, "writer", out matched))
             {
                 var w = new Profile(Path + ":writer");
                 Writers.Add(w);
-                w.TryAddMetadata(property, content, out child);
-                child = child ?? w;
+                child = w.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

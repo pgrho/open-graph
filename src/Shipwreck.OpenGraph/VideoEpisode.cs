@@ -23,14 +23,13 @@ namespace Shipwreck.OpenGraph
                 child = null;
                 return false;
             }
-            if (property.StartsWithChildPath(Path, "series"))
+            if (property.StartsWithChildPath(Path, "series", out var matched))
             {
                 if (Series == null)
                 {
                     Series = new VideoTVShow(Path + ":series");
                 }
-                Series.TryAddMetadata(property, content, out child);
-                child = child ?? Series;
+                child = Series.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

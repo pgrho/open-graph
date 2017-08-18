@@ -6,9 +6,14 @@
             => property?.Length > path?.Length && property.StartsWith(path) && property[path.Length] == ':';
 
         public static bool StartsWithChildPath(this string property, string path, string path2)
+            => StartsWithChildPath(property, path, path2, out _);
+
+        public static bool StartsWithChildPath(this string property, string path, string path2, out bool isMatch)
         {
-            if (property?.Length < path?.Length + 1 + path2.Length)
+            var pathLength = path.Length + 1 + path2.Length;
+            if (property?.Length < pathLength)
             {
+                isMatch = false;
                 return false;
             }
 
@@ -16,11 +21,21 @@
             {
                 if (property[path.Length + 1 + i] != path2[i])
                 {
+                    isMatch = false;
                     return false;
                 }
             }
 
-            return true;
+            if (property.Length == pathLength)
+            {
+                isMatch = true;
+                return true;
+            }
+            else
+            {
+                isMatch = false;
+                return property[pathLength] == ':';
+            }
         }
 
         public static bool MachesChildPath(this string property, string path, string path2)

@@ -83,52 +83,26 @@ namespace Shipwreck.OpenGraph
                 return false;
             }
 
-            if (property.StartsWithChildPath(Path, "image"))
+            bool matched;
+            if (property.StartsWithChildPath(Path, "image", out matched))
             {
                 var img = new GraphImage(Path + ":image");
                 Images.Add(img);
-                if (property.Length == Path.Length + 6)
-                {
-                    img.Url = content;
-                    child = img;
-                }
-                else
-                {
-                    img.TryAddMetadata(property, content, out child);
-                    child = child ?? img;
-                }
+                child = img.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "audio"))
+            else if (property.StartsWithChildPath(Path, "audio", out matched))
             {
                 var audio = new GraphAudio(Path + ":audio");
                 Audios.Add(audio);
-                if (property.Length == Path.Length + 6)
-                {
-                    audio.Url = content;
-                    child = audio;
-                }
-                else
-                {
-                    audio.TryAddMetadata(property, content, out child);
-                    child = child ?? audio;
-                }
+                child = audio.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
-            else if (property.StartsWithChildPath(Path, "video"))
+            else if (property.StartsWithChildPath(Path, "video", out matched))
             {
                 var video = new GraphVideo(Path + ":video");
                 Videos.Add(video);
-                if (property.Length == Path.Length + 6)
-                {
-                    video.Url = content;
-                    child = video;
-                }
-                else
-                {
-                    video.TryAddMetadata(property, content, out child);
-                    child = child ?? video;
-                }
+                child = video.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 
