@@ -81,7 +81,7 @@ namespace Shipwreck.OpenGraph
         #endregion Musician
 
         [Fact]
-        public void DurationTest()
+        public void ReleaseDateTest()
         {
             var html = @"<html prefix='og: http://ogp.me/ns#'>
 <head>
