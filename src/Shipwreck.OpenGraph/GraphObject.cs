@@ -5,7 +5,7 @@ namespace Shipwreck.OpenGraph
 {
     public abstract partial class GraphObject
     {
-        private Dictionary<string, string> _ExtraProperties;
+        private List<GraphProperty> _ExtraProperties;
 
         internal GraphObject(string path)
         {
@@ -13,6 +13,8 @@ namespace Shipwreck.OpenGraph
         }
 
         internal string Path { get; }
+
+        internal virtual bool IsRoot => false;
 
         [DefaultValue(null)]
         public string Title { get; set; }
@@ -32,8 +34,8 @@ namespace Shipwreck.OpenGraph
         [DefaultValue(null)]
         public string SiteName { get; set; }
 
-        public Dictionary<string, string> ExtraProperties
-            => _ExtraProperties ?? (_ExtraProperties = new Dictionary<string, string>());
+        public IList<GraphProperty> ExtraProperties
+            => _ExtraProperties ?? (_ExtraProperties = new List<GraphProperty>());
 
         public bool ShouldSerializeExtraProperties()
             => _ExtraProperties?.Count > 0;
@@ -41,11 +43,43 @@ namespace Shipwreck.OpenGraph
         public void ResetExtraProperties()
             => _ExtraProperties?.Clear();
 
+        internal void LoadProperties(IEnumerable<GraphProperty> properties)
+        {
+            var stack = new List<GraphObject>(2);
+            stack.Add(this);
+
+            foreach (var kv in properties)
+            {
+                for (int i = stack.Count - 1; i >= 0; i--)
+                {
+                    var obj = stack[i];
+
+                    if (obj.TryAddMetadata(kv.Property, kv.Content, out GraphObject c))
+                    {
+                        stack.RemoveRange(i + 1, stack.Count - i - 1);
+
+                        if (c != null)
+                        {
+                            stack.Add(c);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
         internal virtual bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             if (!property.MachesPath(Path))
             {
                 child = null;
+
+                if (IsRoot)
+                {
+                    ExtraProperties.Add(new GraphProperty(property, content));
+                    return true;
+                }
+
                 return false;
             }
 
@@ -160,7 +194,7 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            ExtraProperties[property] = content;
+            ExtraProperties.Add(new GraphProperty(property, content));
 
             return true;
         }

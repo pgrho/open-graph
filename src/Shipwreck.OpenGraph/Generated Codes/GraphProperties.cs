@@ -535,4 +535,84 @@ namespace Shipwreck.OpenGraph
 #endregion Tag
 
     }
+    partial class Graph
+    {
+        [DefaultValue(null)]
+        public MusicSong MusicSong
+        {
+            get => _TypeObject as MusicSong;
+            set => _TypeObject = value ?? (_TypeObject is MusicSong ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public MusicAlbum MusicAlbum
+        {
+            get => _TypeObject as MusicAlbum;
+            set => _TypeObject = value ?? (_TypeObject is MusicAlbum ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public MusicPlaylist MusicPlaylist
+        {
+            get => _TypeObject as MusicPlaylist;
+            set => _TypeObject = value ?? (_TypeObject is MusicPlaylist ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public MusicRadioStation MusicRadioStation
+        {
+            get => _TypeObject as MusicRadioStation;
+            set => _TypeObject = value ?? (_TypeObject is MusicRadioStation ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public VideoMovie VideoMovie
+        {
+            get => _TypeObject as VideoMovie;
+            set => _TypeObject = value ?? (_TypeObject is VideoMovie ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public VideoEpisode VideoEpisode
+        {
+            get => _TypeObject as VideoEpisode;
+            set => _TypeObject = value ?? (_TypeObject is VideoEpisode ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public VideoTVShow VideoTVShow
+        {
+            get => _TypeObject as VideoTVShow;
+            set => _TypeObject = value ?? (_TypeObject is VideoTVShow ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public VideoOther VideoOther
+        {
+            get => _TypeObject as VideoOther;
+            set => _TypeObject = value ?? (_TypeObject is VideoOther ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public Article Article
+        {
+            get => _TypeObject as Article;
+            set => _TypeObject = value ?? (_TypeObject is Article ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public Book Book
+        {
+            get => _TypeObject as Book;
+            set => _TypeObject = value ?? (_TypeObject is Book ? null : _TypeObject);
+        }
+
+        [DefaultValue(null)]
+        public Profile Profile
+        {
+            get => _TypeObject as Profile;
+            set => _TypeObject = value ?? (_TypeObject is Profile ? null : _TypeObject);
+        }
+
+    }
 }

@@ -106,4 +106,30 @@ foreach (var g in properties.GroupBy(p => p.Class))
 <#
 }
 #>
+    partial class Graph
+    {
+<#
+
+var objectTypes = new []
+{
+    "MusicSong", "MusicAlbum", "MusicPlaylist", "MusicRadioStation",
+    "VideoMovie", "VideoEpisode", "VideoTVShow", "VideoOther",
+    "Article", "Book", "Profile"
+};
+
+foreach (var T in objectTypes)
+{
+#>
+        [DefaultValue(null)]
+        public <#= T #> <#= T #>
+        {
+            get => _TypeObject as <#= T #>;
+            set => _TypeObject = value ?? (_TypeObject is <#= T #> ? null : _TypeObject);
+        }
+
+<#
+}
+
+#>
+    }
 }

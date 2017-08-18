@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Shipwreck.OpenGraph
 {
     public sealed partial class Graph : GraphObject
     {
+        private GraphObject _TypeObject;
+
         public Graph()
             : base("og")
         {
         }
+
+        internal override bool IsRoot => true;
 
         [DefaultValue(null)]
         public string Type { get; set; }
@@ -27,14 +32,17 @@ namespace Shipwreck.OpenGraph
 
         public static Graph FromReader(XmlReader reader)
         {
+            var r = new Graph();
+            r.LoadProperties(Enumerate(reader));
+            return r;
+        }
+
+        private static IEnumerable<GraphProperty> Enumerate(XmlReader reader)
+        {
             var nest = 0;
 
             var isHtml = false;
             var isHead = false;
-
-            var r = new Graph();
-            var stack = new List<GraphObject>(2);
-            stack.Add(r);
 
             while (reader.Read())
             {
@@ -62,23 +70,7 @@ namespace Shipwreck.OpenGraph
                                         var prop = reader.Value;
                                         if (reader.MoveToAttribute("content"))
                                         {
-                                            var content = reader.Value;
-
-                                            for (int i = stack.Count - 1; i >= 0; i--)
-                                            {
-                                                var obj = stack[i];
-
-                                                if (obj.TryAddMetadata(prop, content, out GraphObject c))
-                                                {
-                                                    stack.RemoveRange(i + 1, stack.Count - i - 1);
-
-                                                    if (c != null)
-                                                    {
-                                                        stack.Add(c);
-                                                    }
-                                                    break;
-                                                }
-                                            }
+                                            yield return new GraphProperty(prop, reader.Value);
                                         }
                                     }
                                 }
@@ -95,13 +87,11 @@ namespace Shipwreck.OpenGraph
                     case XmlNodeType.EndElement:
                         if (--nest <= 1 && isHead)
                         {
-                            return r;
+                            yield break;
                         }
                         break;
                 }
             }
-
-            return r;
         }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
@@ -116,8 +106,73 @@ namespace Shipwreck.OpenGraph
                 if (Type == null)
                 {
                     Type = content;
+
+                    switch (content)
+                    {
+                        case "music.song":
+                            MusicSong = new MusicSong();
+                            break;
+
+                        case "musicalbum":
+                            MusicAlbum = new MusicAlbum();
+                            break;
+
+                        case "music.playlist":
+                            MusicPlaylist = new MusicPlaylist();
+                            break;
+
+                        case "music.radio_station":
+                            MusicRadioStation = new MusicRadioStation();
+                            break;
+
+                        case "video.movie":
+                            VideoMovie = new VideoMovie();
+                            break;
+
+                        case "video.episode":
+                            VideoEpisode = new VideoEpisode();
+                            break;
+
+                        case "video.tv_show":
+                            VideoTVShow = new VideoTVShow();
+                            break;
+
+                        case "video.other":
+                            VideoOther = new VideoOther();
+                            break;
+
+                        case "article":
+                            Article = new Article();
+                            break;
+
+                        case "book":
+                            Book = new Book();
+                            break;
+
+                        case "profile":
+                            Profile = new Profile();
+                            break;
+                    }
+
+                    if (_TypeObject != null && ShouldSerializeExtraProperties())
+                    {
+                        _TypeObject.LoadProperties(ExtraProperties.Where(kv => kv.Property.MachesPath(_TypeObject.Path)));
+
+                        for (var i = ExtraProperties.Count - 1; i >= 0; i--)
+                        {
+                            if (ExtraProperties[i].Property.MachesPath(_TypeObject.Path))
+                            {
+                                ExtraProperties.RemoveAt(i);
+                            }
+                        }
+                    }
                 }
 
+                return true;
+            }
+
+            if (_TypeObject?.TryAddMetadata(property, content, out child) == true)
+            {
                 return true;
             }
 
