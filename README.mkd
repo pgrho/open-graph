@@ -16,12 +16,14 @@ using Shipwreck.OpenGraph;
 Graph graph = Graph.FromXml(xml);
 ```
 
-### Load from XmlReader, TextReader, Stream
+### Load from XmlReader, XmlDocument, TextReader, Stream
 
 ```
 Graph.FromXmlReader(xmlReader);
+Graph.FromXmlDocument(xmlDocument);
 Graph.FromTextReader(textReader);
 Graph.FromStream(stream);
 ```
 
 **TextReader or Stream must be well-formed.**
+

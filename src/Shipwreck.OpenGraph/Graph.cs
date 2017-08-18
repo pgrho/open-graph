@@ -118,6 +118,53 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+#if NETSTANDARD1_3
+
+        public static Graph FromXmlDocument(XmlDocument xmlDocument)
+        {
+            var r = new Graph();
+            r.LoadProperties(Enumerate(xmlDocument));
+            return r;
+        }
+
+        private static IEnumerable<GraphProperty> Enumerate(XmlDocument xmlDocument)
+        {
+            if ("html".Equals(xmlDocument.DocumentElement?.LocalName, StringComparison.OrdinalIgnoreCase))
+            {
+                foreach (XmlNode head in xmlDocument.DocumentElement.ChildNodes)
+                {
+                    if (head.NodeType == XmlNodeType.Element
+                        && "head".Equals(head.LocalName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (XmlNode meta in head.ChildNodes)
+                        {
+                            if (meta.NodeType == XmlNodeType.Element
+                                && "meta".Equals(meta.LocalName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                var p = meta.Attributes["property"]?.Value;
+                                var c = meta.Attributes["content"]?.Value;
+                                if (p != null && c != null)
+                                {
+                                    yield return new GraphProperty(p, c);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+#else
+        public static Graph FromXmlDocument(XmlDocument xmlDocument)
+        {
+            using (var r = new XmlNodeReader(xmlDocument))
+            {
+                return FromXmlReader(r);
+            }
+        }
+#endif
+
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             child = null;
