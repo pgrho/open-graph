@@ -28,14 +28,36 @@ namespace Shipwreck.OpenGraph
             using (var sr = new StringReader(xml))
             using (var xr = XmlReader.Create(sr))
             {
-                return FromReader(xr);
+                return FromXmlReader(xr);
             }
         }
 
-        public static Graph FromReader(XmlReader reader)
+        public static Graph FromStream(Stream stream)
+        {
+            using (var xr = XmlReader.Create(stream, new XmlReaderSettings()
+            {
+                CloseInput = false
+            }))
+            {
+                return FromXmlReader(xr);
+            }
+        }
+
+        public static Graph FromTextReader(TextReader textReader)
+        {
+            using (var xr = XmlReader.Create(textReader, new XmlReaderSettings()
+            {
+                CloseInput = false
+            }))
+            {
+                return FromXmlReader(xr);
+            }
+        }
+
+        public static Graph FromXmlReader(XmlReader xmlReader)
         {
             var r = new Graph();
-            r.LoadProperties(Enumerate(reader));
+            r.LoadProperties(Enumerate(xmlReader));
             return r;
         }
 
