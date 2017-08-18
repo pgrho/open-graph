@@ -4,6 +4,16 @@ namespace Shipwreck.OpenGraph
 {
     public sealed partial class GraphImage : GraphObject
     {
+        public GraphImage()
+            : this("og")
+        {
+        }
+
+        internal GraphImage(string path)
+            : base(path)
+        {
+        }
+
         [DefaultValue(null)]
         public string Url { get; set; }
 

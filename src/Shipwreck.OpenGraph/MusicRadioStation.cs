@@ -1,20 +1,17 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Shipwreck.OpenGraph
 {
     public partial class MusicRadioStation : GraphObject
     {
-        internal readonly string _Path;
-
         public MusicRadioStation()
+            : this("music")
         {
-            _Path = "music";
         }
 
         internal MusicRadioStation(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(null)]
@@ -22,17 +19,17 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.StartsWithChildPath(_Path, "creator"))
+            if (property.StartsWithChildPath(Path, "creator"))
             {
                 if (Creator == null)
                 {
-                    Creator = new Profile(_Path + ":creator");
+                    Creator = new Profile(Path + ":creator");
                 }
                 Creator.TryAddMetadata(property, content, out child);
                 child = child ?? Creator;

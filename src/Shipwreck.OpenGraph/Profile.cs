@@ -4,16 +4,14 @@ namespace Shipwreck.OpenGraph
 {
     public partial class Profile : GraphObject
     {
-        internal readonly string _Path;
-
         public Profile()
+            : this("profile")
         {
-            _Path = "profile";
         }
 
         internal Profile(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(null)]
@@ -31,11 +29,11 @@ namespace Shipwreck.OpenGraph
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             child = null;
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 return false;
             }
-            if (property.MachesChildPath(_Path, "first_name"))
+            if (property.MachesChildPath(Path, "first_name"))
             {
                 if (FirstName == null)
                 {
@@ -44,7 +42,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "last_name"))
+            else if (property.MachesChildPath(Path, "last_name"))
             {
                 if (LastName == null)
                 {
@@ -53,7 +51,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "username"))
+            else if (property.MachesChildPath(Path, "username"))
             {
                 if (UserName == null)
                 {
@@ -62,7 +60,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "gender"))
+            else if (property.MachesChildPath(Path, "gender"))
             {
                 if (Gender == null)
                 {

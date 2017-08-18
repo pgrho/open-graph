@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Shipwreck.OpenGraph
 {
     public sealed partial class Article : GraphObject
     {
-        private readonly string _Path;
-
         public Article()
+            : this("article")
         {
-            _Path = "article";
         }
 
         internal Article(string path)
+            : base(path)
         {
-            _Path = path;
         }
-
 
         [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
         public DateTime PublishedTime { get; set; }
@@ -34,14 +29,14 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
-            if (property.StartsWithChildPath(_Path, "author"))
+            if (property.StartsWithChildPath(Path, "author"))
             {
-                var a = new Profile(_Path + ":author");
+                var a = new Profile(Path + ":author");
                 Authors.Add(a);
                 a.TryAddMetadata(property, content, out child);
                 child = child ?? a;
@@ -50,8 +45,7 @@ namespace Shipwreck.OpenGraph
 
             child = null;
 
-
-            if (property.MachesChildPath(_Path, "published_time"))
+            if (property.MachesChildPath(Path, "published_time"))
             {
                 if (PublishedTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {
@@ -60,7 +54,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "modified_time"))
+            else if (property.MachesChildPath(Path, "modified_time"))
             {
                 if (ModifiedTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {
@@ -69,7 +63,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "expiration_time"))
+            else if (property.MachesChildPath(Path, "expiration_time"))
             {
                 if (ExpirationTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {
@@ -78,7 +72,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "section"))
+            else if (property.MachesChildPath(Path, "section"))
             {
                 if (Section == null)
                 {
@@ -87,7 +81,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "tag"))
+            else if (property.MachesChildPath(Path, "tag"))
             {
                 Tags.Add(content);
 
@@ -97,5 +91,4 @@ namespace Shipwreck.OpenGraph
             return false;
         }
     }
-
 }

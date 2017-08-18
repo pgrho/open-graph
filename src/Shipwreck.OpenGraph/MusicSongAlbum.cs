@@ -21,13 +21,13 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.MachesChildPath(_Path, "disc"))
+            if (property.MachesChildPath(Path, "disc"))
             {
                 if (Disc == 0 && int.TryParse(content, out int i))
                 {
@@ -37,7 +37,7 @@ namespace Shipwreck.OpenGraph
                 child = null;
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "track"))
+            else if (property.MachesChildPath(Path, "track"))
             {
                 if (Track == 0 && int.TryParse(content, out int i))
                 {

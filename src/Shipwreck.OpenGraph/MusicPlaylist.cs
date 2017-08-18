@@ -1,20 +1,17 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Shipwreck.OpenGraph
 {
     public partial class MusicPlaylist : GraphObject
     {
-        internal readonly string _Path;
-
         public MusicPlaylist()
+            : this("music")
         {
-            _Path = "music";
         }
 
         internal MusicPlaylist(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(null)]
@@ -22,25 +19,25 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.StartsWithChildPath(_Path, "song"))
+            if (property.StartsWithChildPath(Path, "song"))
             {
-                var s = new MusicAlbumSong(_Path + ":song");
+                var s = new MusicAlbumSong(Path + ":song");
                 Songs.Add(s);
                 s.TryAddMetadata(property, content, out child);
                 child = child ?? s;
                 return true;
             }
-            else if (property.StartsWithChildPath(_Path, "creator"))
+            else if (property.StartsWithChildPath(Path, "creator"))
             {
                 if (Creator == null)
                 {
-                    Creator = new Profile(_Path + ":creator");
+                    Creator = new Profile(Path + ":creator");
                 }
                 Creator.TryAddMetadata(property, content, out child);
                 child = child ?? Creator;

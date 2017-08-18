@@ -5,16 +5,14 @@ namespace Shipwreck.OpenGraph
 {
     public partial class MusicAlbum : GraphObject
     {
-        internal readonly string _Path;
-
         public MusicAlbum()
+            : this("music")
         {
-            _Path = "music";
         }
 
         internal MusicAlbum(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
@@ -22,23 +20,23 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.StartsWithChildPath(_Path, "song"))
+            if (property.StartsWithChildPath(Path, "song"))
             {
-                var s = new MusicAlbumSong(_Path + ":song");
+                var s = new MusicAlbumSong(Path + ":song");
                 Songs.Add(s);
                 s.TryAddMetadata(property, content, out child);
                 child = child ?? s;
                 return true;
             }
-            else if (property.StartsWithChildPath(_Path, "musician"))
+            else if (property.StartsWithChildPath(Path, "musician"))
             {
-                var m = new Profile(_Path + ":musician");
+                var m = new Profile(Path + ":musician");
                 Musicians.Add(m);
                 m.TryAddMetadata(property, content, out child);
                 child = child ?? m;
@@ -46,7 +44,7 @@ namespace Shipwreck.OpenGraph
             }
 
             child = null;
-            if (property.MachesChildPath(_Path, "release_date"))
+            if (property.MachesChildPath(Path, "release_date"))
             {
                 if (ReleaseDate == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {

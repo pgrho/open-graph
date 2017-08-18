@@ -18,16 +18,16 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
-            if (property.StartsWithChildPath(_Path, "series"))
+            if (property.StartsWithChildPath(Path, "series"))
             {
                 if (Series == null)
                 {
-                    Series = new VideoTVShow(_Path + ":series");
+                    Series = new VideoTVShow(Path + ":series");
                 }
                 Series.TryAddMetadata(property, content, out child);
                 child = child ?? Series;

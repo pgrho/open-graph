@@ -18,13 +18,13 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.MachesChildPath(_Path, "role"))
+            if (property.MachesChildPath(Path, "role"))
             {
                 if (Role == null)
                 {

@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Shipwreck.OpenGraph
 {
     public sealed partial class Book : GraphObject
     {
-        private readonly string _Path;
-
         public Book()
+            : this("book")
         {
-            _Path = "book";
         }
 
         internal Book(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(null)]
@@ -27,14 +23,14 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
-            if (property.StartsWithChildPath(_Path, "author"))
+            if (property.StartsWithChildPath(Path, "author"))
             {
-                var a = new Profile(_Path + ":author");
+                var a = new Profile(Path + ":author");
                 Authors.Add(a);
                 a.TryAddMetadata(property, content, out child);
                 child = child ?? a;
@@ -43,8 +39,7 @@ namespace Shipwreck.OpenGraph
 
             child = null;
 
-
-            if (property.MachesChildPath(_Path, "isbn"))
+            if (property.MachesChildPath(Path, "isbn"))
             {
                 if (ISBN == null)
                 {
@@ -53,7 +48,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "release_date"))
+            else if (property.MachesChildPath(Path, "release_date"))
             {
                 if (ReleaseDate == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {
@@ -62,7 +57,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "tag"))
+            else if (property.MachesChildPath(Path, "tag"))
             {
                 Tags.Add(content);
 
@@ -72,5 +67,4 @@ namespace Shipwreck.OpenGraph
             return false;
         }
     }
-
 }

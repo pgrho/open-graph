@@ -7,6 +7,11 @@ namespace Shipwreck.OpenGraph
 {
     public sealed partial class Graph : GraphObject
     {
+        public Graph()
+            : base("og")
+        {
+        }
+
         public static Graph FromXml(string xml)
         {
             using (var sr = new StringReader(xml))

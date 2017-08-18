@@ -4,16 +4,14 @@ namespace Shipwreck.OpenGraph
 {
     public partial class MusicSong : GraphObject
     {
-        internal readonly string _Path;
-
         public MusicSong()
+            : this("music")
         {
-            _Path = "music";
         }
 
         internal MusicSong(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(0)]
@@ -21,23 +19,23 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.StartsWithChildPath(_Path, "album"))
+            if (property.StartsWithChildPath(Path, "album"))
             {
-                var a = new MusicSongAlbum(_Path + ":album");
+                var a = new MusicSongAlbum(Path + ":album");
                 Albums.Add(a);
                 a.TryAddMetadata(property, content, out child);
                 child = child ?? a;
                 return true;
             }
-            else if (property.StartsWithChildPath(_Path, "musician"))
+            else if (property.StartsWithChildPath(Path, "musician"))
             {
-                var m = new Profile(_Path + ":musician");
+                var m = new Profile(Path + ":musician");
                 Musicians.Add(m);
                 m.TryAddMetadata(property, content, out child);
                 child = child ?? m;
@@ -45,7 +43,7 @@ namespace Shipwreck.OpenGraph
             }
 
             child = null;
-            if (property.MachesChildPath(_Path, "duration"))
+            if (property.MachesChildPath(Path, "duration"))
             {
                 if (Duration == 0 && int.TryParse(content, out int i))
                 {

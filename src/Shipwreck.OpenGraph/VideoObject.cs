@@ -5,16 +5,14 @@ namespace Shipwreck.OpenGraph
 {
     public abstract partial class VideoObject : GraphObject
     {
-        internal readonly string _Path;
-
         public VideoObject()
+            : this("video")
         {
-            _Path = "video";
         }
 
         internal VideoObject(string path)
+            : base(path)
         {
-            _Path = path;
         }
 
         [DefaultValue(0)]
@@ -25,31 +23,31 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
-            if (!property.MachesPath(_Path))
+            if (!property.MachesPath(Path))
             {
                 child = null;
                 return false;
             }
 
-            if (property.StartsWithChildPath(_Path, "actor"))
+            if (property.StartsWithChildPath(Path, "actor"))
             {
-                var a = new Actor(_Path + ":actor");
+                var a = new Actor(Path + ":actor");
                 Actors.Add(a);
                 a.TryAddMetadata(property, content, out child);
                 child = child ?? a;
                 return true;
             }
-            else if (property.StartsWithChildPath(_Path, "director"))
+            else if (property.StartsWithChildPath(Path, "director"))
             {
-                var d = new Profile(_Path + ":director");
+                var d = new Profile(Path + ":director");
                 Directors.Add(d);
                 d.TryAddMetadata(property, content, out child);
                 child = child ?? d;
                 return true;
             }
-            else if (property.StartsWithChildPath(_Path, "writer"))
+            else if (property.StartsWithChildPath(Path, "writer"))
             {
-                var w = new Profile(_Path + ":writer");
+                var w = new Profile(Path + ":writer");
                 Writers.Add(w);
                 w.TryAddMetadata(property, content, out child);
                 child = child ?? w;
@@ -57,7 +55,7 @@ namespace Shipwreck.OpenGraph
             }
 
             child = null;
-            if (property.MachesChildPath(_Path, "duration"))
+            if (property.MachesChildPath(Path, "duration"))
             {
                 if (Duration == 0 && int.TryParse(content, out int i))
                 {
@@ -66,7 +64,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "release_date"))
+            else if (property.MachesChildPath(Path, "release_date"))
             {
                 if (ReleaseDate == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
                 {
@@ -75,7 +73,7 @@ namespace Shipwreck.OpenGraph
 
                 return true;
             }
-            else if (property.MachesChildPath(_Path, "tag"))
+            else if (property.MachesChildPath(Path, "tag"))
             {
                 Tags.Add(content);
 

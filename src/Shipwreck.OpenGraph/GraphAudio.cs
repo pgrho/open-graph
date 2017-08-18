@@ -4,6 +4,16 @@ namespace Shipwreck.OpenGraph
 {
     public sealed partial class GraphAudio : GraphObject
     {
+        public GraphAudio()
+            : this("og")
+        {
+        }
+
+        internal GraphAudio(string path)
+            : base(path)
+        {
+        }
+
         [DefaultValue(null)]
         public string Url { get; set; }
 
@@ -12,7 +22,7 @@ namespace Shipwreck.OpenGraph
 
         [DefaultValue(null)]
         public string Type { get; set; }
-         
+
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
             child = null;
@@ -41,7 +51,7 @@ namespace Shipwreck.OpenGraph
                     {
                         Type = content;
                     }
-                    return true; 
+                    return true;
             }
 
             child = null;
