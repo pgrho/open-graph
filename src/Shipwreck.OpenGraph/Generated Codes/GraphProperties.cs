@@ -246,5 +246,35 @@ namespace Shipwreck.OpenGraph
 
 #endregion SiteName
 
+#region Image
+
+        private Collection<GraphImage> _Images;
+        
+        public GraphImage Image
+        {
+            get => _Images?.FirstOrDefault() ?? default(GraphImage);
+            set => CollectionHelper.SetCollection(ref _Images, value);
+        }
+
+        public Collection<GraphImage> Images
+        {
+            get => CollectionHelper.GetCollection(ref _Images);
+            set => CollectionHelper.SetCollection(ref _Images, value);
+        }
+
+        public bool ShouldSerializeImage()
+            => false;
+
+        public bool ShouldSerializeImages()
+            => _Images?.Count > 0;
+
+        public void ResetImage()
+            => _Images?.Clear();
+
+        public void ResetImages()
+            => _Images?.Clear();
+
+#endregion Image
+
     }
 }

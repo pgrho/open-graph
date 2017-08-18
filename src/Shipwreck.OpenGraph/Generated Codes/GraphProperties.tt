@@ -1,18 +1,21 @@
 <#@ template language="C#" debug="True" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension="cs" #>
 <#
 
 var properties = new []
 {
-    new { Name = "Title", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "Type", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "Url", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "Description", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "Determiner", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "Locale", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
-    new { Name = "SiteName", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Title", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Type", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Url", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Description", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Determiner", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Locale", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "SiteName", Plural = (string)null, Type = typeof(string).FullName },
+    new { Class = "Graph", Name = "Image", Plural = (string)null, Type = "GraphImage" },
 };
 
 #>
@@ -22,17 +25,23 @@ using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
-    partial class Graph
+<#
+
+foreach (var g in properties.GroupBy(p => p.Class))
+{
+
+#>
+    partial class <#= g.Key #>
     {
 <#
 
-foreach (var p in properties)
-{
-    var type = Type.GetType(p.Type);
-    var N = p.Name;
-    var PL = p.Plural ?? (N + 's');
-    var T = p.Type;
-    var isMscorlib = type?.Assembly == typeof(int).Assembly;
+    foreach (var p in g)
+    {
+        var type = Type.GetType(p.Type);
+        var N = p.Name;
+        var PL = p.Plural ?? (N + 's');
+        var T = p.Type;
+        var isMscorlib = type?.Assembly == typeof(int).Assembly;
 #>
 #region <#= N #>
 
@@ -52,15 +61,15 @@ foreach (var p in properties)
 
         public bool ShouldSerialize<#= N #>()
 <#
-    if (isMscorlib) {
+        if (isMscorlib) {
 #>
             => _<#= PL #>?.Count == 1;
 <#
-    } else {
+        } else {
 #>
             => false;
 <#
-    }
+        }
 #>
 
         public bool ShouldSerialize<#= PL #>()
@@ -75,8 +84,11 @@ foreach (var p in properties)
 #endregion <#= N #>
 
 <#
-}
+    }
 
 #>
     }
+<#
+}
+#>
 }

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Shipwreck.OpenGraph
 {
@@ -307,5 +308,42 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion SiteName
+
+        #region Image
+
+        [Fact]
+        public void ImageTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:image' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock" }, target.Images?.Select(i => i.Url));
+            Assert.False(target.ShouldSerializeImage());
+            Assert.True(target.ShouldSerializeImages());
+        }
+
+        [Fact]
+        public void ImagesTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:image' content='The Rock' />
+<meta property='og:image' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Images?.Select(i => i.Url));
+            Assert.False(target.ShouldSerializeImage());
+            Assert.True(target.ShouldSerializeImages());
+        }
+
+        #endregion Image
     }
 }

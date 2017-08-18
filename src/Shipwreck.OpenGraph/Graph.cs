@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 
 namespace Shipwreck.OpenGraph
 {
-    public partial class Graph : GraphObject
+    public sealed partial class Graph : GraphObject
     {
         public static Graph FromXml(string xml)
         {
@@ -97,6 +98,16 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
+            if (property.StartsWith("og:image:"))
+            {
+                var img = new GraphImage();
+                Images.Add(img);
+                child = img;
+                child.TryAddMetadata(property, content, out _);
+                return true;
+            }
+
+
             switch (property)
             {
                 case "og:title":
@@ -122,6 +133,12 @@ namespace Shipwreck.OpenGraph
                 case "og:url":
                     Urls.Add(content);
                     child = null;
+                    return true;
+
+                case "og:image":
+                    var img = new GraphImage() { Url = content };
+                    Images.Add(img);
+                    child = img;
                     return true;
 
                 case "og:locale":
