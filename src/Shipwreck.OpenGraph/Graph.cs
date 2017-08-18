@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Xml;
 
@@ -107,6 +106,14 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
+            if (property.StartsWith("og:video:"))
+            {
+                var img = new GraphVideo();
+                Videos.Add(img);
+                child = img;
+                child.TryAddMetadata(property, content, out _);
+                return true;
+            }
 
             switch (property)
             {
@@ -154,6 +161,12 @@ namespace Shipwreck.OpenGraph
                 case "og:site_name":
                     SiteNames.Add(content);
                     child = null;
+                    return true;
+
+                case "og:video":
+                    var v = new GraphVideo() { Url = content };
+                    Videos.Add(v);
+                    child = v;
                     return true;
             }
 

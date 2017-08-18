@@ -276,5 +276,35 @@ namespace Shipwreck.OpenGraph
 
 #endregion Image
 
+#region Video
+
+        private Collection<GraphVideo> _Videos;
+        
+        public GraphVideo Video
+        {
+            get => _Videos?.FirstOrDefault() ?? default(GraphVideo);
+            set => CollectionHelper.SetCollection(ref _Videos, value);
+        }
+
+        public Collection<GraphVideo> Videos
+        {
+            get => CollectionHelper.GetCollection(ref _Videos);
+            set => CollectionHelper.SetCollection(ref _Videos, value);
+        }
+
+        public bool ShouldSerializeVideo()
+            => false;
+
+        public bool ShouldSerializeVideos()
+            => _Videos?.Count > 0;
+
+        public void ResetVideo()
+            => _Videos?.Clear();
+
+        public void ResetVideos()
+            => _Videos?.Clear();
+
+#endregion Video
+
     }
 }
