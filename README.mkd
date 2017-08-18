@@ -1,0 +1,27 @@
+# Shipwreck.OpenGraph
+
+Open Graph Protocol Reader for .NET
+
+## Installation
+
+Use NuGet.
+
+## Usage
+
+### Load from well-formed XHTML
+
+```
+using Shipwreck.OpenGraph;
+
+Graph graph = Graph.FromXml(xml);
+```
+
+### Load from XmlReader, TextReader, Stream
+
+```
+Graph.FromXmlReader(xmlReader);
+Graph.FromTextReader(textReader);
+Graph.FromStream(stream);
+```
+
+**TextReader or Stream must be well-formed.**

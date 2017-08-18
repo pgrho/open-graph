@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.OpenGraph", "Shipwreck.OpenGraph\Shipwreck.OpenGraph.csproj", "{6F3A87A2-8EBD-45E4-8FA5-B0A1E4955749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.OpenGraph", "Shipwreck.OpenGraph\Shipwreck.OpenGraph.csproj", "{6F3A87A2-8EBD-45E4-8FA5-B0A1E4955749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.OpenGraph.Tests", "Shipwreck.OpenGraph.Tests\Shipwreck.OpenGraph.Tests.csproj", "{3BF8EAF1-D806-47BA-98B6-1D29E8F21C50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.OpenGraph.Tests", "Shipwreck.OpenGraph.Tests\Shipwreck.OpenGraph.Tests.csproj", "{3BF8EAF1-D806-47BA-98B6-1D29E8F21C50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{623A1A7E-3390-4C61-93F8-E84F74EE9371}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\LICENSE = ..\LICENSE
+		..\README.mkd = ..\README.mkd
 	EndProjectSection
 EndProject
 Global
