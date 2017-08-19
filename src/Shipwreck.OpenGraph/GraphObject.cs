@@ -83,6 +83,17 @@ namespace Shipwreck.OpenGraph
 
         #endregion LocalProperties
 
+        /// <summary>
+        /// Gets or sets a first value of the specified property.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public string this[string property]
+        {
+            get => GetLocalProperty(property);
+            set => SetLocalProperty(property, value);
+        }
+
         #endregion Properties
 
         internal void LoadProperties(IEnumerable<GraphProperty> properties)
@@ -145,7 +156,6 @@ namespace Shipwreck.OpenGraph
 
                 LocalProperties.Add(new GraphProperty(property, content));
                 return true;
-
             }
             return false;
         }

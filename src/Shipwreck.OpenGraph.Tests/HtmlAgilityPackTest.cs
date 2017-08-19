@@ -132,7 +132,7 @@ namespace Shipwreck.OpenGraph
 
                     VideoMovie = new VideoMovie()
                     {
-                        // TODO: ["release_date"] = "1895-12-28",
+                        ["release_date"] = "1895-12-28",
                         Director = new Profile("video:director")
                         {
                             Url = "http://examples.opengraphprotocol.us/profile.html"
