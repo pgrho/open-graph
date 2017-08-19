@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -18,13 +17,6 @@ namespace Shipwreck.OpenGraph
         }
 
         internal override bool IsRoot => true;
-
-        [DefaultValue(null)]
-        public string Type
-        {
-            get => GetLocalProperty("type");
-            set => SetLocalProperty("type", value);
-        }
 
         public GraphObject TypeObject => _TypeObject;
 

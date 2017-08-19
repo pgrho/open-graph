@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,6 +8,76 @@ namespace Shipwreck.OpenGraph
 {
     partial class GraphObject
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Title
+        {
+            get => GetLocalProperty("title");
+            set => SetLocalProperty("title", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Type
+        {
+            get => GetLocalProperty("type");
+            set => SetLocalProperty("type", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Url
+        {
+            get => GetLocalProperty("url");
+            set => SetLocalProperty("url", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Description
+        {
+            get => GetLocalProperty("description");
+            set => SetLocalProperty("description", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Determiner
+        {
+            get => GetLocalProperty("determiner");
+            set => SetLocalProperty("determiner", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Locale
+        {
+            get => GetLocalProperty("locale");
+            set => SetLocalProperty("locale", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string SiteName
+        {
+            get => GetLocalProperty("site_name");
+            set => SetLocalProperty("site_name", value);
+        }
+
 #region AlternateLocale
 
         public string AlternateLocale
@@ -67,6 +138,16 @@ namespace Shipwreck.OpenGraph
     }
     partial class MusicSong
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Duration
+        {
+            get => GetLocalPropertyAsInt32("duration");
+            set => SetLocalProperty("duration", value);
+        }
+
 #region Album
 
         public MusicSongAlbum Album
@@ -98,6 +179,16 @@ namespace Shipwreck.OpenGraph
     }
     partial class MusicAlbum
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
+
 #region Song
 
         public MusicAlbumSong Song
@@ -177,6 +268,26 @@ namespace Shipwreck.OpenGraph
     }
     partial class VideoObject
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Duration
+        {
+            get => GetLocalPropertyAsInt32("duration");
+            set => SetLocalProperty("duration", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
+
 #region Actor
 
         public Actor Actor
@@ -254,6 +365,46 @@ namespace Shipwreck.OpenGraph
     }
     partial class Article
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? PublishedTime
+        {
+            get => GetLocalPropertyAsDateTime("published_time");
+            set => SetLocalProperty("published_time", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? ModifiedTime
+        {
+            get => GetLocalPropertyAsDateTime("modified_time");
+            set => SetLocalProperty("modified_time", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? ExpirationTime
+        {
+            get => GetLocalPropertyAsDateTime("expiration_time");
+            set => SetLocalProperty("expiration_time", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Section
+        {
+            get => GetLocalProperty("section");
+            set => SetLocalProperty("section", value);
+        }
+
 #region Author
 
         public Profile Author
@@ -286,6 +437,26 @@ namespace Shipwreck.OpenGraph
     }
     partial class Book
     {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string ISBN
+        {
+            get => GetLocalProperty("isbn");
+            set => SetLocalProperty("isbn", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
+
 #region Author
 
         public Profile Author
@@ -314,6 +485,207 @@ namespace Shipwreck.OpenGraph
         }
 
 #endregion Tag
+
+    }
+    partial class GraphAudio
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+    }
+    partial class GraphImage
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Width
+        {
+            get => GetLocalPropertyAsInt32("width");
+            set => SetLocalProperty("width", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Height
+        {
+            get => GetLocalPropertyAsInt32("height");
+            set => SetLocalProperty("height", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Alt
+        {
+            get => GetLocalProperty("alt");
+            set => SetLocalProperty("alt", value);
+        }
+
+    }
+    partial class GraphVideo
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Width
+        {
+            get => GetLocalPropertyAsInt32("width");
+            set => SetLocalProperty("width", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Height
+        {
+            get => GetLocalPropertyAsInt32("height");
+            set => SetLocalProperty("height", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Alt
+        {
+            get => GetLocalProperty("alt");
+            set => SetLocalProperty("alt", value);
+        }
+
+    }
+    partial class MusicAlbumSong
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Disc
+        {
+            get => GetLocalPropertyAsInt32("disc");
+            set => SetLocalProperty("disc", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Track
+        {
+            get => GetLocalPropertyAsInt32("track");
+            set => SetLocalProperty("track", value);
+        }
+
+    }
+    partial class MusicSongAlbum
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Disc
+        {
+            get => GetLocalPropertyAsInt32("disc");
+            set => SetLocalProperty("disc", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Track
+        {
+            get => GetLocalPropertyAsInt32("track");
+            set => SetLocalProperty("track", value);
+        }
+
+    }
+    partial class Actor
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Role
+        {
+            get => GetLocalProperty("role");
+            set => SetLocalProperty("role", value);
+        }
+
+    }
+    partial class Profile
+    {
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string FirstName
+        {
+            get => GetLocalProperty("first_name");
+            set => SetLocalProperty("first_name", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string LastName
+        {
+            get => GetLocalProperty("last_name");
+            set => SetLocalProperty("last_name", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string UserName
+        {
+            get => GetLocalProperty("username");
+            set => SetLocalProperty("username", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Gender
+        {
+            get => GetLocalProperty("gender");
+            set => SetLocalProperty("gender", value);
+        }
 
     }
     partial class Graph

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public sealed partial class Book : GraphObject
     {
@@ -13,20 +10,6 @@ namespace Shipwreck.OpenGraph
         internal Book(string path)
             : base(path)
         {
-        }
-
-        [DefaultValue(null)]
-        public string ISBN
-        {
-            get => GetLocalProperty("isbn");
-            set => SetLocalProperty("isbn", value);
-        }
-
-        [DefaultValue(null)]
-        public DateTime? ReleaseDate
-        {
-            get => GetLocalPropertyAsDateTime("release_date");
-            set => SetLocalProperty("release_date", value);
         }
 
         internal override GraphObject CreateNewChild(string property, out bool matched)

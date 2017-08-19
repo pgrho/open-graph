@@ -18,49 +18,7 @@ namespace Shipwreck.OpenGraph
         internal string Path { get; }
 
         internal virtual bool IsRoot => false;
-
-        [DefaultValue(null)]
-        public string Title
-        {
-            get => GetLocalProperty("title");
-            set => SetLocalProperty("title", value);
-        }
-
-        [DefaultValue(null)]
-        public string Url
-        {
-            get => GetLocalProperty("url");
-            set => SetLocalProperty("url", value);
-        }
-
-        [DefaultValue(null)]
-        public string Description
-        {
-            get => GetLocalProperty("description");
-            set => SetLocalProperty("description", value);
-        }
-
-        [DefaultValue(null)]
-        public string Determiner
-        {
-            get => GetLocalProperty("determiner");
-            set => SetLocalProperty("determiner", value);
-        }
-
-        [DefaultValue(null)]
-        public string Locale
-        {
-            get => GetLocalProperty("locale");
-            set => SetLocalProperty("locale", value);
-        }
-
-        [DefaultValue(null)]
-        public string SiteName
-        {
-            get => GetLocalProperty("site_name");
-            set => SetLocalProperty("site_name", value);
-        }
-
+        
         #region Children
 
         public IList<GraphObject> Children

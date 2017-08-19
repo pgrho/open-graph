@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public abstract partial class VideoObject : GraphObject
     {
@@ -13,20 +10,6 @@ namespace Shipwreck.OpenGraph
         internal VideoObject(string path)
             : base(path)
         {
-        }
-
-        [DefaultValue(null)]
-        public int? Duration
-        {
-            get => GetLocalPropertyAsInt32("duration");
-            set => SetLocalProperty("duration", value);
-        }
-
-        [DefaultValue(null)]
-        public DateTime? ReleaseDate
-        {
-            get => GetLocalPropertyAsDateTime("release_date");
-            set => SetLocalProperty("release_date", value);
         }
 
         internal override GraphObject CreateNewChild(string property, out bool matched)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public partial class MusicAlbum : GraphObject
     {
@@ -13,13 +10,6 @@ namespace Shipwreck.OpenGraph
         internal MusicAlbum(string path)
             : base(path)
         {
-        }
-
-        [DefaultValue(null)]
-        public DateTime? ReleaseDate
-        {
-            get => GetLocalPropertyAsDateTime("release_date");
-            set => SetLocalProperty("release_date", value);
         }
 
         internal override GraphObject CreateNewChild(string property, out bool matched)

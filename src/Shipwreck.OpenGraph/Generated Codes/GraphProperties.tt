@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension="cs" #>
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -44,15 +45,84 @@ var properties = new []
     new { Class = "Book", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
 };
 
-foreach (var g in properties.GroupBy(p => p.Class))
+var singleProperties = new []
+{
+    new { Class = "GraphObject", Name = "Title", Property = "title", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "Type", Property = "type", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "Url", Property = "url", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "Description", Property = "description", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "Determiner", Property = "determiner", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "Locale", Property = "locale", Type = "string", Description = (string)null },
+    new { Class = "GraphObject", Name = "SiteName", Property = "site_name", Type = "string", Description = (string)null },
+    
+    new { Class = "GraphAudio", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
+    
+    new { Class = "GraphImage", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
+    new { Class = "GraphImage", Name = "Width", Property = "width", Type = "Int32?", Description = (string)null },
+    new { Class = "GraphImage", Name = "Height", Property = "height", Type = "Int32?", Description = (string)null },
+    new { Class = "GraphImage", Name = "Alt", Property = "alt", Type = "string", Description = (string)null },
+
+    new { Class = "GraphVideo", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
+    new { Class = "GraphVideo", Name = "Width", Property = "width", Type = "Int32?", Description = (string)null },
+    new { Class = "GraphVideo", Name = "Height", Property = "height", Type = "Int32?", Description = (string)null },
+    new { Class = "GraphVideo", Name = "Alt", Property = "alt", Type = "string", Description = (string)null },
+
+    new { Class = "MusicSong", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
+
+    new { Class = "MusicAlbumSong", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicAlbumSong", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+
+    new { Class = "MusicAlbum", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
+
+    new { Class = "MusicSongAlbum", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicSongAlbum", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+
+    new { Class = "VideoObject", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
+    new { Class = "VideoObject", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
+
+    new { Class = "Actor", Name = "Role", Property = "role", Type = "string", Description = (string)null },
+
+    new { Class = "Article", Name = "PublishedTime", Property = "published_time", Type = "DateTime?", Description = (string)null },
+    new { Class = "Article", Name = "ModifiedTime", Property = "modified_time", Type = "DateTime?", Description = (string)null },
+    new { Class = "Article", Name = "ExpirationTime", Property = "expiration_time", Type = "DateTime?", Description = (string)null },
+    new { Class = "Article", Name = "Section", Property = "section", Type = "string", Description = (string)null },
+
+    new { Class = "Book", Name = "ISBN", Property = "isbn", Type = "string", Description = (string)null },
+    new { Class = "Book", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
+
+    new { Class = "Profile", Name = "FirstName", Property = "first_name", Type = "string", Description = (string)null },
+    new { Class = "Profile", Name = "LastName", Property = "last_name", Type = "string", Description = (string)null },
+    new { Class = "Profile", Name = "UserName", Property = "username", Type = "string", Description = (string)null },
+    new { Class = "Profile", Name = "Gender", Property = "gender", Type = "string", Description = (string)null },
+};
+
+foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select(p => p.Class)).Distinct())
 {
 
 #>
-    partial class <#= g.Key #>
+    partial class <#= C #>
     {
 <#
+    foreach (var p in singleProperties.Where(e => e.Class == C))
+    {
+        var N = p.Name;
+        var T = p.Type;
+        var PN = p.Property;
+#>
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public <#= T #> <#= N #>
+        {
+            get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>("<#= PN #>");
+            set => SetLocalProperty("<#= PN #>", value);
+        }
 
-    foreach (var p in g)
+<#
+    }
+
+    foreach (var p in properties.Where(e => e.Class == C))
     {
         var N = p.Name;
         var PL = p.Plural ?? (N + 's');

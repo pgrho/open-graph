@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public partial class MusicSong : GraphObject
     {
@@ -12,13 +10,6 @@ namespace Shipwreck.OpenGraph
         internal MusicSong(string path)
             : base(path)
         {
-        }
-
-        [DefaultValue(null)]
-        public int? Duration
-        {
-            get => GetLocalPropertyAsInt32("duration");
-            set => SetLocalProperty("duration", value);
         }
 
         internal override GraphObject CreateNewChild(string property, out bool matched)
