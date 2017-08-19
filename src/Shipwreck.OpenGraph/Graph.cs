@@ -7,6 +7,9 @@ using System.Xml.XPath;
 
 namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a root object of Open Graph.
+    /// </summary>
     public sealed partial class Graph : GraphObject
     {
         private GraphObject _TypeObject;
@@ -27,6 +30,11 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         public GraphObject TypeObject => _TypeObject;
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified XHTML text.
+        /// </summary>
+        /// <param name="xml">XHTML text that contains Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXml(string xml)
         {
             using (var sr = new StringReader(xml))
@@ -36,6 +44,11 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified data stream.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> that contains the XHTML for Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromStream(Stream stream)
         {
             using (var xr = XmlReader.Create(stream, new XmlReaderSettings()
@@ -47,6 +60,11 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="TextReader"/>.
+        /// </summary>
+        /// <param name="textReader">A <see cref="TextReader"/> that contains the XHTML for Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromTextReader(TextReader textReader)
         {
             using (var xr = XmlReader.Create(textReader, new XmlReaderSettings()
@@ -58,6 +76,11 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XmlReader"/>.
+        /// </summary>
+        /// <param name="xmlReader">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXmlReader(XmlReader xmlReader)
         {
             var r = new Graph();
@@ -122,6 +145,11 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XmlDocument"/>.
+        /// </summary>
+        /// <param name="xmlDocument">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
 #if NETSTANDARD1_3
 
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
@@ -169,12 +197,22 @@ namespace Shipwreck.OpenGraph
         }
 #endif
 
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="IXPathNavigable"/>.
+        /// </summary>
+        /// <param name="xPathNavigable">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXPathNavigable(IXPathNavigable xPathNavigable)
             => FromXPathNavigator(xPathNavigable.CreateNavigator());
 
-        public static Graph FromXPathNavigator(XPathNavigator xPathNavigable)
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XPathNavigator"/>.
+        /// </summary>
+        /// <param name="xPathNavigator">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXPathNavigator(XPathNavigator xPathNavigator)
         {
-            using (var r = xPathNavigable.ReadSubtree())
+            using (var r = xPathNavigator.ReadSubtree())
             {
                 return FromXmlReader(r);
             }

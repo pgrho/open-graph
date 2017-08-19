@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a single song.
+    /// </summary>
     public sealed partial class MusicSong : GraphObject
     {
         /// <summary>

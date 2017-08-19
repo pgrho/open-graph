@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a person.
+    /// </summary>
     public sealed partial class Profile : GraphObject
     {
         /// <summary>

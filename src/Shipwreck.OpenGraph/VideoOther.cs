@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a generic video, and contains references to the actors and other professionals involved in its production.
+    /// </summary>
     public sealed class VideoOther : VideoObject
     {
         /// <summary>

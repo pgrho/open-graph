@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents an episode of a TV show and contains references to the actors and other professionals involved in its production.
+    /// </summary>
     public sealed partial class VideoEpisode : VideoObject
     {
         /// <summary>

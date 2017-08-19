@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a 'radio' station of a stream of audio.
+    /// </summary>
     public partial class MusicRadioStation : GraphObject
     {
         /// <summary>

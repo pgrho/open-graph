@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Provides a base type of Open Graph object.
+    /// </summary>
     public abstract partial class GraphObject : IEnumerable<GraphProperty>
     {
         internal List<GraphObject> _Children;

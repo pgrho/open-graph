@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents an article on a website.
+    /// </summary>
     public sealed partial class Article : GraphObject
     {
         /// <summary>

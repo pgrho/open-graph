@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Provides a base type of video namespace object.
+    /// </summary>
     public abstract partial class VideoObject : GraphObject
     {
         /// <summary>

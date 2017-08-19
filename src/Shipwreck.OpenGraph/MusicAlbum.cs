@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a music album.
+    /// </summary>
     public sealed partial class MusicAlbum : GraphObject
     {
         /// <summary>

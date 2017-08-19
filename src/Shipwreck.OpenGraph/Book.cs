@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a book or publication.
+    /// </summary>
     public sealed partial class Book : GraphObject
     {
         /// <summary>
