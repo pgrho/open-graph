@@ -16,38 +16,10 @@ namespace Shipwreck.OpenGraph
 
 var properties = new []
 {
-    new M("GraphObject", "AlternateLocale", "string") { Property = "locale:alternate" },
-    new M("GraphObject", "Image", "GraphImage"),
-    new M("GraphObject", "Video", "GraphVideo"),
-    new M("GraphObject", "Audio", "GraphAudio"),
-    
-    new M("MusicSong", "Album", "MusicAlbum"),
-    new M("MusicSong", "Musician", "Profile"),
-    
-    new M("MusicAlbum", "Song", "MusicSong"),
-    new M("MusicAlbum", "Musician", "Profile"),
-    
-    new M("MusicPlaylist", "Song", "MusicSong"),
-    new M("MusicPlaylist", "Creator", "Profile"),
-    
-    new M("MusicRadioStation", "Creator", "Profile"),
-    
-    new M("VideoObject", "Actor", "Profile"),
-    new M("VideoObject", "Director", "Profile"),
-    new M("VideoObject", "Writer", "Profile"),
-    new M("VideoObject", "Tag", "string"),
-    
-    new M("VideoEpisode", "Series", "VideoTVShow") { Plural = "AllSeries", SummaryPlural = "all series" },
-    
-    new M("Article", "Author", "Profile"),
-    new M("Article", "Tag", "string"),
-    
-    new M("Book", "Author", "Profile"),
-    new M("Book", "Tag", "string"),
-};
-
-var singleProperties = new []
-{
+    new M("GraphObject", "AlternateLocale", "string", isArray: true) { Property = "locale:alternate" },
+    new M("GraphObject", "Image", "GraphImage", isArray: true),
+    new M("GraphObject", "Video", "GraphVideo", isArray: true),
+    new M("GraphObject", "Audio", "GraphAudio", isArray: true),
     new M("GraphObject", "Title", "string"),
     new M("GraphObject", "Type", "string"),
     new M("GraphObject", "Url", "string"),
@@ -55,9 +27,9 @@ var singleProperties = new []
     new M("GraphObject", "Determiner", "string"),
     new M("GraphObject", "Locale", "string"),
     new M("GraphObject", "SiteName", "string"),
-    
+
     new M("GraphAudio", "SecureUrl", "string"),
-    
+
     new M("GraphImage", "SecureUrl", "string"),
     new M("GraphImage", "Width", "Int32?"),
     new M("GraphImage", "Height", "Int32?"),
@@ -68,22 +40,41 @@ var singleProperties = new []
     new M("GraphVideo", "Height", "Int32?"),
     new M("GraphVideo", "Alt", "string"),
 
+    new M("MusicSong", "Album", "MusicAlbum", isArray: true),
+    new M("MusicSong", "Musician", "Profile", isArray: true),
     new M("MusicSong", "Duration", "Int32?"),
     new M("MusicSong", "Disc", "Int32?"),
     new M("MusicSong", "Track", "Int32?"),
 
+    new M("MusicAlbum", "Song", "MusicSong", isArray: true),
+    new M("MusicAlbum", "Musician", "Profile", isArray: true),
     new M("MusicAlbum", "ReleaseDate", "DateTime?"),
     new M("MusicAlbum", "Disc", "Int32?"),
     new M("MusicAlbum", "Track", "Int32?"),
 
+    new M("MusicPlaylist", "Song", "MusicSong", isArray: true),
+    new M("MusicPlaylist", "Creator", "Profile", isArray: true),
+
+    new M("MusicRadioStation", "Creator", "Profile", isArray: true),
+
+    new M("VideoObject", "Actor", "Profile", isArray: true),
+    new M("VideoObject", "Director", "Profile", isArray: true),
+    new M("VideoObject", "Writer", "Profile", isArray: true),
+    new M("VideoObject", "Tag", "string", isArray: true),
     new M("VideoObject", "Duration", "Int32?"),
     new M("VideoObject", "ReleaseDate", "DateTime?"),
 
+    new M("VideoEpisode", "Series", "VideoTVShow", isArray: true) { Plural = "AllSeries", SummaryPlural = "all series" },
+
+    new M("Article", "Author", "Profile", isArray: true),
+    new M("Article", "Tag", "string", isArray: true),
     new M("Article", "PublishedTime", "DateTime?"),
     new M("Article", "ModifiedTime", "DateTime?"),
     new M("Article", "ExpirationTime", "DateTime?"),
     new M("Article", "Section", "string"),
 
+    new M("Book", "Author", "Profile", isArray: true),
+    new M("Book", "Tag", "string", isArray: true),
     new M("Book", "ISBN", "string") { Property = "isbn", SummaryName = "ISBN" },
     new M("Book", "ReleaseDate", "DateTime?"),
 
@@ -94,14 +85,15 @@ var singleProperties = new []
     new M("Profile", "Role", "string"),
 };
 
-foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select(p => p.Class)).Distinct())
+foreach (var g in properties.GroupBy(p => p.Class))
 {
+    var C = g.Key;
 
 #>
     partial class <#= C #>
     {
 <#
-    foreach (var p in singleProperties.Where(e => e.Class == C))
+    foreach (var p in g.Where(e => !e.IsArray))
     {
         var N = p.Name;
         var T = p.Type;
@@ -121,8 +113,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
 <#
     }
 
-    var props = properties.Where(e => e.Class == C);
-    foreach (var p in props)
+    foreach (var p in g.Where(e => e.IsArray))
     {
         var N = p.Name;
         var PL = p.Plural ?? (N + 's');
@@ -190,7 +181,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
 <#
     }
 
-    var children = props.Where(p => p.Type != "string").ToArray();
+    var children = g.Where(p => p.IsArray && p.Type != "string").ToArray();
 
     if (children.Any() && C != "GraphObject")
     {
@@ -256,16 +247,18 @@ public class M
     private string _SummaryName;
     private string _SummaryPlural;
 
-    public M(string c, string n, string t)
+    public M(string c, string n, string t, bool isArray = false)
     {
         Class = c;
         Name = n;
         Type = t;
+        IsArray = isArray;
     }
 
     public string Class { get; set; }
     public string Name { get; set; }
     public string Type { get; set; }
+    public bool IsArray { get; set; }
     
     public string Property
     {

@@ -186,6 +186,114 @@ namespace Shipwreck.OpenGraph
         #endregion Audio
 
     }
+    partial class GraphAudio
+    {
+        /// <summary>
+        /// Gets or sets a secure url.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+    }
+    partial class GraphImage
+    {
+        /// <summary>
+        /// Gets or sets a secure url.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a width.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Width
+        {
+            get => GetLocalPropertyAsInt32("width");
+            set => SetLocalProperty("width", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a height.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Height
+        {
+            get => GetLocalPropertyAsInt32("height");
+            set => SetLocalProperty("height", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an alt.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Alt
+        {
+            get => GetLocalProperty("alt");
+            set => SetLocalProperty("alt", value);
+        }
+
+    }
+    partial class GraphVideo
+    {
+        /// <summary>
+        /// Gets or sets a secure url.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SecureUrl
+        {
+            get => GetLocalProperty("secure_url");
+            set => SetLocalProperty("secure_url", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a width.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Width
+        {
+            get => GetLocalPropertyAsInt32("width");
+            set => SetLocalProperty("width", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a height.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Height
+        {
+            get => GetLocalPropertyAsInt32("height");
+            set => SetLocalProperty("height", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an alt.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Alt
+        {
+            get => GetLocalProperty("alt");
+            set => SetLocalProperty("alt", value);
+        }
+
+    }
     partial class MusicSong
     {
         /// <summary>
@@ -855,114 +963,6 @@ namespace Shipwreck.OpenGraph
             }
             return base.CreateNewChild(property, out matched);
         }
-    }
-    partial class GraphAudio
-    {
-        /// <summary>
-        /// Gets or sets a secure url.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string SecureUrl
-        {
-            get => GetLocalProperty("secure_url");
-            set => SetLocalProperty("secure_url", value);
-        }
-
-    }
-    partial class GraphImage
-    {
-        /// <summary>
-        /// Gets or sets a secure url.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string SecureUrl
-        {
-            get => GetLocalProperty("secure_url");
-            set => SetLocalProperty("secure_url", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a width.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Int32? Width
-        {
-            get => GetLocalPropertyAsInt32("width");
-            set => SetLocalProperty("width", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a height.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Int32? Height
-        {
-            get => GetLocalPropertyAsInt32("height");
-            set => SetLocalProperty("height", value);
-        }
-
-        /// <summary>
-        /// Gets or sets an alt.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Alt
-        {
-            get => GetLocalProperty("alt");
-            set => SetLocalProperty("alt", value);
-        }
-
-    }
-    partial class GraphVideo
-    {
-        /// <summary>
-        /// Gets or sets a secure url.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string SecureUrl
-        {
-            get => GetLocalProperty("secure_url");
-            set => SetLocalProperty("secure_url", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a width.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Int32? Width
-        {
-            get => GetLocalPropertyAsInt32("width");
-            set => SetLocalProperty("width", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a height.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Int32? Height
-        {
-            get => GetLocalPropertyAsInt32("height");
-            set => SetLocalProperty("height", value);
-        }
-
-        /// <summary>
-        /// Gets or sets an alt.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Alt
-        {
-            get => GetLocalProperty("alt");
-            set => SetLocalProperty("alt", value);
-        }
-
     }
     partial class Profile
     {
