@@ -80,12 +80,19 @@ namespace Shipwreck.OpenGraph
 
 #region AlternateLocale
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public string AlternateLocale
         {
             get => GetLocalProperty("locale:alternate");
             set => SetLocalProperty("locale:alternate", value);
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<string> AlternateLocales
         {
             get => new GraphObjectPropertyCollection(this, "locale:alternate");
@@ -95,11 +102,18 @@ namespace Shipwreck.OpenGraph
 
 #region Image
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public GraphImage Image
         {
             get => Images?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<GraphImage> Images
         {
             get => new GraphObjectChildCollection<GraphImage>(this, "image");
@@ -109,11 +123,18 @@ namespace Shipwreck.OpenGraph
 
 #region Video
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public GraphVideo Video
         {
             get => Videos?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<GraphVideo> Videos
         {
             get => new GraphObjectChildCollection<GraphVideo>(this, "video");
@@ -123,11 +144,18 @@ namespace Shipwreck.OpenGraph
 
 #region Audio
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public GraphAudio Audio
         {
             get => Audios?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<GraphAudio> Audios
         {
             get => new GraphObjectChildCollection<GraphAudio>(this, "audio");
@@ -150,11 +178,18 @@ namespace Shipwreck.OpenGraph
 
 #region Album
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicSongAlbum Album
         {
             get => Albums?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<MusicSongAlbum> Albums
         {
             get => new GraphObjectChildCollection<MusicSongAlbum>(this, "album");
@@ -164,11 +199,18 @@ namespace Shipwreck.OpenGraph
 
 #region Musician
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Musician
         {
             get => Musicians?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Musicians
         {
             get => new GraphObjectChildCollection<Profile>(this, "musician");
@@ -191,11 +233,18 @@ namespace Shipwreck.OpenGraph
 
 #region Song
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicAlbumSong Song
         {
             get => Songs?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<MusicAlbumSong> Songs
         {
             get => new GraphObjectChildCollection<MusicAlbumSong>(this, "song");
@@ -205,11 +254,18 @@ namespace Shipwreck.OpenGraph
 
 #region Musician
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Musician
         {
             get => Musicians?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Musicians
         {
             get => new GraphObjectChildCollection<Profile>(this, "musician");
@@ -222,11 +278,18 @@ namespace Shipwreck.OpenGraph
     {
 #region Song
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicAlbumSong Song
         {
             get => Songs?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<MusicAlbumSong> Songs
         {
             get => new GraphObjectChildCollection<MusicAlbumSong>(this, "song");
@@ -236,11 +299,18 @@ namespace Shipwreck.OpenGraph
 
 #region Creator
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Creator
         {
             get => Creators?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Creators
         {
             get => new GraphObjectChildCollection<Profile>(this, "creator");
@@ -253,11 +323,18 @@ namespace Shipwreck.OpenGraph
     {
 #region Creator
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Creator
         {
             get => Creators?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Creators
         {
             get => new GraphObjectChildCollection<Profile>(this, "creator");
@@ -290,11 +367,18 @@ namespace Shipwreck.OpenGraph
 
 #region Actor
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Actor Actor
         {
             get => Actors?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Actor> Actors
         {
             get => new GraphObjectChildCollection<Actor>(this, "actor");
@@ -304,11 +388,18 @@ namespace Shipwreck.OpenGraph
 
 #region Director
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Director
         {
             get => Directors?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Directors
         {
             get => new GraphObjectChildCollection<Profile>(this, "director");
@@ -318,11 +409,18 @@ namespace Shipwreck.OpenGraph
 
 #region Writer
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Writer
         {
             get => Writers?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Writers
         {
             get => new GraphObjectChildCollection<Profile>(this, "writer");
@@ -332,12 +430,19 @@ namespace Shipwreck.OpenGraph
 
 #region Tag
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public string Tag
         {
             get => GetLocalProperty("tag");
             set => SetLocalProperty("tag", value);
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<string> Tags
         {
             get => new GraphObjectPropertyCollection(this, "tag");
@@ -350,11 +455,18 @@ namespace Shipwreck.OpenGraph
     {
 #region Series
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public VideoTVShow Series
         {
             get => AllSeries?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<VideoTVShow> AllSeries
         {
             get => new GraphObjectChildCollection<VideoTVShow>(this, "series");
@@ -407,11 +519,18 @@ namespace Shipwreck.OpenGraph
 
 #region Author
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Author
         {
             get => Authors?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Authors
         {
             get => new GraphObjectChildCollection<Profile>(this, "author");
@@ -421,12 +540,19 @@ namespace Shipwreck.OpenGraph
 
 #region Tag
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public string Tag
         {
             get => GetLocalProperty("tag");
             set => SetLocalProperty("tag", value);
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<string> Tags
         {
             get => new GraphObjectPropertyCollection(this, "tag");
@@ -459,11 +585,18 @@ namespace Shipwreck.OpenGraph
 
 #region Author
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Author
         {
             get => Authors?.FirstOrDefault();
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<Profile> Authors
         {
             get => new GraphObjectChildCollection<Profile>(this, "author");
@@ -473,12 +606,19 @@ namespace Shipwreck.OpenGraph
 
 #region Tag
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public string Tag
         {
             get => GetLocalProperty("tag");
             set => SetLocalProperty("tag", value);
         }
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<string> Tags
         {
             get => new GraphObjectPropertyCollection(this, "tag");
@@ -691,6 +831,9 @@ namespace Shipwreck.OpenGraph
     partial class Graph
     {
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicSong MusicSong
         {
             get => _TypeObject as MusicSong;
@@ -698,6 +841,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicAlbum MusicAlbum
         {
             get => _TypeObject as MusicAlbum;
@@ -705,6 +851,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicPlaylist MusicPlaylist
         {
             get => _TypeObject as MusicPlaylist;
@@ -712,6 +861,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public MusicRadioStation MusicRadioStation
         {
             get => _TypeObject as MusicRadioStation;
@@ -719,6 +871,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public VideoMovie VideoMovie
         {
             get => _TypeObject as VideoMovie;
@@ -726,6 +881,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public VideoEpisode VideoEpisode
         {
             get => _TypeObject as VideoEpisode;
@@ -733,6 +891,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public VideoTVShow VideoTVShow
         {
             get => _TypeObject as VideoTVShow;
@@ -740,6 +901,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public VideoOther VideoOther
         {
             get => _TypeObject as VideoOther;
@@ -747,6 +911,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Article Article
         {
             get => _TypeObject as Article;
@@ -754,6 +921,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Book Book
         {
             get => _TypeObject as Book;
@@ -761,6 +931,9 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public Profile Profile
         {
             get => _TypeObject as Profile;

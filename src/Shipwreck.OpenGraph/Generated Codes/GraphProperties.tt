@@ -136,6 +136,10 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         if (T == "string")
         {
 #>
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public <#= T #> <#= N #>
         {
             get => GetLocalProperty("<#= PN #>");
@@ -146,6 +150,10 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         else
         {
 #>
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public <#= T #> <#= N #>
         {
             get => <#= PL #>?.FirstOrDefault();
@@ -154,6 +162,9 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         }
 #>
 
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>(this, "<#= PN #>");
@@ -184,6 +195,9 @@ foreach (var T in objectTypes)
 {
 #>
         [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
         public <#= T #> <#= T #>
         {
             get => _TypeObject as <#= T #>;
