@@ -156,24 +156,7 @@ namespace Shipwreck.OpenGraph
 
             return true;
         }
-
-        internal virtual GraphObject CreateNewChild(string property, out bool matched)
-        {
-            if (property.StartsWithChildPath(Path, "image", out matched))
-            {
-                return new GraphImage(Path + ":image");
-            }
-            else if (property.StartsWithChildPath(Path, "audio", out matched))
-            {
-                return new GraphAudio(Path + ":audio");
-            }
-            else if (property.StartsWithChildPath(Path, "video", out matched))
-            {
-                return new GraphVideo(Path + ":video");
-            }
-            return null;
-        }
-
+        
         #region Child accessors
 
         internal T GetChild<T>(string property)

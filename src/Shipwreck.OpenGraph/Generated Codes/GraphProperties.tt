@@ -20,6 +20,7 @@ var properties = new []
     new M("GraphObject", "Image", "GraphImage", isArray: true),
     new M("GraphObject", "Video", "GraphVideo", isArray: true),
     new M("GraphObject", "Audio", "GraphAudio", isArray: true),
+    new M("GraphObject", "Restriction", "GraphRestriction", isArray: true) { Property = "restrictions" },
     new M("GraphObject", "SeeAlso", "string", isArray: true),
     new M("GraphObject", "Title", "string"),
     new M("GraphObject", "Type", "string"),
@@ -44,6 +45,11 @@ var properties = new []
     new M("GraphVideo", "Width", "Int32?"),
     new M("GraphVideo", "Height", "Int32?"),
     new M("GraphVideo", "Alt", "string"),
+
+    new M("GraphRestriction", "AllowedContry", "string", isArray: true) { Plural = "AllowedCountries", Property = "country:allowed" },
+    new M("GraphRestriction", "DisallowedContry", "string", isArray: true) { Plural = "DisallowedCountries", Property = "country:disallowed" },
+    new M("GraphRestriction", "Age", "string"),
+    new M("GraphRestriction", "Content", "string", isArray: true),
 
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
@@ -196,11 +202,12 @@ foreach (var g in properties.GroupBy(p => p.Class))
 
     var children = g.Where(p => p.IsArray && p.Type != "string").ToArray();
 
-    if (children.Any() && C != "GraphObject")
+    if (children.Any())
     {
+        var isBase = C == "GraphObject";
 #>
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal <#= isBase ? "virtual" : "override" #> GraphObject CreateNewChild(string property, out bool matched)
         {
 <#
         foreach (var p in children)
@@ -213,7 +220,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
 <#
         }
 #>
-            return base.CreateNewChild(property, out matched);
+            return <#= isBase ? "null" : "base.CreateNewChild(property, out matched)" #>;
         }
 <#
     }

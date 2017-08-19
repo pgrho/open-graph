@@ -218,6 +218,31 @@ namespace Shipwreck.OpenGraph
 
         #endregion Audio
 
+        #region Restriction
+
+        /// <summary>
+        /// Gets or sets a restriction.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public GraphRestriction Restriction
+        {
+            get => GetChild<GraphRestriction>("restrictions");
+            set => SetChild("restrictions", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all restrictions.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<GraphRestriction> Restrictions
+        {
+            get => new GraphObjectChildCollection<GraphRestriction>(this, "restrictions");
+            set => SetChild<GraphRestriction>("restrictions", value);
+        }
+
+        #endregion Restriction
+
         #region SeeAlso
 
         /// <summary>
@@ -243,6 +268,27 @@ namespace Shipwreck.OpenGraph
 
         #endregion SeeAlso
 
+        /// <inheritdoc />
+        internal virtual GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "image", out matched))
+            {
+                return new GraphImage(Path + ":image");
+            }
+            if (property.StartsWithChildPath(Path, "video", out matched))
+            {
+                return new GraphVideo(Path + ":video");
+            }
+            if (property.StartsWithChildPath(Path, "audio", out matched))
+            {
+                return new GraphAudio(Path + ":audio");
+            }
+            if (property.StartsWithChildPath(Path, "restrictions", out matched))
+            {
+                return new GraphRestriction(Path + ":restrictions");
+            }
+            return null;
+        }
     }
     partial class GraphAudio
     {
@@ -361,6 +407,95 @@ namespace Shipwreck.OpenGraph
             get => GetLocalProperty("alt");
             set => SetLocalProperty("alt", value);
         }
+
+    }
+    partial class GraphRestriction
+    {
+        /// <summary>
+        /// Gets or sets an age.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Age
+        {
+            get => GetLocalProperty("age");
+            set => SetLocalProperty("age", value);
+        }
+
+        #region AllowedContry
+
+        /// <summary>
+        /// Gets or sets an allowed contry.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AllowedContry
+        {
+            get => GetLocalProperty("country:allowed");
+            set => SetLocalProperty("country:allowed", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all allowed countries.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> AllowedCountries
+        {
+            get => new GraphObjectPropertyCollection(this, "country:allowed");
+            set => SetLocalProperty("country:allowed", value);
+        }
+
+        #endregion AllowedContry
+
+        #region DisallowedContry
+
+        /// <summary>
+        /// Gets or sets a disallowed contry.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DisallowedContry
+        {
+            get => GetLocalProperty("country:disallowed");
+            set => SetLocalProperty("country:disallowed", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all disallowed countries.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> DisallowedCountries
+        {
+            get => new GraphObjectPropertyCollection(this, "country:disallowed");
+            set => SetLocalProperty("country:disallowed", value);
+        }
+
+        #endregion DisallowedContry
+
+        #region Content
+
+        /// <summary>
+        /// Gets or sets a content.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Content
+        {
+            get => GetLocalProperty("content");
+            set => SetLocalProperty("content", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all contents.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> Contents
+        {
+            get => new GraphObjectPropertyCollection(this, "content");
+            set => SetLocalProperty("content", value);
+        }
+
+        #endregion Content
 
     }
     partial class MusicSong
