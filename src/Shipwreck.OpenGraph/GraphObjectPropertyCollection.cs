@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph
 {
-    public sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>, IList<string>, IReadOnlyList<string>
+    public sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>
     {
         private readonly GraphObject _Object;
         private readonly string _Property;
