@@ -5,9 +5,6 @@
         public static bool MachesPath(this string property, string path)
             => property?.Length > path?.Length && property.StartsWith(path) && property[path.Length] == ':';
 
-        public static bool StartsWithChildPath(this string property, string path, string path2)
-            => StartsWithChildPath(property, path, path2, out _);
-
         public static bool StartsWithChildPath(this string property, string path, string path2, out bool isMatch)
         {
             var pathLength = path.Length + 1 + path2.Length;
