@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph
 {
-    public abstract class PartialCollection<TItem, TInternal> : IList<TItem>, IReadOnlyCollection<TItem>
+    public abstract class PartialCollection<TItem, TInternal> : IList<TItem>, IReadOnlyCollection<TItem>, IList
     {
         internal PartialCollection()
         {
@@ -55,6 +55,15 @@ namespace Shipwreck.OpenGraph
           => false;
 
         #endregion ICollection<T> Properties
+
+        #region ICollection Properties
+
+        bool ICollection.IsSynchronized => false;
+
+        object ICollection.SyncRoot
+            => this;
+
+        #endregion ICollection Properties
 
         #region IList<T> Properties
 
@@ -107,6 +116,22 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion IList<T> Properties
+
+        #region IList Properties
+
+        object IList.this[int index]
+        {
+            get => this[index];
+            set => this[index] = (TItem)value;
+        }
+
+        bool IList.IsFixedSize
+            => false;
+
+        bool IList.IsReadOnly
+            => false;
+
+        #endregion IList Properties
 
         #region IEnumerable<T> Methods
 
@@ -198,6 +223,13 @@ namespace Shipwreck.OpenGraph
 
         #endregion ICollection<T> Methods
 
+        #region ICollection
+
+        void ICollection.CopyTo(Array array, int index)
+            => CopyTo((TItem[])array, index);
+
+        #endregion ICollection
+
         #region IList<T> Methods
 
         public int IndexOf(TItem item)
@@ -273,5 +305,32 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion IList<T> Methods
+
+        #region IList
+
+        int IList.Add(object value)
+        {
+            Add((TItem)value);
+            return Count - 1;
+        }
+
+        bool IList.Contains(object value)
+            => value is TItem && Contains((TItem)value);
+
+        int IList.IndexOf(object value)
+            => value is TItem ? IndexOf((TItem)value) : -1;
+
+        void IList.Insert(int index, object value)
+            => Insert(index, (TItem)value);
+
+        void IList.Remove(object value)
+        {
+            if (value is TItem)
+            {
+                Remove((TItem)value);
+            }
+        }
+
+        #endregion IList
     }
 }
