@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Shipwreck.OpenGraph
@@ -22,18 +23,34 @@ namespace Shipwreck.OpenGraph
             Path = path;
         }
 
+        #region Properties
+
         internal string Path { get; }
 
         internal virtual bool IsRoot => false;
 
         #region Children
 
+        /// <summary>
+        /// Gets or sets a list of all children of this object.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IList<GraphObject> Children
-            => _Children ?? (_Children = new List<GraphObject>());
+        {
+            get => CollectionHelper.GetCollection(ref _Children);
+            set => CollectionHelper.SetCollection(ref _Children, value);
+        }
 
+        /// <summary>
+        /// Returns whether serialization processes should serialize the contents of the <see cref="Children"/> property on instances of this class.
+        /// </summary>
+        /// <returns><c>true</c> if the <see cref="Children"/> property value should be serialized; otherwise, <c>false</c>.</returns>
         public bool ShouldSerializeChildren()
             => _Children?.Count > 0;
 
+        /// <summary>
+        /// Resets the value for this <see cref="Children"/> to the default state.
+        /// </summary>
         public void ResetChildren()
             => _Children?.Clear();
 
@@ -41,16 +58,32 @@ namespace Shipwreck.OpenGraph
 
         #region LocalProperties
 
+        /// <summary>
+        /// Gets or sets a list of all local properties of this object.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IList<GraphProperty> LocalProperties
-            => _LocalProperties ?? (_LocalProperties = new List<GraphProperty>());
+        {
+            get => CollectionHelper.GetCollection(ref _LocalProperties);
+            set => CollectionHelper.SetCollection(ref _LocalProperties, value);
+        }
 
+        /// <summary>
+        /// Returns whether serialization processes should serialize the contents of the <see cref="LocalProperties"/> property on instances of this class.
+        /// </summary>
+        /// <returns><c>true</c> if the <see cref="LocalProperties"/> property value should be serialized; otherwise, <c>false</c>.</returns>
         public bool ShouldSerializeLocalProperties()
             => _LocalProperties?.Count > 0;
 
+        /// <summary>
+        /// Resets the value for this <see cref="LocalProperties"/> to the default state.
+        /// </summary>
         public void ResetLocalProperties()
             => _LocalProperties?.Clear();
 
         #endregion LocalProperties
+
+        #endregion Properties
 
         internal void LoadProperties(IEnumerable<GraphProperty> properties)
         {
@@ -141,9 +174,21 @@ namespace Shipwreck.OpenGraph
             return null;
         }
 
+        #region Local Property accessors
+
+        /// <summary>
+        /// Returns a first value of the specified property.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public string GetLocalProperty(string property)
             => _LocalProperties?.FirstOrDefault(kv => kv.Property.MachesChildPath(Path, property)).Content;
 
+        /// <summary>
+        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="content"/>.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <param name="content">A new value to set.</param>
         public void SetLocalProperty(string property, string content)
         {
             if (_LocalProperties != null)
@@ -162,18 +207,44 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Returns a first value of the specified property as integer value.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public int? GetLocalPropertyAsInt32(string property)
             => int.TryParse(GetLocalProperty(property), out int i) ? i : (int?)null;
 
+        /// <summary>
+        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <param name="value">A new value to set.</param>
         public void SetLocalProperty(string property, int? value)
             => SetLocalProperty(property, value?.ToString("R"));
 
+        /// <summary>
+        /// Returns a first value of the specified property as <see cref="DateTime"/> value.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public DateTime? GetLocalPropertyAsDateTime(string property)
             => DateTime.TryParse(GetLocalProperty(property), out DateTime i) ? i : (DateTime?)null;
 
+        /// <summary>
+        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <param name="value">A new value to set.</param>
         public void SetLocalProperty(string property, DateTime? value)
             => SetLocalProperty(property, value?.ToString("o"));
 
+        #endregion Local Property accessors
+
+        /// <summary>
+        /// Returns an enumerator that iterates properties of descendants of this object.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public virtual IEnumerator<GraphProperty> GetEnumerator()
         {
             if (_LocalProperties != null)
