@@ -21,22 +21,13 @@ namespace Shipwreck.OpenGraph
             get => new GraphObjectChildCollection<Profile>(this, "creator").FirstOrDefault();
         }
 
-        internal override bool TryAddMetadata(string property, string content)
+        internal override GraphObject CreateNewChild(string property, out bool matched)
         {
-            if (!property.MachesPath(Path))
+            if (property.StartsWithChildPath(Path, "creator", out matched))
             {
-                return false;
+                return new Profile(Path + ":creator");
             }
-
-            if (property.StartsWithChildPath(Path, "creator", out var matched))
-            {
-                var child = new Profile(Path + ":creator");
-                Children.Add(child);
-                child.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content);
+            return base.CreateNewChild(property, out matched);
         }
     }
 }

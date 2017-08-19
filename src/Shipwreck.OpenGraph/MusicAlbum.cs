@@ -22,31 +22,17 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("release_date", value);
         }
 
-        internal override bool TryAddMetadata(string property, string content)
+        internal override GraphObject CreateNewChild(string property, out bool matched)
         {
-            if (!property.MachesPath(Path))
-            {
-                return false;
-            }
-
-            bool matched;
-            GraphObject child = null;
             if (property.StartsWithChildPath(Path, "song", out matched))
             {
-                child = new MusicAlbumSong(Path + ":song");
+                return new MusicAlbumSong(Path + ":song");
             }
             else if (property.StartsWithChildPath(Path, "musician", out matched))
             {
-                child = new Profile(Path + ":musician");
+                return new Profile(Path + ":musician");
             }
-            if (child != null)
-            {
-                Children.Add(child);
-                child.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content);
+            return base.CreateNewChild(property, out matched);
         }
     }
 }

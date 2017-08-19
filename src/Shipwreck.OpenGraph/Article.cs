@@ -43,21 +43,13 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("section", value);
         }
 
-        internal override bool TryAddMetadata(string property, string content)
+        internal override GraphObject CreateNewChild(string property, out bool matched)
         {
-            if (!property.MachesPath(Path))
+            if (property.StartsWithChildPath(Path, "author", out matched))
             {
-                return false;
+                return new Profile(Path + ":author");
             }
-            if (property.StartsWithChildPath(Path, "author", out var matched))
-            {
-                var child = new Profile(Path + ":author");
-                Children.Add(child);
-                child.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content);
+            return base.CreateNewChild(property, out matched);
         }
     }
 }

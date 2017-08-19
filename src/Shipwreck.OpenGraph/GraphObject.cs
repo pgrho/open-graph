@@ -134,19 +134,8 @@ namespace Shipwreck.OpenGraph
             }
 
             bool matched;
-            GraphObject child = null;
-            if (property.StartsWithChildPath(Path, "image", out matched))
-            {
-                child = new GraphImage(Path + ":image");
-            }
-            else if (property.StartsWithChildPath(Path, "audio", out matched))
-            {
-                child = new GraphAudio(Path + ":audio");
-            }
-            else if (property.StartsWithChildPath(Path, "video", out matched))
-            {
-                child = new GraphVideo(Path + ":video");
-            }
+
+            var child = CreateNewChild(property, out matched);
 
             if (child != null)
             {
@@ -174,6 +163,23 @@ namespace Shipwreck.OpenGraph
             LocalProperties.Add(new GraphProperty(property, content));
 
             return true;
+        }
+
+        internal virtual GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "image", out matched))
+            {
+                return new GraphImage(Path + ":image");
+            }
+            else if (property.StartsWithChildPath(Path, "audio", out matched))
+            {
+                return new GraphAudio(Path + ":audio");
+            }
+            else if (property.StartsWithChildPath(Path, "video", out matched))
+            {
+                return new GraphVideo(Path + ":video");
+            }
+            return null;
         }
 
         public string GetLocalProperty(string property)

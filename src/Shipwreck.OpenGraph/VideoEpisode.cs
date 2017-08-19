@@ -20,21 +20,14 @@ namespace Shipwreck.OpenGraph
             get => new GraphObjectChildCollection<VideoTVShow>(this, "series").FirstOrDefault();
         }
 
-        internal override bool TryAddMetadata(string property, string content)
+        internal override GraphObject CreateNewChild(string property, out bool matched)
         {
-            if (!property.MachesPath(Path))
+            if (property.StartsWithChildPath(Path, "series", out matched))
             {
-                return false;
-            }
-            if (property.StartsWithChildPath(Path, "series", out var matched))
-            {
-                var child = new VideoTVShow(Path + ":series");
-                Children.Add(child);
-                child.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                return new VideoTVShow(Path + ":series");
             }
 
-            return base.TryAddMetadata(property, content);
+            return base.CreateNewChild(property, out matched);
         }
     }
 }
