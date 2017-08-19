@@ -52,9 +52,9 @@ namespace Shipwreck.OpenGraph
             }
             if (property.StartsWithChildPath(Path, "author", out var matched))
             {
-                var a = new Profile(Path + ":author");
-                Authors.Add(a);
-                child = a.AddMetadataOrSetUrl(matched, property, content);
+                child = new Profile(Path + ":author");
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

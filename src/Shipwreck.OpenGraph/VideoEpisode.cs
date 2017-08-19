@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
@@ -14,7 +15,10 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public VideoTVShow Series { get; set; }
+        public VideoTVShow Series
+        {
+            get => new GraphObjectChildCollection<VideoTVShow>(this, "series").FirstOrDefault();
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -25,11 +29,9 @@ namespace Shipwreck.OpenGraph
             }
             if (property.StartsWithChildPath(Path, "series", out var matched))
             {
-                if (Series == null)
-                {
-                    Series = new VideoTVShow(Path + ":series");
-                }
-                child = Series.AddMetadataOrSetUrl(matched, property, content);
+                child = new VideoTVShow(Path + ":series");
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

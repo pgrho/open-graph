@@ -24,25 +24,25 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
+            child = null;
             if (!property.MachesPath(Path))
             {
-                child = null;
                 return false;
             }
 
             bool matched;
             if (property.StartsWithChildPath(Path, "song", out matched))
             {
-                var s = new MusicAlbumSong(Path + ":song");
-                Songs.Add(s);
-                child = s.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                child = new MusicAlbumSong(Path + ":song");
             }
             else if (property.StartsWithChildPath(Path, "musician", out matched))
             {
-                var m = new Profile(Path + ":musician");
-                Musicians.Add(m);
-                child = m.AddMetadataOrSetUrl(matched, property, content);
+                child = new Profile(Path + ":musician");
+            }
+            if (child != null)
+            {
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

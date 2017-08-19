@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
@@ -15,7 +16,10 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public Profile Creator { get; set; }
+        public Profile Creator
+        {
+            get => new GraphObjectChildCollection<Profile>(this, "creator").FirstOrDefault();
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -27,11 +31,9 @@ namespace Shipwreck.OpenGraph
 
             if (property.StartsWithChildPath(Path, "creator", out var matched))
             {
-                if (Creator == null)
-                {
-                    Creator = new Profile(Path + ":creator");
-                }
-                child = Creator.AddMetadataOrSetUrl(matched, property, content);
+                child = new Profile(Path + ":creator");
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

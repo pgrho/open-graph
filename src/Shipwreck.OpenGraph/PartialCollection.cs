@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
@@ -31,7 +30,26 @@ namespace Shipwreck.OpenGraph
         #region ICollection<T> Properties
 
         public int Count
-            => PeekInternalList() == null ? 0 : this.Count();
+        {
+            get
+            {
+                var props = PeekInternalList();
+
+                var j = 0;
+                if (props != null)
+                {
+                    for (int i = 0; i < props.Count; i++)
+                    {
+                        var kv = props[i];
+                        if (ShouldInclude(kv))
+                        {
+                            j++;
+                        }
+                    }
+                }
+                return j;
+            }
+        }
 
         bool ICollection<TItem>.IsReadOnly
           => false;
@@ -42,7 +60,24 @@ namespace Shipwreck.OpenGraph
 
         public TItem this[int index]
         {
-            get => this.ElementAt(index);
+            get
+            {
+                var props = PeekInternalList();
+
+                var j = 0;
+                if (props != null)
+                {
+                    for (int i = 0; i < props.Count; i++)
+                    {
+                        var kv = props[i];
+                        if (ShouldInclude(kv) && j++ == index)
+                        {
+                            return ToItem(kv);
+                        }
+                    }
+                }
+                throw new IndexOutOfRangeException();
+            }
             set
             {
                 var props = PeekInternalList();

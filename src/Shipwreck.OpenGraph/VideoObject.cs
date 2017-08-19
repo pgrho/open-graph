@@ -31,32 +31,29 @@ namespace Shipwreck.OpenGraph
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
+            child = null;
             if (!property.MachesPath(Path))
             {
-                child = null;
                 return false;
             }
 
             bool matched;
             if (property.StartsWithChildPath(Path, "actor", out matched))
             {
-                var a = new Actor(Path + ":actor");
-                Actors.Add(a);
-                child = a.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                child = new Actor(Path + ":actor");
             }
             else if (property.StartsWithChildPath(Path, "director", out matched))
             {
-                var d = new Profile(Path + ":director");
-                Directors.Add(d);
-                child = d.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                child = new Profile(Path + ":director");
             }
             else if (property.StartsWithChildPath(Path, "writer", out matched))
             {
-                var w = new Profile(Path + ":writer");
-                Writers.Add(w);
-                child = w.AddMetadataOrSetUrl(matched, property, content);
+                child = new Profile(Path + ":writer");
+            }
+            if (child != null)
+            {
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 

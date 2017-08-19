@@ -128,29 +128,27 @@ namespace Shipwreck.OpenGraph
             }
 
             bool matched;
+            child = null;
             if (property.StartsWithChildPath(Path, "image", out matched))
             {
-                var img = new GraphImage(Path + ":image");
-                Images.Add(img);
-                child = img.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                child = new GraphImage(Path + ":image");
             }
             else if (property.StartsWithChildPath(Path, "audio", out matched))
             {
-                var audio = new GraphAudio(Path + ":audio");
-                Audios.Add(audio);
-                child = audio.AddMetadataOrSetUrl(matched, property, content);
-                return true;
+                child = new GraphAudio(Path + ":audio");
             }
             else if (property.StartsWithChildPath(Path, "video", out matched))
             {
-                var video = new GraphVideo(Path + ":video");
-                Videos.Add(video);
-                child = video.AddMetadataOrSetUrl(matched, property, content);
+                child = new GraphVideo(Path + ":video");
+            }
+
+            if (child != null)
+            {
+                Children.Add(child);
+                child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 
-            child = null;
             if (property.MachesChildPath(Path, "url"))
             {
                 if (Url == null)
