@@ -284,8 +284,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal(new[] { "The Rock" }, target.Images?.Select(i => i.Url));
-            Assert.False(target.ShouldSerializeImage());
-            Assert.True(target.ShouldSerializeImages());
         }
 
         [Fact]
@@ -301,8 +299,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.Images?.Select(i => i.Url));
-            Assert.False(target.ShouldSerializeImage());
-            Assert.True(target.ShouldSerializeImages());
         }
 
         #endregion Image

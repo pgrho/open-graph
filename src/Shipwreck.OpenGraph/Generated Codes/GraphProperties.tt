@@ -12,81 +12,31 @@ namespace Shipwreck.OpenGraph
 {
 <#
 
-var stringArrays = new []
-{
-    new { Class = "GraphObject", Name = "AlternateLocale", Property = "locale:alternate", Plural = (string)null },
-    new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null },
-    new { Class = "Article", Name = "Tag", Property = "tag", Plural = (string)null },
-    new { Class = "Book", Name = "Tag", Property = "tag", Plural = (string)null },
-};
-
-foreach (var g in stringArrays.GroupBy(p => p.Class))
-{
-
-#>
-    partial class <#= g.Key #>
-    {
-<#
-
-    foreach (var p in g)
-    {
-        var N = p.Name;
-        var PL = p.Plural ?? (N + 's');
-        var PN = p.Property;
-#>
-#region <#= N #>
-
-        public string <#= N #>
-        {
-            get => GetLocalProperty("<#= PN #>");
-            set => SetLocalProperty("<#= PN #>", value);
-        }
-
-        public IList<string> <#= PL #>
-        {
-            get => new GraphObjectPropertyCollection(this, "<#= PN #>");
-            // set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
-        }
-
-        public bool ShouldSerialize<#= N #>()
-            => <#= PL #>?.Count == 1;
-
-        public bool ShouldSerialize<#= PL #>()
-            => <#= PL #>?.Count > 1;
-
-        public void Reset<#= PL #>()
-            => <#= N #> = null;
-
-#endregion <#= N #>
-
-<#
-    }
-
-#>
-    }
-<#
-}
 var properties = new []
 {
-    new { Class = "GraphObject", Name = "Image", Plural = (string)null, Type = "GraphImage" },
-    new { Class = "GraphObject", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
-    new { Class = "GraphObject", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
+    new { Class = "GraphObject", Name = "AlternateLocale", Property = "locale:alternate", Plural = (string)null, Type = "string" },
+    new { Class = "GraphObject", Name = "Image", Property = "image", Plural = (string)null, Type = "GraphImage" },
+    new { Class = "GraphObject", Name = "Video", Property = "video", Plural = (string)null, Type = "GraphVideo" },
+    new { Class = "GraphObject", Name = "Audio", Property = "audio", Plural = (string)null, Type = "GraphAudio" },
     
-    new { Class = "MusicSong", Name = "Album", Plural = (string)null, Type = "MusicSongAlbum" },
-    new { Class = "MusicSong", Name = "Musician", Plural = (string)null, Type = "Profile" },
+    new { Class = "MusicSong", Name = "Album", Property = "album", Plural = (string)null, Type = "MusicSongAlbum" },
+    new { Class = "MusicSong", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
     
-    new { Class = "MusicAlbum", Name = "Song", Plural = (string)null, Type = "MusicAlbumSong" },
-    new { Class = "MusicAlbum", Name = "Musician", Plural = (string)null, Type = "Profile" },
+    new { Class = "MusicAlbum", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicAlbum", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
     
-    new { Class = "MusicPlaylist", Name = "Song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicPlaylist", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicAlbumSong" },
     
-    new { Class = "VideoObject", Name = "Actor", Plural = (string)null, Type = "Actor" },
-    new { Class = "VideoObject", Name = "Director", Plural = (string)null, Type = "Profile" },
-    new { Class = "VideoObject", Name = "Writer", Plural = (string)null, Type = "Profile" },
+    new { Class = "VideoObject", Name = "Actor", Property = "actor", Plural = (string)null, Type = "Actor" },
+    new { Class = "VideoObject", Name = "Director", Property = "director", Plural = (string)null, Type = "Profile" },
+    new { Class = "VideoObject", Name = "Writer", Property = "writer", Plural = (string)null, Type = "Profile" },
+    new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
     
-    new { Class = "Article", Name = "Author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Article", Name = "Author", Property = "author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Article", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
     
-    new { Class = "Book", Name = "Author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Book", Name = "Author", Property = "author", Plural = (string)null, Type = "Profile" },
+    new { Class = "Book", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
 };
 
 foreach (var g in properties.GroupBy(p => p.Class))
@@ -99,49 +49,40 @@ foreach (var g in properties.GroupBy(p => p.Class))
 
     foreach (var p in g)
     {
-        var type = Type.GetType(p.Type);
         var N = p.Name;
         var PL = p.Plural ?? (N + 's');
         var T = p.Type;
-        var isMscorlib = type?.Assembly == typeof(int).Assembly;
+        var PN = p.Property;
+        var CT = T == "string" ? "GraphObjectPropertyCollection" : $"GraphObjectChildCollection<{T}>";
 #>
 #region <#= N #>
 
-        private Collection<<#= T #>> _<#= PL #>;
-        
+<#
+        if (T == "string")
+        {
+#>
         public <#= T #> <#= N #>
         {
-            get => _<#= PL #>?.FirstOrDefault();
-            set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
+            get => GetLocalProperty("<#= PN #>");
+            set => SetLocalProperty("<#= PN #>", value);
         }
-
-        public Collection<<#= T #>> <#= PL #>
+<#
+        }
+        else
         {
-            get => CollectionHelper.GetCollection(ref _<#= PL #>);
-            set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
+#>
+        public <#= T #> <#= N #>
+        {
+            get => <#= PL #>?.FirstOrDefault();
         }
-
-        public bool ShouldSerialize<#= N #>()
-<#
-        if (isMscorlib) {
-#>
-            => _<#= PL #>?.Count == 1;
-<#
-        } else {
-#>
-            => false;
 <#
         }
 #>
 
-        public bool ShouldSerialize<#= PL #>()
-            => _<#= PL #>?.Count > <#= isMscorlib ? 1 : 0 #>;
-
-        public void Reset<#= N #>()
-            => _<#= PL #>?.Clear();
-
-        public void Reset<#= PL #>()
-            => _<#= PL #>?.Clear();
+        public IList<<#= T #>> <#= PL #>
+        {
+            get => new <#= CT #>(this, "<#= PN #>");
+        }
 
 #endregion <#= N #>
 

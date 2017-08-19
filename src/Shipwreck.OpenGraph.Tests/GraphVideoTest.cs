@@ -19,8 +19,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal(new[] { "The Rock" }, target.Videos?.Select(i => i.Url));
-            Assert.False(target.ShouldSerializeVideo());
-            Assert.True(target.ShouldSerializeVideos());
         }
 
         [Fact]

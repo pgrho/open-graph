@@ -19,8 +19,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal(new[] { "The Rock" }, target.Audios?.Select(i => i.Url));
-            Assert.False(target.ShouldSerializeAudio());
-            Assert.True(target.ShouldSerializeAudios());
         }
 
         [Fact]
