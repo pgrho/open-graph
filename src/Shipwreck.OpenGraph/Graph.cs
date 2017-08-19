@@ -11,6 +11,9 @@ namespace Shipwreck.OpenGraph
     {
         private GraphObject _TypeObject;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Graph" /> class.
+        /// </summary>
         public Graph()
             : base("og")
         {

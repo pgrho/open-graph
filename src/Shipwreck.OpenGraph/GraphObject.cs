@@ -9,6 +9,10 @@ namespace Shipwreck.OpenGraph
         internal List<GraphObject> _Children;
         internal List<GraphProperty> _LocalProperties;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GraphObject" /> class with specified property path.
+        /// </summary>
+        /// <param name="path">A property path for this instance.</param>
         internal GraphObject(string path)
         {
             Path = path;
