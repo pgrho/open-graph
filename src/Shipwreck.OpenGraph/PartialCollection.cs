@@ -266,12 +266,12 @@ namespace Shipwreck.OpenGraph
 
         #endregion ICollection<T> Methods
 
-        #region ICollection
+        #region ICollection Methods
 
         void ICollection.CopyTo(Array array, int index)
             => CopyTo((TItem[])array, index);
 
-        #endregion ICollection
+        #endregion ICollection Methods
 
         #region IList<T> Methods
 
@@ -363,7 +363,7 @@ namespace Shipwreck.OpenGraph
 
         #endregion IList<T> Methods
 
-        #region IList
+        #region IList Methods
 
         int IList.Add(object value)
         {
@@ -388,6 +388,6 @@ namespace Shipwreck.OpenGraph
             }
         }
 
-        #endregion IList
+        #endregion IList Methods
     }
 }
