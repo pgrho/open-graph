@@ -1,6 +1,7 @@
 <#@ template language="C#" debug="True" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension="cs" #>
 using System;
@@ -15,82 +16,82 @@ namespace Shipwreck.OpenGraph
 
 var properties = new []
 {
-    new { Class = "GraphObject", Name = "AlternateLocale", Property = "locale:alternate", Plural = (string)null, Type = "string" },
-    new { Class = "GraphObject", Name = "Image", Property = "image", Plural = (string)null, Type = "GraphImage" },
-    new { Class = "GraphObject", Name = "Video", Property = "video", Plural = (string)null, Type = "GraphVideo" },
-    new { Class = "GraphObject", Name = "Audio", Property = "audio", Plural = (string)null, Type = "GraphAudio" },
+    new M("GraphObject", "AlternateLocale", "string") { Property = "locale:alternate" },
+    new M("GraphObject", "Image", "GraphImage"),
+    new M("GraphObject", "Video", "GraphVideo"),
+    new M("GraphObject", "Audio", "GraphAudio"),
     
-    new { Class = "MusicSong", Name = "Album", Property = "album", Plural = (string)null, Type = "MusicAlbum" },
-    new { Class = "MusicSong", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
+    new M("MusicSong", "Album", "MusicAlbum"),
+    new M("MusicSong", "Musician", "Profile"),
     
-    new { Class = "MusicAlbum", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicSong" },
-    new { Class = "MusicAlbum", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
+    new M("MusicAlbum", "Song", "MusicSong"),
+    new M("MusicAlbum", "Musician", "Profile"),
     
-    new { Class = "MusicPlaylist", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicSong" },
-    new { Class = "MusicPlaylist", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
+    new M("MusicPlaylist", "Song", "MusicSong"),
+    new M("MusicPlaylist", "Creator", "Profile"),
     
-    new { Class = "MusicRadioStation", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
+    new M("MusicRadioStation", "Creator", "Profile"),
     
-    new { Class = "VideoObject", Name = "Actor", Property = "actor", Plural = (string)null, Type = "Profile" },
-    new { Class = "VideoObject", Name = "Director", Property = "director", Plural = (string)null, Type = "Profile" },
-    new { Class = "VideoObject", Name = "Writer", Property = "writer", Plural = (string)null, Type = "Profile" },
-    new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
+    new M("VideoObject", "Actor", "Profile"),
+    new M("VideoObject", "Director", "Profile"),
+    new M("VideoObject", "Writer", "Profile"),
+    new M("VideoObject", "Tag", "string"),
     
-    new { Class = "VideoEpisode", Name = "Series", Property = "series", Plural = "AllSeries", Type = "VideoTVShow" },
+    new M("VideoEpisode", "Series", "VideoTVShow") { Plural = "AllSeries" },
     
-    new { Class = "Article", Name = "Author", Property = "author", Plural = (string)null, Type = "Profile" },
-    new { Class = "Article", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
+    new M("Article", "Author", "Profile"),
+    new M("Article", "Tag", "string"),
     
-    new { Class = "Book", Name = "Author", Property = "author", Plural = (string)null, Type = "Profile" },
-    new { Class = "Book", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
+    new M("Book", "Author", "Profile"),
+    new M("Book", "Tag", "string"),
 };
 
 var singleProperties = new []
 {
-    new { Class = "GraphObject", Name = "Title", Property = "title", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "Type", Property = "type", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "Url", Property = "url", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "Description", Property = "description", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "Determiner", Property = "determiner", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "Locale", Property = "locale", Type = "string", Description = (string)null },
-    new { Class = "GraphObject", Name = "SiteName", Property = "site_name", Type = "string", Description = (string)null },
+    new M("GraphObject", "Title", "string"),
+    new M("GraphObject", "Type", "string"),
+    new M("GraphObject", "Url", "string"),
+    new M("GraphObject", "Description", "string"),
+    new M("GraphObject", "Determiner", "string"),
+    new M("GraphObject", "Locale", "string"),
+    new M("GraphObject", "SiteName", "string"),
     
-    new { Class = "GraphAudio", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
+    new M("GraphAudio", "SecureUrl", "string"),
     
-    new { Class = "GraphImage", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
-    new { Class = "GraphImage", Name = "Width", Property = "width", Type = "Int32?", Description = (string)null },
-    new { Class = "GraphImage", Name = "Height", Property = "height", Type = "Int32?", Description = (string)null },
-    new { Class = "GraphImage", Name = "Alt", Property = "alt", Type = "string", Description = (string)null },
+    new M("GraphImage", "SecureUrl", "string"),
+    new M("GraphImage", "Width", "Int32?"),
+    new M("GraphImage", "Height", "Int32?"),
+    new M("GraphImage", "Alt", "string"),
 
-    new { Class = "GraphVideo", Name = "SecureUrl", Property = "secure_url", Type = "string", Description = (string)null },
-    new { Class = "GraphVideo", Name = "Width", Property = "width", Type = "Int32?", Description = (string)null },
-    new { Class = "GraphVideo", Name = "Height", Property = "height", Type = "Int32?", Description = (string)null },
-    new { Class = "GraphVideo", Name = "Alt", Property = "alt", Type = "string", Description = (string)null },
+    new M("GraphVideo", "SecureUrl", "string"),
+    new M("GraphVideo", "Width", "Int32?"),
+    new M("GraphVideo", "Height", "Int32?"),
+    new M("GraphVideo", "Alt", "string"),
 
-    new { Class = "MusicSong", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
-    new { Class = "MusicSong", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
-    new { Class = "MusicSong", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+    new M("MusicSong", "Duration", "Int32?"),
+    new M("MusicSong", "Disc", "Int32?"),
+    new M("MusicSong", "Track", "Int32?"),
 
-    new { Class = "MusicAlbum", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
-    new { Class = "MusicAlbum", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
-    new { Class = "MusicAlbum", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+    new M("MusicAlbum", "ReleaseDate", "DateTime?"),
+    new M("MusicAlbum", "Disc", "Int32?"),
+    new M("MusicAlbum", "Track", "Int32?"),
 
-    new { Class = "VideoObject", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
-    new { Class = "VideoObject", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
+    new M("VideoObject", "Duration", "Int32?"),
+    new M("VideoObject", "ReleaseDate", "DateTime?"),
 
-    new { Class = "Article", Name = "PublishedTime", Property = "published_time", Type = "DateTime?", Description = (string)null },
-    new { Class = "Article", Name = "ModifiedTime", Property = "modified_time", Type = "DateTime?", Description = (string)null },
-    new { Class = "Article", Name = "ExpirationTime", Property = "expiration_time", Type = "DateTime?", Description = (string)null },
-    new { Class = "Article", Name = "Section", Property = "section", Type = "string", Description = (string)null },
+    new M("Article", "PublishedTime", "DateTime?"),
+    new M("Article", "ModifiedTime", "DateTime?"),
+    new M("Article", "ExpirationTime", "DateTime?"),
+    new M("Article", "Section", "string"),
 
-    new { Class = "Book", Name = "ISBN", Property = "isbn", Type = "string", Description = (string)null },
-    new { Class = "Book", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
+    new M("Book", "ISBN", "string") { Property = "isbn" },
+    new M("Book", "ReleaseDate", "DateTime?"),
 
-    new { Class = "Profile", Name = "FirstName", Property = "first_name", Type = "string", Description = (string)null },
-    new { Class = "Profile", Name = "LastName", Property = "last_name", Type = "string", Description = (string)null },
-    new { Class = "Profile", Name = "UserName", Property = "username", Type = "string", Description = (string)null },
-    new { Class = "Profile", Name = "Gender", Property = "gender", Type = "string", Description = (string)null },
-    new { Class = "Profile", Name = "Role", Property = "role", Type = "string", Description = (string)null },
+    new M("Profile", "FirstName", "string"),
+    new M("Profile", "LastName", "string"),
+    new M("Profile", "UserName", "string") { Property = "username" },
+    new M("Profile", "Gender", "string"),
+    new M("Profile", "Role", "string"),
 };
 
 foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select(p => p.Class)).Distinct())
@@ -223,4 +224,58 @@ foreach (var T in objectTypes)
 
 #>
     }
+}<#+
+public class M
+{
+    private string _Property;
+    private string _Plural;
+
+    public M(string c, string n, string t)
+    {
+        Class = c;
+        Name = n;
+        Type = t;
+    }
+
+    public string Class { get; set; }
+    public string Name { get; set; }
+    public string Type { get; set; }
+    
+    public string Property
+    {
+        get
+        {
+            if (_Property != null)
+            {
+                return _Property;
+            }
+            var sb = new StringBuilder(Name);
+
+            for (var i = 0; i < sb.Length; i++)
+            {
+                var c = sb[i];
+                if ('A' <= c && c <= 'Z')
+                {
+                    if (i > 0)
+                    {
+                        sb[i] = '_';
+                        sb.Insert(++i, char.ToLower(c));
+                    }
+                    else
+                    {
+                        sb[i] = char.ToLower(c);
+                    }
+                }
+            }
+
+            return sb.ToString();
+        }
+        set => _Property = value;
+    }
+    public string Plural
+    {
+        get => _Plural ?? $"{Name}s";
+        set => _Plural = value;
+    }
 }
+#>
