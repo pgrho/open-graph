@@ -1503,6 +1503,17 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Gets or sets an official site.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string OfficialSite
+        {
+            get => GetLocalProperty("official_site");
+            set => SetLocalProperty("official_site", value);
+        }
+
+        /// <summary>
         /// Gets or sets a role.
         /// </summary>
         [DefaultValue(null)]
@@ -1513,9 +1524,79 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("role", value);
         }
 
+        #region Book
+
+        /// <summary>
+        /// Gets or sets a book.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Book Book
+        {
+            get => Books.FirstOrDefault();
+            set => Books.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all books.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Book> Books
+        {
+            get => new GraphObjectChildCollection<Book>(this, "book");
+            set => Books.Set(value);
+        }
+
+        #endregion Book
+
+        #region Genre
+
+        /// <summary>
+        /// Gets or sets a genre.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Genre
+        {
+            get => GetLocalProperty("genre");
+            set => SetLocalProperty("genre", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all genres.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> Genres
+        {
+            get => new GraphObjectPropertyCollection(this, "genre");
+            set => SetLocalProperty("genre", value);
+        }
+
+        #endregion Genre
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "book", out matched))
+            {
+                return new Book(Path + ":book");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class Book
     {
+        /// <summary>
+        /// Gets or sets an initial release date.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? InitialReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("initial_release_date");
+            set => SetLocalProperty("initial_release_date", value);
+        }
+
         /// <summary>
         /// Gets or sets ISBN.
         /// </summary>
@@ -1528,6 +1609,50 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Gets or sets a language.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Language
+        {
+            get => GetLocalProperty("language");
+            set => SetLocalProperty("language", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a page count.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? PageCount
+        {
+            get => GetLocalPropertyAsInt32("page_count");
+            set => SetLocalProperty("page_count", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a rating value.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? RatingValue
+        {
+            get => GetLocalPropertyAsSingle("rating:value");
+            set => SetLocalProperty("rating:value", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a rating scale.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? RatingScale
+        {
+            get => GetLocalPropertyAsInt32("rating:scale");
+            set => SetLocalProperty("rating:scale", value);
+        }
+
+        /// <summary>
         /// Gets or sets a release date.
         /// </summary>
         [DefaultValue(null)]
@@ -1536,6 +1661,17 @@ namespace Shipwreck.OpenGraph
         {
             get => GetLocalPropertyAsDateTime("release_date");
             set => SetLocalProperty("release_date", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a sample.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Sample
+        {
+            get => GetLocalProperty("sample");
+            set => SetLocalProperty("sample", value);
         }
 
         #region Author
@@ -1562,6 +1698,56 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion Author
+
+        #region Genre
+
+        /// <summary>
+        /// Gets or sets a genre.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public BookGenre Genre
+        {
+            get => Genres.FirstOrDefault();
+            set => Genres.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all genres.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<BookGenre> Genres
+        {
+            get => new GraphObjectChildCollection<BookGenre>(this, "genre");
+            set => Genres.Set(value);
+        }
+
+        #endregion Genre
+
+        #region AlternateLanguage
+
+        /// <summary>
+        /// Gets or sets an alternate language.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AlternateLanguage
+        {
+            get => GetLocalProperty("language:alternate");
+            set => SetLocalProperty("language:alternate", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all alternate languages.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> AlternateLanguages
+        {
+            get => new GraphObjectPropertyCollection(this, "language:alternate");
+            set => SetLocalProperty("language:alternate", value);
+        }
+
+        #endregion AlternateLanguage
 
         #region Tag
 
@@ -1595,8 +1781,26 @@ namespace Shipwreck.OpenGraph
             {
                 return new Profile(Path + ":author");
             }
+            if (property.StartsWithChildPath(Path, "genre", out matched))
+            {
+                return new BookGenre(Path + ":genre");
+            }
             return base.CreateNewChild(property, out matched);
         }
+    }
+    partial class BookGenre
+    {
+        /// <summary>
+        /// Gets or sets a canonical name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string CanonicalName
+        {
+            get => GetLocalProperty("canonical_name");
+            set => SetLocalProperty("canonical_name", value);
+        }
+
     }
     partial class AndroidApplink
     {
@@ -1819,6 +2023,17 @@ namespace Shipwreck.OpenGraph
         {
             get => _TypeObject as Book;
             set => _TypeObject = value ?? (_TypeObject is Book ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.BookGenre" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public BookGenre BookGenre
+        {
+            get => _TypeObject as BookGenre;
+            set => _TypeObject = value ?? (_TypeObject is BookGenre ? null : _TypeObject);
         }
 
         /// <summary>

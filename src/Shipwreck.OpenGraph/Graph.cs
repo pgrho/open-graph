@@ -231,6 +231,26 @@ namespace Shipwreck.OpenGraph
 
                         switch (content)
                         {
+                            case "article":
+                                Article = new Article();
+                                break;
+
+                            case "book":
+                                Book = new Book();
+                                break;
+
+                            case "books.author":
+                                Profile = new Profile("books");
+                                break;
+
+                            case "books.book":
+                                Book = new Book("books");
+                                break;
+
+                            case "books.genre":
+                                BookGenre = new BookGenre();
+                                break;
+
                             case "music.song":
                                 MusicSong = new MusicSong();
                                 break;
@@ -247,6 +267,10 @@ namespace Shipwreck.OpenGraph
                                 MusicRadioStation = new MusicRadioStation();
                                 break;
 
+                            case "profile":
+                                Profile = new Profile();
+                                break;
+
                             case "video.movie":
                                 VideoMovie = new VideoMovie();
                                 break;
@@ -261,18 +285,6 @@ namespace Shipwreck.OpenGraph
 
                             case "video.other":
                                 VideoOther = new VideoOther();
-                                break;
-
-                            case "article":
-                                Article = new Article();
-                                break;
-
-                            case "book":
-                                Book = new Book();
-                                break;
-
-                            case "profile":
-                                Profile = new Profile();
                                 break;
                         }
 

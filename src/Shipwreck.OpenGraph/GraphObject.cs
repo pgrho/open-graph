@@ -216,6 +216,22 @@ namespace Shipwreck.OpenGraph
             => SetLocalProperty(property, value?.ToString("R"));
 
         /// <summary>
+        /// Returns a first value of the specified property as float value.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public float? GetLocalPropertyAsSingle(string property)
+            => float.TryParse(GetLocalProperty(property), out float i) ? i : (float?)null;
+
+        /// <summary>
+        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <param name="value">A new value to set.</param>
+        public void SetLocalProperty(string property, float? value)
+            => SetLocalProperty(property, value?.ToString("R"));
+
+        /// <summary>
         /// Returns a first value of the specified property as <see cref="DateTime"/> value.
         /// </summary>
         /// <param name="property">The local name of the property.</param>

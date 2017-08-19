@@ -102,14 +102,27 @@ var properties = new []
     new M("Article", "Section", "string"),
 
     new M("Book", "Author", "Profile", isArray: true),
+    new M("Book", "Genre", "BookGenre", isArray: true),
+    new M("Book", "AlternateLanguage", "string", isArray: true) { Path = "language:alternate" },
     new M("Book", "Tag", "string", isArray: true),
+    new M("Book", "InitialReleaseDate", "DateTime?"),
     new M("Book", "ISBN", "string") { Path = "isbn", SummaryName = "ISBN" },
+    new M("Book", "Language", "string"),
+    new M("Book", "PageCount", "Int32?"),
+    new M("Book", "RatingValue", "Single?") { Path = "rating:value" },
+    new M("Book", "RatingScale", "Int32?") { Path = "rating:scale" },
     new M("Book", "ReleaseDate", "DateTime?"),
-
+    new M("Book", "Sample", "string"),
+    
+    new M("BookGenre", "CanonicalName", "string"),
+    
+    new M("Profile", "Book", "Book", isArray: true),
+    new M("Profile", "Genre", "string", isArray: true),
     new M("Profile", "FirstName", "string"),
     new M("Profile", "LastName", "string"),
     new M("Profile", "UserName", "string") { Path = "username" },
     new M("Profile", "Gender", "string"),
+    new M("Profile", "OfficialSite", "string"),
     new M("Profile", "Role", "string"),
     
     new M("AndroidApplink", "Package", "string"),
@@ -272,7 +285,7 @@ var objectTypes = new []
 {
     "MusicSong", "MusicAlbum", "MusicPlaylist", "MusicRadioStation",
     "VideoMovie", "VideoEpisode", "VideoTVShow", "VideoOther",
-    "Article", "Book", "Profile"
+    "Article", "Book", "BookGenre", "Profile"
 };
 
 foreach (var T in objectTypes)
