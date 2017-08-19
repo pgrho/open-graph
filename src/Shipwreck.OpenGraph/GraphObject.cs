@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Shipwreck.OpenGraph
@@ -18,7 +17,7 @@ namespace Shipwreck.OpenGraph
         internal string Path { get; }
 
         internal virtual bool IsRoot => false;
-        
+
         #region Children
 
         public IList<GraphObject> Children
@@ -110,12 +109,6 @@ namespace Shipwreck.OpenGraph
                     return true;
                 }
                 return false;
-            }
-            else if (property.MachesChildPath(Path, "locale:alternate"))
-            {
-                AlternateLocales.Add(content);
-
-                return true;
             }
 
             LocalProperties.Add(new GraphProperty(property, content));
