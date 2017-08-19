@@ -107,9 +107,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         var PN = p.Property;
 #>
         [DefaultValue(null)]
-#if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
         public <#= T #> <#= N #>
         {
             get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>("<#= PN #>");
@@ -135,9 +133,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         {
 #>
         [DefaultValue(null)]
-#if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
         public <#= T #> <#= N #>
         {
             get => GetLocalProperty("<#= PN #>");
@@ -160,9 +156,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         }
 #>
 
-#if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>(this, "<#= PN #>");
@@ -179,6 +173,7 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
     if (children.Any() && C != "GraphObject")
     {
 #>
+        /// <inheritdoc />
         internal override GraphObject CreateNewChild(string property, out bool matched)
         {
 <#
@@ -216,9 +211,7 @@ foreach (var T in objectTypes)
 {
 #>
         [DefaultValue(null)]
-#if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
         public <#= T #> <#= T #>
         {
             get => _TypeObject as <#= T #>;
