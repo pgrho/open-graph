@@ -1350,6 +1350,117 @@ namespace Shipwreck.OpenGraph
             return base.CreateNewChild(property, out matched);
         }
     }
+    partial class AndroidApplink
+    {
+        /// <summary>
+        /// Gets or sets a package.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Package
+        {
+            get => GetLocalProperty("package");
+            set => SetLocalProperty("package", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an app name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AppName
+        {
+            get => GetLocalProperty("app_name");
+            set => SetLocalProperty("app_name", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a class.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Class
+        {
+            get => GetLocalProperty("class");
+            set => SetLocalProperty("class", value);
+        }
+
+    }
+    partial class IosApplink
+    {
+        /// <summary>
+        /// Gets or sets an app store id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? AppStoreId
+        {
+            get => GetLocalPropertyAsInt32("app_store_id");
+            set => SetLocalProperty("app_store_id", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an app name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AppName
+        {
+            get => GetLocalProperty("app_name");
+            set => SetLocalProperty("app_name", value);
+        }
+
+    }
+    partial class Weblink
+    {
+        /// <summary>
+        /// Gets or sets a should fallback.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Boolean? ShouldFallback
+        {
+            get => GetLocalPropertyAsBoolean("should_fallback");
+            set => SetLocalProperty("should_fallback", value);
+        }
+
+    }
+    partial class WindowsApplink
+    {
+        /// <summary>
+        /// Gets or sets a package family name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string PackageFamilyName
+        {
+            get => GetLocalProperty("package_family_name");
+            set => SetLocalProperty("package_family_name", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an app id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AppId
+        {
+            get => GetLocalProperty("app_id");
+            set => SetLocalProperty("app_id", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an app name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AppName
+        {
+            get => GetLocalProperty("app_name");
+            set => SetLocalProperty("app_name", value);
+        }
+
+    }
     partial class Graph
     {
         /// <summary>

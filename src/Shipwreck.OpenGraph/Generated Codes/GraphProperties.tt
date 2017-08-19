@@ -102,6 +102,19 @@ var properties = new []
     new M("Profile", "UserName", "string") { Property = "username" },
     new M("Profile", "Gender", "string"),
     new M("Profile", "Role", "string"),
+    
+    new M("AndroidApplink", "Package", "string"),
+    new M("AndroidApplink", "AppName", "string"),
+    new M("AndroidApplink", "Class", "string"),
+    
+    new M("IosApplink", "AppStoreId", "Int32?"),
+    new M("IosApplink", "AppName", "string"),
+    
+    new M("Weblink", "ShouldFallback", "Boolean?"),
+    
+    new M("WindowsApplink", "PackageFamilyName", "string"),
+    new M("WindowsApplink", "AppId", "string"),
+    new M("WindowsApplink", "AppName", "string"),
 };
 
 foreach (var g in properties.GroupBy(p => p.Class))
