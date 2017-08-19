@@ -213,7 +213,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The local name of the property.</param>
         /// <param name="value">A new value to set.</param>
         public void SetLocalProperty(string property, int? value)
-            => SetLocalProperty(property, value?.ToString("R"));
+            => SetLocalProperty(property, value?.ToString("D"));
 
         /// <summary>
         /// Returns a first value of the specified property as float value.

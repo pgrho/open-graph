@@ -116,13 +116,11 @@ namespace Shipwreck.OpenGraph
                             case 3:
                                 if (isHead && "meta".Equals(reader.LocalName, StringComparison.OrdinalIgnoreCase))
                                 {
-                                    if (reader.MoveToAttribute("property"))
+                                    var p = reader.GetAttribute("property");
+                                    var c = reader.GetAttribute("content");
+                                    if (!string.IsNullOrEmpty(p) && c != null)
                                     {
-                                        var prop = reader.Value;
-                                        if (reader.MoveToAttribute("content"))
-                                        {
-                                            yield return new GraphProperty(prop, reader.Value);
-                                        }
+                                        yield return new GraphProperty(p, c);
                                     }
                                 }
                                 break;
