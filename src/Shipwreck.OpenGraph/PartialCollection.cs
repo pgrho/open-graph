@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents a collection that filters elements in another collection which matches condition.
+    /// </summary>
     public abstract class PartialCollection<TItem, TInternal> : IList<TItem>, IReadOnlyCollection<TItem>, IList
     {
         internal PartialCollection()
@@ -11,7 +14,10 @@ namespace Shipwreck.OpenGraph
             Comparer = EqualityComparer<TItem>.Default;
         }
 
-        public IEqualityComparer<TItem> Comparer { get; }
+        /// <summary>
+        /// Gets the <see cref="IEqualityComparer{T}"/> that is used to determine equality of elements.
+        /// </summary>
+        protected IEqualityComparer<TItem> Comparer { get; }
 
         #region Template Methods
 
@@ -29,6 +35,9 @@ namespace Shipwreck.OpenGraph
 
         #region ICollection<T> Properties
 
+        /// <summary>
+        /// Gets the number of elements contained in this collection.
+        /// </summary>
         public int Count
         {
             get
@@ -67,6 +76,11 @@ namespace Shipwreck.OpenGraph
 
         #region IList<T> Properties
 
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
         public TItem this[int index]
         {
             get
@@ -135,6 +149,10 @@ namespace Shipwreck.OpenGraph
 
         #region IEnumerable<T> Methods
 
+        /// <summary>
+        /// Returns an enumerator that iterates through this collection.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<TItem> GetEnumerator()
         {
             var props = PeekInternalList();
@@ -158,6 +176,10 @@ namespace Shipwreck.OpenGraph
 
         #region ICollection<T> Methods
 
+        /// <summary>
+        /// Adds an object to the end of the collection.
+        /// </summary>
+        /// <param name="item">The object to be added to the end of the collection.</param>
         public void Add(TItem item)
         {
             if (item == null)
@@ -168,6 +190,9 @@ namespace Shipwreck.OpenGraph
             GetOrCreateInternalList().Add(ToInternalItem(item));
         }
 
+        /// <summary>
+        /// Removes all elements from the collection.
+        /// </summary>
         public void Clear()
         {
             var prop = PeekInternalList();
@@ -183,9 +208,19 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Determines whether an element is in the collection.
+        /// </summary>
+        /// <param name="item">The object to locate in the collection.</param>
+        /// <returns><c>true</c> if item is found in the collection; otherwise, <c>false</c>.</returns>
         public bool Contains(TItem item)
             => IndexOf(item) >= 0;
 
+        /// <summary>
+        /// Copies the entire collection to a compatible one-dimensional array, starting at the specified index of the target array.
+        /// </summary>
+        /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from collection.</param>
+        /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
         public void CopyTo(TItem[] array, int arrayIndex)
         {
             var props = PeekInternalList();
@@ -202,6 +237,14 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Removes the first occurrence of a specific object from the collection.
+        /// </summary>
+        /// <param name="item">The object to remove from collection.</param>
+        /// <returns>
+        /// <c>true</c> if item is successfully removed; otherwise, <c>false</c>.
+        /// This method also returns false if item was not found in the collection.
+        /// </returns>
         public bool Remove(TItem item)
         {
             var props = PeekInternalList();
@@ -232,6 +275,11 @@ namespace Shipwreck.OpenGraph
 
         #region IList<T> Methods
 
+        /// <summary>
+        /// Searches for the specified object and returns the zero-based index of the first occurrence within the entire collection.
+        /// </summary>
+        /// <param name="item">The object to locate in the collection.</param>
+        /// <returns>The zero-based index of the first occurrence of item within the entire collection, if found; otherwise, -1.</returns>
         public int IndexOf(TItem item)
         {
             var props = PeekInternalList();
@@ -254,6 +302,11 @@ namespace Shipwreck.OpenGraph
             return -1;
         }
 
+        /// <summary>
+        /// Inserts an element into the collection at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+        /// <param name="item">The object to insert.</param>
         public void Insert(int index, TItem item)
         {
             var props = PeekInternalList();
@@ -281,6 +334,10 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Removes the element at the specified index of the collection.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to remove.</param>
         public void RemoveAt(int index)
         {
             var props = PeekInternalList();

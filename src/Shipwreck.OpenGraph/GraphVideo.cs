@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents an video resource that can attached to other <see cref="GraphObject"/>.
+    /// </summary>
     public sealed partial class GraphVideo : GraphObject
     {
         /// <summary>

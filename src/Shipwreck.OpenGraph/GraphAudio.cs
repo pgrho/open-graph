@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents an audio resource that can attached to other <see cref="GraphObject"/>.
+    /// </summary>
     public sealed partial class GraphAudio : GraphObject
     {
         /// <summary>

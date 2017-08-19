@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.OpenGraph
 {
+    /// <summary>
+    /// Represents an image resource that can attached to other <see cref="GraphObject"/>.
+    /// </summary>
     public sealed partial class GraphImage : GraphObject
     {
         /// <summary>
