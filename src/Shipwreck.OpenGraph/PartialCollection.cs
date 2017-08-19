@@ -33,6 +33,16 @@ namespace Shipwreck.OpenGraph
 
         #endregion Template Methods
 
+        #region Extension Points
+
+        internal virtual void InsertInternalItem(int index, TInternal internalItem)
+            => GetOrCreateInternalList().Insert(index, internalItem);
+
+        internal virtual void RemoveInternalItem(int index)
+            => GetOrCreateInternalList().RemoveAt(index);
+
+        #endregion Extension Points
+
         #region ICollection<T> Properties
 
         /// <summary>
@@ -187,7 +197,7 @@ namespace Shipwreck.OpenGraph
                 throw new ArgumentNullException(nameof(item));
             }
 
-            GetOrCreateInternalList().Add(ToInternalItem(item));
+            InsertInternalItem(PeekInternalList()?.Count ?? 0, ToInternalItem(item));
         }
 
         /// <summary>
@@ -202,7 +212,7 @@ namespace Shipwreck.OpenGraph
                 {
                     if (ShouldInclude(prop[i]))
                     {
-                        prop.RemoveAt(i);
+                        RemoveInternalItem(i);
                     }
                 }
             }
@@ -256,7 +266,7 @@ namespace Shipwreck.OpenGraph
                     var kv = props[i];
                     if (ShouldInclude(kv) && Comparer.Equals(ToItem(kv), item))
                     {
-                        props.RemoveAt(i);
+                        RemoveInternalItem(i);
                         return true;
                     }
                 }
@@ -319,14 +329,14 @@ namespace Shipwreck.OpenGraph
                     var kv = props[i];
                     if (ShouldInclude(kv) && j++ == index)
                     {
-                        props.Insert(i, ToInternalItem(item));
+                        InsertInternalItem(i, ToInternalItem(item));
                         return;
                     }
                 }
             }
             if (index == j)
             {
-                GetOrCreateInternalList().Add(ToInternalItem(item));
+                InsertInternalItem(props.Count, ToInternalItem(item));
             }
             else
             {
@@ -352,7 +362,7 @@ namespace Shipwreck.OpenGraph
                     {
                         if (j == index)
                         {
-                            props.RemoveAt(i);
+                            RemoveInternalItem(i);
                             return;
                         }
                         j++;
