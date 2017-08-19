@@ -20,13 +20,17 @@ var properties = new []
     new M("GraphObject", "Image", "GraphImage", isArray: true),
     new M("GraphObject", "Video", "GraphVideo", isArray: true),
     new M("GraphObject", "Audio", "GraphAudio", isArray: true),
+    new M("GraphObject", "SeeAlso", "string", isArray: true),
     new M("GraphObject", "Title", "string"),
     new M("GraphObject", "Type", "string"),
     new M("GraphObject", "Url", "string"),
     new M("GraphObject", "Description", "string"),
     new M("GraphObject", "Determiner", "string"),
     new M("GraphObject", "Locale", "string"),
+    new M("GraphObject", "RichAttachment", "Boolean?"),
     new M("GraphObject", "SiteName", "string"),
+    new M("GraphObject", "TimeToLive", "Int32?") { Property = "ttl" },
+    new M("GraphObject", "UpdatedTime", "DateTime?"),
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -34,6 +38,7 @@ var properties = new []
     new M("GraphImage", "Width", "Int32?"),
     new M("GraphImage", "Height", "Int32?"),
     new M("GraphImage", "Alt", "string"),
+    new M("GraphImage", "UserGenerated", "Boolean?"),
 
     new M("GraphVideo", "SecureUrl", "string"),
     new M("GraphVideo", "Width", "Int32?"),

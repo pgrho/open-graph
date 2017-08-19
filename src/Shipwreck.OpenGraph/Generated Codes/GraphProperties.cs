@@ -75,6 +75,17 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Gets or sets a rich attachment.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Boolean? RichAttachment
+        {
+            get => GetLocalPropertyAsBoolean("rich_attachment");
+            set => SetLocalProperty("rich_attachment", value);
+        }
+
+        /// <summary>
         /// Gets or sets a site name.
         /// </summary>
         [DefaultValue(null)]
@@ -83,6 +94,28 @@ namespace Shipwreck.OpenGraph
         {
             get => GetLocalProperty("site_name");
             set => SetLocalProperty("site_name", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a time to live.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? TimeToLive
+        {
+            get => GetLocalPropertyAsInt32("ttl");
+            set => SetLocalProperty("ttl", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an updated time.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? UpdatedTime
+        {
+            get => GetLocalPropertyAsDateTime("updated_time");
+            set => SetLocalProperty("updated_time", value);
         }
 
         #region AlternateLocale
@@ -185,6 +218,31 @@ namespace Shipwreck.OpenGraph
 
         #endregion Audio
 
+        #region SeeAlso
+
+        /// <summary>
+        /// Gets or sets a see also.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string SeeAlso
+        {
+            get => GetLocalProperty("see_also");
+            set => SetLocalProperty("see_also", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all see alsos.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> SeeAlsos
+        {
+            get => new GraphObjectPropertyCollection(this, "see_also");
+            set => SetLocalProperty("see_also", value);
+        }
+
+        #endregion SeeAlso
+
     }
     partial class GraphAudio
     {
@@ -244,6 +302,17 @@ namespace Shipwreck.OpenGraph
         {
             get => GetLocalProperty("alt");
             set => SetLocalProperty("alt", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an user generated.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Boolean? UserGenerated
+        {
+            get => GetLocalPropertyAsBoolean("user_generated");
+            set => SetLocalProperty("user_generated", value);
         }
 
     }

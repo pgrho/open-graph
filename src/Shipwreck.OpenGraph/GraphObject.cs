@@ -248,6 +248,22 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Returns a first value of the specified property as boolean value.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public bool? GetLocalPropertyAsBoolean(string property)
+            => bool.TryParse(GetLocalProperty(property), out bool i) ? i : (bool?)null;
+
+        /// <summary>
+        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
+        /// </summary>
+        /// <param name="property">The local name of the property.</param>
+        /// <param name="value">A new value to set.</param>
+        public void SetLocalProperty(string property, bool? value)
+            => SetLocalProperty(property, value == null ? null : value == true ? "true" : "false");
+
+        /// <summary>
         /// Returns a first value of the specified property as integer value.
         /// </summary>
         /// <param name="property">The local name of the property.</param>
