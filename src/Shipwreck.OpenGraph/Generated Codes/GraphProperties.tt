@@ -122,7 +122,8 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
 <#
     }
 
-    foreach (var p in properties.Where(e => e.Class == C))
+    var props = properties.Where(e => e.Class == C);
+    foreach (var p in props)
     {
         var N = p.Name;
         var PL = p.Plural ?? (N + 's');
@@ -175,6 +176,29 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
 <#
     }
 
+
+    var children = props.Where(p => p.Type != "string").ToArray();
+
+    if (children.Any() && C != "GraphObject")
+    {
+#>
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+<#
+        foreach (var p in children)
+        {
+#>
+            if (property.StartsWithChildPath(Path, "<#= p.Property #>", out matched))
+            {
+                return new <#= p.Type #>(Path + ":<#= p.Property #>");
+            }
+<#
+        }
+#>
+            return base.CreateNewChild(property, out matched);
+        }
+<#
+    }
 #>
     }
 <#

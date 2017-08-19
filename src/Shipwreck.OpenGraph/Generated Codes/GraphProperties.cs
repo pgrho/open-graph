@@ -218,6 +218,18 @@ namespace Shipwreck.OpenGraph
 
 #endregion Musician
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "album", out matched))
+            {
+                return new MusicSongAlbum(Path + ":album");
+            }
+            if (property.StartsWithChildPath(Path, "musician", out matched))
+            {
+                return new Profile(Path + ":musician");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class MusicAlbum
     {
@@ -273,6 +285,18 @@ namespace Shipwreck.OpenGraph
 
 #endregion Musician
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "song", out matched))
+            {
+                return new MusicAlbumSong(Path + ":song");
+            }
+            if (property.StartsWithChildPath(Path, "musician", out matched))
+            {
+                return new Profile(Path + ":musician");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class MusicPlaylist
     {
@@ -318,6 +342,18 @@ namespace Shipwreck.OpenGraph
 
 #endregion Creator
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "song", out matched))
+            {
+                return new MusicAlbumSong(Path + ":song");
+            }
+            if (property.StartsWithChildPath(Path, "creator", out matched))
+            {
+                return new Profile(Path + ":creator");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class MusicRadioStation
     {
@@ -342,6 +378,14 @@ namespace Shipwreck.OpenGraph
 
 #endregion Creator
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "creator", out matched))
+            {
+                return new Profile(Path + ":creator");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class VideoObject
     {
@@ -450,6 +494,22 @@ namespace Shipwreck.OpenGraph
 
 #endregion Tag
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "actor", out matched))
+            {
+                return new Actor(Path + ":actor");
+            }
+            if (property.StartsWithChildPath(Path, "director", out matched))
+            {
+                return new Profile(Path + ":director");
+            }
+            if (property.StartsWithChildPath(Path, "writer", out matched))
+            {
+                return new Profile(Path + ":writer");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class VideoEpisode
     {
@@ -474,6 +534,14 @@ namespace Shipwreck.OpenGraph
 
 #endregion Series
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "series", out matched))
+            {
+                return new VideoTVShow(Path + ":series");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class Article
     {
@@ -560,6 +628,14 @@ namespace Shipwreck.OpenGraph
 
 #endregion Tag
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "author", out matched))
+            {
+                return new Profile(Path + ":author");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class Book
     {
@@ -626,6 +702,14 @@ namespace Shipwreck.OpenGraph
 
 #endregion Tag
 
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            if (property.StartsWithChildPath(Path, "author", out matched))
+            {
+                return new Profile(Path + ":author");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class GraphAudio
     {
