@@ -275,5 +275,24 @@ namespace Shipwreck.OpenGraph
 
             return base.TryAddMetadata(property, content);
         }
+
+        public override IEnumerator<GraphProperty> GetEnumerator()
+        {
+            using (var iter = base.GetEnumerator())
+            {
+                while (iter.MoveNext())
+                {
+                    yield return iter.Current;
+                }
+            }
+
+            if (_TypeObject != null)
+            {
+                foreach (var kv in _TypeObject)
+                {
+                    yield return kv;
+                }
+            }
+        }
     }
 }

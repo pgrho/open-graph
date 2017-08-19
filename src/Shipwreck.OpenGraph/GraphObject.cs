@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Shipwreck.OpenGraph
 {
-    public abstract partial class GraphObject
+    public abstract partial class GraphObject : IEnumerable<GraphProperty>
     {
         internal List<GraphObject> _Children;
         internal List<GraphProperty> _LocalProperties;
@@ -169,5 +170,30 @@ namespace Shipwreck.OpenGraph
 
         public void SetLocalProperty(string property, DateTime? value)
             => SetLocalProperty(property, value?.ToString("o"));
+
+        public virtual IEnumerator<GraphProperty> GetEnumerator()
+        {
+            if (_LocalProperties != null)
+            {
+                foreach (var kv in _LocalProperties)
+                {
+                    yield return kv;
+                }
+            }
+
+            if (_Children != null)
+            {
+                foreach (var c in _Children)
+                {
+                    foreach (var kv in c)
+                    {
+                        yield return kv;
+                    }
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }
