@@ -20,18 +20,18 @@ var properties = new []
     new { Class = "GraphObject", Name = "Video", Property = "video", Plural = (string)null, Type = "GraphVideo" },
     new { Class = "GraphObject", Name = "Audio", Property = "audio", Plural = (string)null, Type = "GraphAudio" },
     
-    new { Class = "MusicSong", Name = "Album", Property = "album", Plural = (string)null, Type = "MusicSongAlbum" },
+    new { Class = "MusicSong", Name = "Album", Property = "album", Plural = (string)null, Type = "MusicAlbum" },
     new { Class = "MusicSong", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
     
-    new { Class = "MusicAlbum", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicAlbum", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicSong" },
     new { Class = "MusicAlbum", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
     
-    new { Class = "MusicPlaylist", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicPlaylist", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicSong" },
     new { Class = "MusicPlaylist", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
     
     new { Class = "MusicRadioStation", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
     
-    new { Class = "VideoObject", Name = "Actor", Property = "actor", Plural = (string)null, Type = "Actor" },
+    new { Class = "VideoObject", Name = "Actor", Property = "actor", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Director", Property = "director", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Writer", Property = "writer", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
@@ -68,19 +68,15 @@ var singleProperties = new []
     new { Class = "GraphVideo", Name = "Alt", Property = "alt", Type = "string", Description = (string)null },
 
     new { Class = "MusicSong", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
-
-    new { Class = "MusicAlbumSong", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
-    new { Class = "MusicAlbumSong", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicSong", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicSong", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
 
     new { Class = "MusicAlbum", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
-
-    new { Class = "MusicSongAlbum", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
-    new { Class = "MusicSongAlbum", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicAlbum", Name = "Disc", Property = "disc", Type = "Int32?", Description = (string)null },
+    new { Class = "MusicAlbum", Name = "Track", Property = "track", Type = "Int32?", Description = (string)null },
 
     new { Class = "VideoObject", Name = "Duration", Property = "duration", Type = "Int32?", Description = (string)null },
     new { Class = "VideoObject", Name = "ReleaseDate", Property = "release_date", Type = "DateTime?", Description = (string)null },
-
-    new { Class = "Actor", Name = "Role", Property = "role", Type = "string", Description = (string)null },
 
     new { Class = "Article", Name = "PublishedTime", Property = "published_time", Type = "DateTime?", Description = (string)null },
     new { Class = "Article", Name = "ModifiedTime", Property = "modified_time", Type = "DateTime?", Description = (string)null },
@@ -94,6 +90,7 @@ var singleProperties = new []
     new { Class = "Profile", Name = "LastName", Property = "last_name", Type = "string", Description = (string)null },
     new { Class = "Profile", Name = "UserName", Property = "username", Type = "string", Description = (string)null },
     new { Class = "Profile", Name = "Gender", Property = "gender", Type = "string", Description = (string)null },
+    new { Class = "Profile", Name = "Role", Property = "role", Type = "string", Description = (string)null },
 };
 
 foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select(p => p.Class)).Distinct())

@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.OpenGraph
 {
-    public partial class Profile : GraphObject
+    public sealed partial class Profile : GraphObject
     {
         public Profile()
             : this("profile")

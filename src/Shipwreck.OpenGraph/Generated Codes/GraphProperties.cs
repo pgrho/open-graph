@@ -176,13 +176,33 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("duration", value);
         }
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Disc
+        {
+            get => GetLocalPropertyAsInt32("disc");
+            set => SetLocalProperty("disc", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Track
+        {
+            get => GetLocalPropertyAsInt32("track");
+            set => SetLocalProperty("track", value);
+        }
+
 #region Album
 
         [DefaultValue(null)]
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public MusicSongAlbum Album
+        public MusicAlbum Album
         {
             get => Albums?.FirstOrDefault();
         }
@@ -190,9 +210,9 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public IList<MusicSongAlbum> Albums
+        public IList<MusicAlbum> Albums
         {
-            get => new GraphObjectChildCollection<MusicSongAlbum>(this, "album");
+            get => new GraphObjectChildCollection<MusicAlbum>(this, "album");
         }
 
 #endregion Album
@@ -222,7 +242,7 @@ namespace Shipwreck.OpenGraph
         {
             if (property.StartsWithChildPath(Path, "album", out matched))
             {
-                return new MusicSongAlbum(Path + ":album");
+                return new MusicAlbum(Path + ":album");
             }
             if (property.StartsWithChildPath(Path, "musician", out matched))
             {
@@ -243,13 +263,33 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("release_date", value);
         }
 
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Disc
+        {
+            get => GetLocalPropertyAsInt32("disc");
+            set => SetLocalProperty("disc", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public Int32? Track
+        {
+            get => GetLocalPropertyAsInt32("track");
+            set => SetLocalProperty("track", value);
+        }
+
 #region Song
 
         [DefaultValue(null)]
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public MusicAlbumSong Song
+        public MusicSong Song
         {
             get => Songs?.FirstOrDefault();
         }
@@ -257,9 +297,9 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public IList<MusicAlbumSong> Songs
+        public IList<MusicSong> Songs
         {
-            get => new GraphObjectChildCollection<MusicAlbumSong>(this, "song");
+            get => new GraphObjectChildCollection<MusicSong>(this, "song");
         }
 
 #endregion Song
@@ -289,7 +329,7 @@ namespace Shipwreck.OpenGraph
         {
             if (property.StartsWithChildPath(Path, "song", out matched))
             {
-                return new MusicAlbumSong(Path + ":song");
+                return new MusicSong(Path + ":song");
             }
             if (property.StartsWithChildPath(Path, "musician", out matched))
             {
@@ -306,7 +346,7 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public MusicAlbumSong Song
+        public MusicSong Song
         {
             get => Songs?.FirstOrDefault();
         }
@@ -314,9 +354,9 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public IList<MusicAlbumSong> Songs
+        public IList<MusicSong> Songs
         {
-            get => new GraphObjectChildCollection<MusicAlbumSong>(this, "song");
+            get => new GraphObjectChildCollection<MusicSong>(this, "song");
         }
 
 #endregion Song
@@ -346,7 +386,7 @@ namespace Shipwreck.OpenGraph
         {
             if (property.StartsWithChildPath(Path, "song", out matched))
             {
-                return new MusicAlbumSong(Path + ":song");
+                return new MusicSong(Path + ":song");
             }
             if (property.StartsWithChildPath(Path, "creator", out matched))
             {
@@ -415,7 +455,7 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public Actor Actor
+        public Profile Actor
         {
             get => Actors?.FirstOrDefault();
         }
@@ -423,9 +463,9 @@ namespace Shipwreck.OpenGraph
 #if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 #endif
-        public IList<Actor> Actors
+        public IList<Profile> Actors
         {
-            get => new GraphObjectChildCollection<Actor>(this, "actor");
+            get => new GraphObjectChildCollection<Profile>(this, "actor");
         }
 
 #endregion Actor
@@ -498,7 +538,7 @@ namespace Shipwreck.OpenGraph
         {
             if (property.StartsWithChildPath(Path, "actor", out matched))
             {
-                return new Actor(Path + ":actor");
+                return new Profile(Path + ":actor");
             }
             if (property.StartsWithChildPath(Path, "director", out matched))
             {
@@ -810,65 +850,6 @@ namespace Shipwreck.OpenGraph
         }
 
     }
-    partial class MusicAlbumSong
-    {
-        [DefaultValue(null)]
-#if !NETSTANDARD1_3
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
-        public Int32? Disc
-        {
-            get => GetLocalPropertyAsInt32("disc");
-            set => SetLocalProperty("disc", value);
-        }
-
-        [DefaultValue(null)]
-#if !NETSTANDARD1_3
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
-        public Int32? Track
-        {
-            get => GetLocalPropertyAsInt32("track");
-            set => SetLocalProperty("track", value);
-        }
-
-    }
-    partial class MusicSongAlbum
-    {
-        [DefaultValue(null)]
-#if !NETSTANDARD1_3
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
-        public Int32? Disc
-        {
-            get => GetLocalPropertyAsInt32("disc");
-            set => SetLocalProperty("disc", value);
-        }
-
-        [DefaultValue(null)]
-#if !NETSTANDARD1_3
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
-        public Int32? Track
-        {
-            get => GetLocalPropertyAsInt32("track");
-            set => SetLocalProperty("track", value);
-        }
-
-    }
-    partial class Actor
-    {
-        [DefaultValue(null)]
-#if !NETSTANDARD1_3
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
-        public string Role
-        {
-            get => GetLocalProperty("role");
-            set => SetLocalProperty("role", value);
-        }
-
-    }
     partial class Profile
     {
         [DefaultValue(null)]
@@ -909,6 +890,16 @@ namespace Shipwreck.OpenGraph
         {
             get => GetLocalProperty("gender");
             set => SetLocalProperty("gender", value);
+        }
+
+        [DefaultValue(null)]
+#if !NETSTANDARD1_3
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+#endif
+        public string Role
+        {
+            get => GetLocalProperty("role");
+            set => SetLocalProperty("role", value);
         }
 
     }

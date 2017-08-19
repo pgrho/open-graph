@@ -95,5 +95,37 @@ namespace Shipwreck.OpenGraph
             Assert.NotNull(target.MusicAlbum);
             Assert.Equal(new DateTime(2003, 4, 5), target.MusicAlbum.ReleaseDate);
         }
+
+        [Fact]
+        public void DiscTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.album' />
+<meta property='music:song:disc' content='55301' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicAlbum);
+            Assert.Equal(new int?[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Disc));
+        }
+
+        [Fact]
+        public void TrackTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='og:type' content='music.album' />
+<meta property='music:song:track' content='55301' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.NotNull(target.MusicAlbum);
+            Assert.Equal(new int?[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Track));
+        }
     }
 }

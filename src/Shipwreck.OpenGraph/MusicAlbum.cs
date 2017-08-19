@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.OpenGraph
 {
-    public partial class MusicAlbum : GraphObject
+    public sealed partial class MusicAlbum : GraphObject
     {
         public MusicAlbum()
             : this("music")
