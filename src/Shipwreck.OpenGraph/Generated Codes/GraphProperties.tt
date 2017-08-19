@@ -146,6 +146,16 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
             get => GetLocalProperty("<#= PN #>");
             set => SetLocalProperty("<#= PN #>", value);
         }
+
+        /// <summary>
+        /// Gets or sets a list of <#= p.SummaryPlural #>.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<<#= T #>> <#= PL #>
+        {
+            get => new <#= CT #>(this, "<#= PN #>");
+            set => SetLocalProperty("<#= PN #>", value);
+        }
 <#
         }
         else
@@ -158,11 +168,9 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= N #>
         {
-            get => <#= PL #>?.FirstOrDefault();
+            get => GetChild<<#= T #>>("<#= PN #>");
+            set => SetChild("<#= PN #>", value);
         }
-<#
-        }
-#>
 
         /// <summary>
         /// Gets or sets a list of <#= p.SummaryPlural #>.
@@ -171,13 +179,16 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>(this, "<#= PN #>");
+            set => SetChild<<#= T #>>("<#= PN #>", value);
         }
+<#
+        }
+#>
 
         #endregion <#= N #>
 
 <#
     }
-
 
     var children = props.Where(p => p.Type != "string").ToArray();
 
