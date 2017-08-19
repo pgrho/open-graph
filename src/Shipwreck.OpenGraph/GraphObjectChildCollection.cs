@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph
@@ -17,6 +18,8 @@ namespace Shipwreck.OpenGraph
 
         internal GraphObject Object { get; }
         internal string Property { get; }
+
+        #region Template Methods
 
         /// <inheritdoc />
         internal override IList<GraphObject> PeekInternalList()
@@ -38,6 +41,10 @@ namespace Shipwreck.OpenGraph
         internal override GraphObject ToInternalItem(T item)
             => item;
 
+        #endregion Template Methods
+
+        #region Object Methods
+
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
@@ -48,5 +55,7 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         public override int GetHashCode()
             => Object.GetHashCode() ^ Property.GetHashCode();
+
+        #endregion Object Methods
     }
 }
