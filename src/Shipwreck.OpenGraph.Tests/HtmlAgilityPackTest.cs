@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using Xunit;
 using Xunit.Abstractions;
@@ -80,6 +79,34 @@ namespace Shipwreck.OpenGraph
         {
             _Output = output;
         }
+
+        [Fact]
+        public void BookTest()
+            => Run("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/master/book-isbn10.html",
+                new Graph()
+                {
+                    Title = "Steve Jobs",
+                    SiteName = "Open Graph protocol examples",
+                    Type = "book",
+                    Locale = "en_US",
+                    Url = "http://examples.opengraphprotocol.us/book-isbn10.html",
+
+                    Image = new GraphImage("og:image")
+                    {
+                        Url = "http://examples.opengraphprotocol.us/media/images/50.png",
+                        SecureUrl = "https://d72cgtgi6hvvl.cloudfront.net/media/images/50.png",
+                        Width = 50,
+                        Height = 50,
+                        Type = "image/png"
+                    },
+
+                    Book = new Book()
+                    {
+                        ["release_date"] = "2011-10-24",
+                        ISBN = "1451648537",
+                        Tags = new[] { "Steve Jobs", "Apple", "Pixar" }
+                    }
+                });
 
         [Fact]
         public void VideoMovieTest()
