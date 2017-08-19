@@ -13,18 +13,23 @@ namespace Shipwreck.OpenGraph
             _Property = property;
         }
 
+        /// <inheritdoc />
         internal override IList<GraphProperty> PeekInternalList()
             => _Object._LocalProperties;
 
+        /// <inheritdoc />
         internal override IList<GraphProperty> GetOrCreateInternalList()
             => _Object.LocalProperties;
 
+        /// <inheritdoc />
         internal override bool ShouldInclude(GraphProperty internalItem)
             => internalItem.Property.MachesChildPath(_Object.Path, _Property);
 
+        /// <inheritdoc />
         internal override string ToItem(GraphProperty internalItem)
             => internalItem.Content;
 
+        /// <inheritdoc />
         internal override GraphProperty ToInternalItem(string item)
             => new GraphProperty(_Object.Path + ":" + _Property, item);
     }

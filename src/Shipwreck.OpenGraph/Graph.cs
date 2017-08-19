@@ -19,6 +19,7 @@ namespace Shipwreck.OpenGraph
         {
         }
 
+        /// <inheritdoc />
         internal override bool IsRoot => true;
 
         public GraphObject TypeObject => _TypeObject;
@@ -176,6 +177,7 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <inheritdoc />
         internal override bool TryAddMetadata(string property, string content)
         {
             if (property.MachesPath(Path))
@@ -276,6 +278,7 @@ namespace Shipwreck.OpenGraph
             return base.TryAddMetadata(property, content);
         }
 
+        /// <inheritdoc />
         public override IEnumerator<GraphProperty> GetEnumerator()
         {
             using (var iter = base.GetEnumerator())
