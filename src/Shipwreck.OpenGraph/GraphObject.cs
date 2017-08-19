@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Shipwreck.OpenGraph
 {
@@ -11,6 +12,8 @@ namespace Shipwreck.OpenGraph
     /// </summary>
     public abstract partial class GraphObject : IEnumerable<GraphProperty>
     {
+        private static readonly Regex _PropertyPattern = new Regex("^[a-z][a-z0-9_]*(:[a-z][a-z0-9_]*)+$", RegexOptions.IgnoreCase);
+
         internal List<GraphObject> _Children;
         internal List<GraphProperty> _LocalProperties;
 
@@ -96,6 +99,9 @@ namespace Shipwreck.OpenGraph
 
         #endregion Properties
 
+        internal static bool IsValidProperty(string property)
+            => property != null && _PropertyPattern.IsMatch(property);
+
         internal void LoadProperties(IEnumerable<GraphProperty> properties)
         {
             var stack = new List<GraphObject>(2);
@@ -103,6 +109,12 @@ namespace Shipwreck.OpenGraph
 
             foreach (var kv in properties)
             {
+                //ignores property without colon.
+                if (!IsValidProperty(kv.Property))
+                {
+                    continue;
+                }
+
                 for (int i = stack.Count - 1; i >= 0; i--)
                 {
                     var obj = stack[i];
