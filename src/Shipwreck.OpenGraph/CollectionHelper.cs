@@ -26,5 +26,34 @@ namespace Shipwreck.OpenGraph
                 }
             }
         }
+
+        public static void Set<T>(this IList<T> collection, T value)
+            where T : GraphObject
+        {
+            collection.Clear();
+
+            if (value != null)
+            {
+                collection.Add(value);
+            }
+        }
+        public static void Set<T>(this IList<T> collection, IEnumerable<T> value)
+            where T : GraphObject
+        {
+            if (collection.Equals(value))
+            {
+                return;
+            }
+
+            collection.Clear();
+
+            if (value != null)
+            {
+                foreach (var e in value)
+                {
+                    collection.Add(e);
+                }
+            }
+        }
     }
 }

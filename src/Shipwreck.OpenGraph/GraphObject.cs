@@ -157,46 +157,6 @@ namespace Shipwreck.OpenGraph
             return true;
         }
         
-        #region Child accessors
-
-        internal T GetChild<T>(string property)
-            where T : GraphObject
-            => new GraphObjectChildCollection<T>(this, property).FirstOrDefault();
-
-        internal void SetChild<T>(string property, T value)
-            where T : GraphObject
-        {
-            var col = new GraphObjectChildCollection<T>(this, property);
-            col.Clear();
-
-            if (value != null)
-            {
-                Children.Add(value);
-            }
-        }
-
-        internal void SetChild<T>(string property, IEnumerable<T> values)
-            where T : GraphObject
-        {
-            var pc = values as GraphObjectChildCollection<T>;
-            if (pc?.Object == this && pc.Property == property)
-            {
-                return;
-            }
-            var col = new GraphObjectChildCollection<T>(this, property);
-            col.Clear();
-
-            if (values != null)
-            {
-                foreach (var v in values)
-                {
-                    Children.Add(v);
-                }
-            }
-        }
-
-        #endregion Child accessors
-
         #region Local Property accessors
 
         /// <summary>

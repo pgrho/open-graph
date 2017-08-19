@@ -37,5 +37,16 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject ToInternalItem(T item)
             => item;
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            var other = obj as GraphObjectChildCollection<T>;
+            return Object == other?.Object && Property == other.Property && GetType() == other.GetType();
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+            => Object.GetHashCode() ^ Property.GetHashCode();
     }
 }

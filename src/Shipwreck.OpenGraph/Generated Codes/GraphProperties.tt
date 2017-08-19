@@ -16,11 +16,11 @@ namespace Shipwreck.OpenGraph
 
 var properties = new []
 {
-    new M("GraphObject", "AlternateLocale", "string", isArray: true) { Property = "locale:alternate" },
+    new M("GraphObject", "AlternateLocale", "string", isArray: true) { Path = "locale:alternate" },
     new M("GraphObject", "Image", "GraphImage", isArray: true),
     new M("GraphObject", "Video", "GraphVideo", isArray: true),
     new M("GraphObject", "Audio", "GraphAudio", isArray: true),
-    new M("GraphObject", "Restriction", "GraphRestriction", isArray: true) { Property = "restrictions" },
+    new M("GraphObject", "Restriction", "GraphRestriction", isArray: true) { Path = "restrictions" },
     new M("GraphObject", "SeeAlso", "string", isArray: true),
     new M("GraphObject", "Title", "string"),
     new M("GraphObject", "Type", "string"),
@@ -30,7 +30,7 @@ var properties = new []
     new M("GraphObject", "Locale", "string"),
     new M("GraphObject", "RichAttachment", "Boolean?"),
     new M("GraphObject", "SiteName", "string"),
-    new M("GraphObject", "TimeToLive", "Int32?") { Property = "ttl" },
+    new M("GraphObject", "TimeToLive", "Int32?") { Path = "ttl" },
     new M("GraphObject", "UpdatedTime", "DateTime?"),
 
     new M("GraphAudio", "SecureUrl", "string"),
@@ -46,16 +46,16 @@ var properties = new []
     new M("GraphVideo", "Height", "Int32?"),
     new M("GraphVideo", "Alt", "string"),
 
-    new M("GraphRestriction", "AllowedContry", "string", isArray: true) { Plural = "AllowedCountries", Property = "country:allowed" },
-    new M("GraphRestriction", "DisallowedContry", "string", isArray: true) { Plural = "DisallowedCountries", Property = "country:disallowed" },
+    new M("GraphRestriction", "AllowedContry", "string", isArray: true) { Plural = "AllowedCountries", Path = "country:allowed" },
+    new M("GraphRestriction", "DisallowedContry", "string", isArray: true) { Plural = "DisallowedCountries", Path = "country:disallowed" },
     new M("GraphRestriction", "Age", "string"),
     new M("GraphRestriction", "Content", "string", isArray: true),
 
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
-    new M("MusicSong", "Preview", "GraphAudio", isArray: true) { Property = "preview_url" },
+    new M("MusicSong", "Preview", "GraphAudio", isArray: true) { Path = "preview_url" },
     new M("MusicSong", "Duration", "Int32?"),
-    new M("MusicSong", "ISRC", "string") { Property = "isrc", SummaryName = "ISRC" },
+    new M("MusicSong", "ISRC", "string") { Path = "isrc", SummaryName = "ISRC" },
     new M("MusicSong", "ReleaseDate", "DateTime?"),
     new M("MusicSong", "ReleaseType", "string"),
     new M("MusicSong", "Disc", "Int32?"),
@@ -94,12 +94,12 @@ var properties = new []
 
     new M("Book", "Author", "Profile", isArray: true),
     new M("Book", "Tag", "string", isArray: true),
-    new M("Book", "ISBN", "string") { Property = "isbn", SummaryName = "ISBN" },
+    new M("Book", "ISBN", "string") { Path = "isbn", SummaryName = "ISBN" },
     new M("Book", "ReleaseDate", "DateTime?"),
 
     new M("Profile", "FirstName", "string"),
     new M("Profile", "LastName", "string"),
-    new M("Profile", "UserName", "string") { Property = "username" },
+    new M("Profile", "UserName", "string") { Path = "username" },
     new M("Profile", "Gender", "string"),
     new M("Profile", "Role", "string"),
     
@@ -129,7 +129,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
     {
         var N = p.Name;
         var T = p.Type;
-        var PN = p.Property;
+        var PN = p.Path;
 #>
         /// <summary>
         /// Gets or sets <#= p.SummaryName #>.
@@ -150,8 +150,8 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var N = p.Name;
         var PL = p.Plural ?? (N + 's');
         var T = p.Type;
-        var PN = p.Property;
-        var CT = T == "string" ? "GraphObjectPropertyCollection" : $"GraphObjectChildCollection<{T}>";
+        var PN = p.Path;
+        var CT = T == "string" ? "GraphObjectPropertyCollection" : p.OverridesPath ?  $"GraphChildCollection<{T}>" : $"GraphObjectChildCollection<{T}>";
 #>
         #region <#= N #>
 
@@ -191,8 +191,8 @@ foreach (var g in properties.GroupBy(p => p.Class))
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= N #>
         {
-            get => GetChild<<#= T #>>("<#= PN #>");
-            set => SetChild("<#= PN #>", value);
+            get => <#= PL #>.FirstOrDefault();
+            set => <#= PL #>.Set(value);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>(this, "<#= PN #>");
-            set => SetChild<<#= T #>>("<#= PN #>", value);
+            set => <#= PL #>.Set(value);
         }
 <#
         }
@@ -225,12 +225,25 @@ foreach (var g in properties.GroupBy(p => p.Class))
 <#
         foreach (var p in children)
         {
-#>
-            if (property.StartsWithChildPath(Path, "<#= p.Property #>", out matched))
+            if (p.OverridesPath)
             {
-                return new <#= p.Type #>(Path + ":<#= p.Property #>");
+#>
+            matched = property == "<#= p.Path #>";
+            if (matched || property.StartsWith(":<#= p.Path #>"))
+            {
+                return new <#= p.Type #>("<#= p.Path #>");
             }
 <#
+            }
+            else
+            {
+#>
+            if (property.StartsWithChildPath(Path, "<#= p.Path #>", out matched))
+            {
+                return new <#= p.Type #>(Path + ":<#= p.Path #>");
+            }
+<#
+            }
         }
 #>
             return <#= isBase ? "null" : "base.CreateNewChild(property, out matched)" #>;
@@ -275,7 +288,7 @@ foreach (var T in objectTypes)
 }<#+
 public class M
 {
-    private string _Property;
+    private string _Path;
     private string _Plural;
     private string _SummaryName;
     private string _SummaryPlural;
@@ -292,14 +305,15 @@ public class M
     public string Name { get; set; }
     public string Type { get; set; }
     public bool IsArray { get; set; }
+    public bool OverridesPath { get; set; }
     
-    public string Property
+    public string Path
     {
         get
         {
-            if (_Property != null)
+            if (_Path != null)
             {
-                return _Property;
+                return _Path;
             }
             var sb = new StringBuilder(Name);
 
@@ -322,7 +336,7 @@ public class M
 
             return sb.ToString();
         }
-        set => _Property = value;
+        set => _Path = value;
     }
     public string Plural
     {

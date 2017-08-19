@@ -152,8 +152,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public GraphImage Image
         {
-            get => GetChild<GraphImage>("image");
-            set => SetChild("image", value);
+            get => Images.FirstOrDefault();
+            set => Images.Set(value);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Shipwreck.OpenGraph
         public IList<GraphImage> Images
         {
             get => new GraphObjectChildCollection<GraphImage>(this, "image");
-            set => SetChild<GraphImage>("image", value);
+            set => Images.Set(value);
         }
 
         #endregion Image
@@ -177,8 +177,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public GraphVideo Video
         {
-            get => GetChild<GraphVideo>("video");
-            set => SetChild("video", value);
+            get => Videos.FirstOrDefault();
+            set => Videos.Set(value);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Shipwreck.OpenGraph
         public IList<GraphVideo> Videos
         {
             get => new GraphObjectChildCollection<GraphVideo>(this, "video");
-            set => SetChild<GraphVideo>("video", value);
+            set => Videos.Set(value);
         }
 
         #endregion Video
@@ -202,8 +202,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public GraphAudio Audio
         {
-            get => GetChild<GraphAudio>("audio");
-            set => SetChild("audio", value);
+            get => Audios.FirstOrDefault();
+            set => Audios.Set(value);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Shipwreck.OpenGraph
         public IList<GraphAudio> Audios
         {
             get => new GraphObjectChildCollection<GraphAudio>(this, "audio");
-            set => SetChild<GraphAudio>("audio", value);
+            set => Audios.Set(value);
         }
 
         #endregion Audio
@@ -227,8 +227,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public GraphRestriction Restriction
         {
-            get => GetChild<GraphRestriction>("restrictions");
-            set => SetChild("restrictions", value);
+            get => Restrictions.FirstOrDefault();
+            set => Restrictions.Set(value);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Shipwreck.OpenGraph
         public IList<GraphRestriction> Restrictions
         {
             get => new GraphObjectChildCollection<GraphRestriction>(this, "restrictions");
-            set => SetChild<GraphRestriction>("restrictions", value);
+            set => Restrictions.Set(value);
         }
 
         #endregion Restriction
@@ -575,8 +575,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MusicAlbum Album
         {
-            get => GetChild<MusicAlbum>("album");
-            set => SetChild("album", value);
+            get => Albums.FirstOrDefault();
+            set => Albums.Set(value);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Shipwreck.OpenGraph
         public IList<MusicAlbum> Albums
         {
             get => new GraphObjectChildCollection<MusicAlbum>(this, "album");
-            set => SetChild<MusicAlbum>("album", value);
+            set => Albums.Set(value);
         }
 
         #endregion Album
@@ -600,8 +600,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Musician
         {
-            get => GetChild<Profile>("musician");
-            set => SetChild("musician", value);
+            get => Musicians.FirstOrDefault();
+            set => Musicians.Set(value);
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Musicians
         {
             get => new GraphObjectChildCollection<Profile>(this, "musician");
-            set => SetChild<Profile>("musician", value);
+            set => Musicians.Set(value);
         }
 
         #endregion Musician
@@ -625,8 +625,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public GraphAudio Preview
         {
-            get => GetChild<GraphAudio>("preview_url");
-            set => SetChild("preview_url", value);
+            get => Previews.FirstOrDefault();
+            set => Previews.Set(value);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace Shipwreck.OpenGraph
         public IList<GraphAudio> Previews
         {
             get => new GraphObjectChildCollection<GraphAudio>(this, "preview_url");
-            set => SetChild<GraphAudio>("preview_url", value);
+            set => Previews.Set(value);
         }
 
         #endregion Preview
@@ -714,8 +714,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MusicSong Song
         {
-            get => GetChild<MusicSong>("song");
-            set => SetChild("song", value);
+            get => Songs.FirstOrDefault();
+            set => Songs.Set(value);
         }
 
         /// <summary>
@@ -725,7 +725,7 @@ namespace Shipwreck.OpenGraph
         public IList<MusicSong> Songs
         {
             get => new GraphObjectChildCollection<MusicSong>(this, "song");
-            set => SetChild<MusicSong>("song", value);
+            set => Songs.Set(value);
         }
 
         #endregion Song
@@ -739,8 +739,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Musician
         {
-            get => GetChild<Profile>("musician");
-            set => SetChild("musician", value);
+            get => Musicians.FirstOrDefault();
+            set => Musicians.Set(value);
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Musicians
         {
             get => new GraphObjectChildCollection<Profile>(this, "musician");
-            set => SetChild<Profile>("musician", value);
+            set => Musicians.Set(value);
         }
 
         #endregion Musician
@@ -791,8 +791,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Creator
         {
-            get => GetChild<Profile>("creator");
-            set => SetChild("creator", value);
+            get => Creators.FirstOrDefault();
+            set => Creators.Set(value);
         }
 
         /// <summary>
@@ -802,7 +802,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Creators
         {
             get => new GraphObjectChildCollection<Profile>(this, "creator");
-            set => SetChild<Profile>("creator", value);
+            set => Creators.Set(value);
         }
 
         #endregion Creator
@@ -816,8 +816,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public MusicSong Song
         {
-            get => GetChild<MusicSong>("song");
-            set => SetChild("song", value);
+            get => Songs.FirstOrDefault();
+            set => Songs.Set(value);
         }
 
         /// <summary>
@@ -827,7 +827,7 @@ namespace Shipwreck.OpenGraph
         public IList<MusicSong> Songs
         {
             get => new GraphObjectChildCollection<MusicSong>(this, "song");
-            set => SetChild<MusicSong>("song", value);
+            set => Songs.Set(value);
         }
 
         #endregion Song
@@ -857,8 +857,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Creator
         {
-            get => GetChild<Profile>("creator");
-            set => SetChild("creator", value);
+            get => Creators.FirstOrDefault();
+            set => Creators.Set(value);
         }
 
         /// <summary>
@@ -868,7 +868,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Creators
         {
             get => new GraphObjectChildCollection<Profile>(this, "creator");
-            set => SetChild<Profile>("creator", value);
+            set => Creators.Set(value);
         }
 
         #endregion Creator
@@ -916,8 +916,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Actor
         {
-            get => GetChild<Profile>("actor");
-            set => SetChild("actor", value);
+            get => Actors.FirstOrDefault();
+            set => Actors.Set(value);
         }
 
         /// <summary>
@@ -927,7 +927,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Actors
         {
             get => new GraphObjectChildCollection<Profile>(this, "actor");
-            set => SetChild<Profile>("actor", value);
+            set => Actors.Set(value);
         }
 
         #endregion Actor
@@ -941,8 +941,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Director
         {
-            get => GetChild<Profile>("director");
-            set => SetChild("director", value);
+            get => Directors.FirstOrDefault();
+            set => Directors.Set(value);
         }
 
         /// <summary>
@@ -952,7 +952,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Directors
         {
             get => new GraphObjectChildCollection<Profile>(this, "director");
-            set => SetChild<Profile>("director", value);
+            set => Directors.Set(value);
         }
 
         #endregion Director
@@ -966,8 +966,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Writer
         {
-            get => GetChild<Profile>("writer");
-            set => SetChild("writer", value);
+            get => Writers.FirstOrDefault();
+            set => Writers.Set(value);
         }
 
         /// <summary>
@@ -977,7 +977,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Writers
         {
             get => new GraphObjectChildCollection<Profile>(this, "writer");
-            set => SetChild<Profile>("writer", value);
+            set => Writers.Set(value);
         }
 
         #endregion Writer
@@ -1036,8 +1036,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public VideoTVShow Series
         {
-            get => GetChild<VideoTVShow>("series");
-            set => SetChild("series", value);
+            get => AllSeries.FirstOrDefault();
+            set => AllSeries.Set(value);
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace Shipwreck.OpenGraph
         public IList<VideoTVShow> AllSeries
         {
             get => new GraphObjectChildCollection<VideoTVShow>(this, "series");
-            set => SetChild<VideoTVShow>("series", value);
+            set => AllSeries.Set(value);
         }
 
         #endregion Series
@@ -1117,8 +1117,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Author
         {
-            get => GetChild<Profile>("author");
-            set => SetChild("author", value);
+            get => Authors.FirstOrDefault();
+            set => Authors.Set(value);
         }
 
         /// <summary>
@@ -1128,7 +1128,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Authors
         {
             get => new GraphObjectChildCollection<Profile>(this, "author");
-            set => SetChild<Profile>("author", value);
+            set => Authors.Set(value);
         }
 
         #endregion Author
@@ -1142,8 +1142,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Publisher
         {
-            get => GetChild<Profile>("publisher");
-            set => SetChild("publisher", value);
+            get => Publishers.FirstOrDefault();
+            set => Publishers.Set(value);
         }
 
         /// <summary>
@@ -1153,7 +1153,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Publishers
         {
             get => new GraphObjectChildCollection<Profile>(this, "publisher");
-            set => SetChild<Profile>("publisher", value);
+            set => Publishers.Set(value);
         }
 
         #endregion Publisher
@@ -1299,8 +1299,8 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Profile Author
         {
-            get => GetChild<Profile>("author");
-            set => SetChild("author", value);
+            get => Authors.FirstOrDefault();
+            set => Authors.Set(value);
         }
 
         /// <summary>
@@ -1310,7 +1310,7 @@ namespace Shipwreck.OpenGraph
         public IList<Profile> Authors
         {
             get => new GraphObjectChildCollection<Profile>(this, "author");
-            set => SetChild<Profile>("author", value);
+            set => Authors.Set(value);
         }
 
         #endregion Author
