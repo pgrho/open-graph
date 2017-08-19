@@ -42,18 +42,24 @@ var properties = new []
 
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
+    new M("MusicSong", "Preview", "GraphAudio", isArray: true) { Property = "preview_url" },
     new M("MusicSong", "Duration", "Int32?"),
+    new M("MusicSong", "ISRC", "string") { Property = "isrc", SummaryName = "ISRC" },
+    new M("MusicSong", "ReleaseDate", "DateTime?"),
+    new M("MusicSong", "ReleaseType", "string"),
     new M("MusicSong", "Disc", "Int32?"),
     new M("MusicSong", "Track", "Int32?"),
 
     new M("MusicAlbum", "Song", "MusicSong", isArray: true),
     new M("MusicAlbum", "Musician", "Profile", isArray: true),
     new M("MusicAlbum", "ReleaseDate", "DateTime?"),
+    new M("MusicAlbum", "ReleaseType", "string"),
     new M("MusicAlbum", "Disc", "Int32?"),
     new M("MusicAlbum", "Track", "Int32?"),
 
-    new M("MusicPlaylist", "Song", "MusicSong", isArray: true),
     new M("MusicPlaylist", "Creator", "Profile", isArray: true),
+    new M("MusicPlaylist", "Song", "MusicSong", isArray: true),
+    new M("MusicPlaylist", "SongCount", "Int32?"),
 
     new M("MusicRadioStation", "Creator", "Profile", isArray: true),
 

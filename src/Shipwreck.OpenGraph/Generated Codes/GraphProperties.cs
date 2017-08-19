@@ -308,6 +308,39 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Gets or sets ISRC.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ISRC
+        {
+            get => GetLocalProperty("isrc");
+            set => SetLocalProperty("isrc", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a release date.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a release type.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ReleaseType
+        {
+            get => GetLocalProperty("release_type");
+            set => SetLocalProperty("release_type", value);
+        }
+
+        /// <summary>
         /// Gets or sets a disc.
         /// </summary>
         [DefaultValue(null)]
@@ -379,6 +412,31 @@ namespace Shipwreck.OpenGraph
 
         #endregion Musician
 
+        #region Preview
+
+        /// <summary>
+        /// Gets or sets a preview.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public GraphAudio Preview
+        {
+            get => GetChild<GraphAudio>("preview_url");
+            set => SetChild("preview_url", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all previews.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<GraphAudio> Previews
+        {
+            get => new GraphObjectChildCollection<GraphAudio>(this, "preview_url");
+            set => SetChild<GraphAudio>("preview_url", value);
+        }
+
+        #endregion Preview
+
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(string property, out bool matched)
         {
@@ -389,6 +447,10 @@ namespace Shipwreck.OpenGraph
             if (property.StartsWithChildPath(Path, "musician", out matched))
             {
                 return new Profile(Path + ":musician");
+            }
+            if (property.StartsWithChildPath(Path, "preview_url", out matched))
+            {
+                return new GraphAudio(Path + ":preview_url");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -404,6 +466,17 @@ namespace Shipwreck.OpenGraph
         {
             get => GetLocalPropertyAsDateTime("release_date");
             set => SetLocalProperty("release_date", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a release type.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ReleaseType
+        {
+            get => GetLocalProperty("release_type");
+            set => SetLocalProperty("release_type", value);
         }
 
         /// <summary>
@@ -494,30 +567,16 @@ namespace Shipwreck.OpenGraph
     }
     partial class MusicPlaylist
     {
-        #region Song
-
         /// <summary>
-        /// Gets or sets a song.
+        /// Gets or sets a song count.
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public MusicSong Song
+        public Int32? SongCount
         {
-            get => GetChild<MusicSong>("song");
-            set => SetChild("song", value);
+            get => GetLocalPropertyAsInt32("song_count");
+            set => SetLocalProperty("song_count", value);
         }
-
-        /// <summary>
-        /// Gets or sets a list of all songs.
-        /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IList<MusicSong> Songs
-        {
-            get => new GraphObjectChildCollection<MusicSong>(this, "song");
-            set => SetChild<MusicSong>("song", value);
-        }
-
-        #endregion Song
 
         #region Creator
 
@@ -544,16 +603,41 @@ namespace Shipwreck.OpenGraph
 
         #endregion Creator
 
+        #region Song
+
+        /// <summary>
+        /// Gets or sets a song.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public MusicSong Song
+        {
+            get => GetChild<MusicSong>("song");
+            set => SetChild("song", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all songs.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<MusicSong> Songs
+        {
+            get => new GraphObjectChildCollection<MusicSong>(this, "song");
+            set => SetChild<MusicSong>("song", value);
+        }
+
+        #endregion Song
+
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(string property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "song", out matched))
-            {
-                return new MusicSong(Path + ":song");
-            }
             if (property.StartsWithChildPath(Path, "creator", out matched))
             {
                 return new Profile(Path + ":creator");
+            }
+            if (property.StartsWithChildPath(Path, "song", out matched))
+            {
+                return new MusicSong(Path + ":song");
             }
             return base.CreateNewChild(property, out matched);
         }
