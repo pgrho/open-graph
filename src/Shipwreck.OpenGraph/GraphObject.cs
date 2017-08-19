@@ -14,7 +14,7 @@ namespace Shipwreck.OpenGraph
     {
         private static readonly Regex _PropertyPattern = new Regex("^[a-z][a-z0-9_]*(:[a-z][a-z0-9_]*)+$", RegexOptions.IgnoreCase);
 
-        internal List<GraphObject> _Children;
+        internal GraphObjectCollection _Children;
         internal List<GraphProperty> _LocalProperties;
 
         /// <summary>
@@ -28,9 +28,12 @@ namespace Shipwreck.OpenGraph
 
         #region Properties
 
-        internal string Path { get; }
+        /// <summary>
+        /// Gets a parent object of this instance.
+        /// </summary>
+        public GraphObject Parent { get; internal set; }
 
-        internal virtual bool IsRoot => false;
+        internal string Path { get; }
 
         #region Children
 
@@ -40,8 +43,25 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IList<GraphObject> Children
         {
-            get => CollectionHelper.GetCollection(ref _Children);
-            set => CollectionHelper.SetCollection(ref _Children, value);
+            get => _Children ?? (_Children = new GraphObjectCollection(this));
+            set
+            {
+                if (value != _Children)
+                {
+                    _Children?.Clear();
+                    if (value?.Count > 0)
+                    {
+                        if (_Children == null)
+                        {
+                            _Children = new GraphObjectCollection(this);
+                        }
+                        foreach (var v in value)
+                        {
+                            _Children.Add(v);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -145,7 +165,7 @@ namespace Shipwreck.OpenGraph
         {
             var pathMatched = property.MachesPath(Path);
 
-            if (pathMatched || IsRoot)
+            if (pathMatched || Parent == null)
             {
                 var child = CreateNewChild(property, out var matched);
 

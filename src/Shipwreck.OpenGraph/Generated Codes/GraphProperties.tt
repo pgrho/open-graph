@@ -299,7 +299,7 @@ foreach (var T in objectTypes)
         public <#= T #> <#= T #>
         {
             get => _TypeObject as <#= T #>;
-            set => _TypeObject = value ?? (_TypeObject is <#= T #> ? null : _TypeObject);
+            set => TypeObject = value ?? (_TypeObject is <#= T #> ? null : _TypeObject);
         }
 
 <#

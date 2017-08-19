@@ -22,13 +22,35 @@ namespace Shipwreck.OpenGraph
         {
         }
 
-        /// <inheritdoc />
-        internal override bool IsRoot => true;
-
         /// <summary>
         /// Gets a type specific <see cref="GraphObject" />.
         /// </summary>
-        public GraphObject TypeObject => _TypeObject;
+        public GraphObject TypeObject
+        {
+            get => _TypeObject;
+            private set
+            {
+                if (value != _TypeObject)
+                {
+                    if (value?.Parent != null)
+                    {
+                        throw new InvalidOperationException("Specified item is already attached to an object.");
+                    }
+
+                    if (_TypeObject != null)
+                    {
+                        _TypeObject.Parent = null;
+                    }
+
+                    _TypeObject = value;
+
+                    if (_TypeObject != null)
+                    {
+                        _TypeObject.Parent = this;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified XHTML text.
