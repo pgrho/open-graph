@@ -501,5 +501,273 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion _TypeObject
+
+        #region Applink
+
+        #region AndroidApp
+
+        [Fact]
+        public void AndroidAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:android' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.AndroidApp.Url);
+        }
+
+        [Fact]
+        public void AndroidAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:android' content='The Rock' />
+<meta property='al:android' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.AndroidApps.Select(a => a.Url));
+        }
+
+        #endregion AndroidApp
+
+        #region IosApp
+
+        [Fact]
+        public void IosAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:ios' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.IosApp.Url);
+        }
+
+        [Fact]
+        public void IosAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:ios' content='The Rock' />
+<meta property='al:ios' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.IosApps.Select(a => a.Url));
+        }
+
+        #endregion IosApp
+
+        #region IPadApp
+
+        [Fact]
+        public void IPadAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:ipad' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.IPadApp.Url);
+        }
+
+        [Fact]
+        public void IPadAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:ipad' content='The Rock' />
+<meta property='al:ipad' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.IPadApps.Select(a => a.Url));
+        }
+
+        #endregion IPadApp
+
+        #region IPhoneApp
+
+        [Fact]
+        public void IPhoneAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:iphone' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.IPhoneApp.Url);
+        }
+
+        [Fact]
+        public void IPhoneAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:iphone' content='The Rock' />
+<meta property='al:iphone' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.IPhoneApps.Select(a => a.Url));
+        }
+
+        #endregion IPhoneApp
+
+        #region WebApp
+
+        [Fact]
+        public void WebAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:web' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.WebApp.Url);
+        }
+
+        [Fact]
+        public void WebAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:web' content='The Rock' />
+<meta property='al:web' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.WebApps.Select(a => a.Url));
+        }
+
+        #endregion WebApp
+
+        #region WindowsApp
+
+        [Fact]
+        public void WindowsAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.WindowsApp.Url);
+        }
+
+        [Fact]
+        public void WindowsAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows' content='The Rock' />
+<meta property='al:windows' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.WindowsApps.Select(a => a.Url));
+        }
+
+        #endregion WindowsApp
+
+        #region WindowsPhoneApp
+
+        [Fact]
+        public void WindowsPhoneAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows_phone' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.WindowsPhoneApp.Url);
+        }
+
+        [Fact]
+        public void WindowsPhoneAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows_phone' content='The Rock' />
+<meta property='al:windows_phone' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.WindowsPhoneApps.Select(a => a.Url));
+        }
+
+        #endregion WindowsPhoneApp
+
+        #region WindowsUniversalApp
+
+        [Fact]
+        public void WindowsUniversalAppTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows_universal' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.WindowsUniversalApp.Url);
+        }
+
+        [Fact]
+        public void WindowsUniversalAppsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='al:windows_universal' content='The Rock' />
+<meta property='al:windows_universal' content='The Rock 2' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.WindowsUniversalApps.Select(a => a.Url));
+        }
+
+        #endregion WindowsUniversalApp
+
+        #endregion Applink
     }
 }

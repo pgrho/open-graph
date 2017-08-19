@@ -32,6 +32,15 @@ var properties = new []
     new M("GraphObject", "SiteName", "string"),
     new M("GraphObject", "TimeToLive", "Int32?") { Path = "ttl" },
     new M("GraphObject", "UpdatedTime", "DateTime?"),
+    
+    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "al:android", OverridesPath = true },
+    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "al:ios", OverridesPath = true },
+    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "al:ipad", OverridesPath = true },
+    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "al:iphone", OverridesPath = true },
+    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "al:web", OverridesPath = true },
+    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "al:windows", OverridesPath = true },
+    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "al:windows_phone", OverridesPath = true },
+    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "al:windows_universal", OverridesPath = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 

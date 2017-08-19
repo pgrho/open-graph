@@ -120,43 +120,36 @@ namespace Shipwreck.OpenGraph
 
         internal virtual bool TryAddMetadata(string property, string content)
         {
-            if (!property.MachesPath(Path))
+            var pathMatched = property.MachesPath(Path);
+
+            if (pathMatched || IsRoot)
             {
-                if (IsRoot)
+                var child = CreateNewChild(property, out var matched);
+
+                if (child != null)
                 {
-                    LocalProperties.Add(new GraphProperty(property, content));
+                    Children.Add(child);
+                    child.AddMetadataOrSetUrl(matched, property, content);
                     return true;
                 }
 
-                return false;
-            }
+                if (pathMatched && property.MachesChildPath(Path, "url"))
+                {
+                    if (Url == null)
+                    {
+                        Url = content;
+                        return true;
+                    }
+                    return false;
+                }
 
-            bool matched;
-
-            var child = CreateNewChild(property, out matched);
-
-            if (child != null)
-            {
-                Children.Add(child);
-                child.AddMetadataOrSetUrl(matched, property, content);
+                LocalProperties.Add(new GraphProperty(property, content));
                 return true;
+
             }
-
-            if (property.MachesChildPath(Path, "url"))
-            {
-                if (Url == null)
-                {
-                    Url = content;
-                    return true;
-                }
-                return false;
-            }
-
-            LocalProperties.Add(new GraphProperty(property, content));
-
-            return true;
+            return false;
         }
-        
+
         #region Local Property accessors
 
         /// <summary>

@@ -290,6 +290,254 @@ namespace Shipwreck.OpenGraph
             return null;
         }
     }
+    partial class Graph
+    {
+        #region AndroidApp
+
+        /// <summary>
+        /// Gets or sets an android app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public AndroidApplink AndroidApp
+        {
+            get => AndroidApps.FirstOrDefault();
+            set => AndroidApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all android apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<AndroidApplink> AndroidApps
+        {
+            get => new GraphChildCollection<AndroidApplink>(this, "al:android");
+            set => AndroidApps.Set(value);
+        }
+
+        #endregion AndroidApp
+
+        #region IosApp
+
+        /// <summary>
+        /// Gets or sets an ios app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IosApplink IosApp
+        {
+            get => IosApps.FirstOrDefault();
+            set => IosApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all ios apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<IosApplink> IosApps
+        {
+            get => new GraphChildCollection<IosApplink>(this, "al:ios");
+            set => IosApps.Set(value);
+        }
+
+        #endregion IosApp
+
+        #region IPadApp
+
+        /// <summary>
+        /// Gets or sets an i pad app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IosApplink IPadApp
+        {
+            get => IPadApps.FirstOrDefault();
+            set => IPadApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all i pad apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<IosApplink> IPadApps
+        {
+            get => new GraphChildCollection<IosApplink>(this, "al:ipad");
+            set => IPadApps.Set(value);
+        }
+
+        #endregion IPadApp
+
+        #region IPhoneApp
+
+        /// <summary>
+        /// Gets or sets an i phone app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IosApplink IPhoneApp
+        {
+            get => IPhoneApps.FirstOrDefault();
+            set => IPhoneApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all i phone apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<IosApplink> IPhoneApps
+        {
+            get => new GraphChildCollection<IosApplink>(this, "al:iphone");
+            set => IPhoneApps.Set(value);
+        }
+
+        #endregion IPhoneApp
+
+        #region WebApp
+
+        /// <summary>
+        /// Gets or sets a web app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Weblink WebApp
+        {
+            get => WebApps.FirstOrDefault();
+            set => WebApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all web apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Weblink> WebApps
+        {
+            get => new GraphChildCollection<Weblink>(this, "al:web");
+            set => WebApps.Set(value);
+        }
+
+        #endregion WebApp
+
+        #region WindowsApp
+
+        /// <summary>
+        /// Gets or sets a windows app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public WindowsApplink WindowsApp
+        {
+            get => WindowsApps.FirstOrDefault();
+            set => WindowsApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all windows apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<WindowsApplink> WindowsApps
+        {
+            get => new GraphChildCollection<WindowsApplink>(this, "al:windows");
+            set => WindowsApps.Set(value);
+        }
+
+        #endregion WindowsApp
+
+        #region WindowsPhoneApp
+
+        /// <summary>
+        /// Gets or sets a windows phone app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public WindowsApplink WindowsPhoneApp
+        {
+            get => WindowsPhoneApps.FirstOrDefault();
+            set => WindowsPhoneApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all windows phone apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<WindowsApplink> WindowsPhoneApps
+        {
+            get => new GraphChildCollection<WindowsApplink>(this, "al:windows_phone");
+            set => WindowsPhoneApps.Set(value);
+        }
+
+        #endregion WindowsPhoneApp
+
+        #region WindowsUniversalApp
+
+        /// <summary>
+        /// Gets or sets a windows universal app.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public WindowsApplink WindowsUniversalApp
+        {
+            get => WindowsUniversalApps.FirstOrDefault();
+            set => WindowsUniversalApps.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all windows universal apps.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<WindowsApplink> WindowsUniversalApps
+        {
+            get => new GraphChildCollection<WindowsApplink>(this, "al:windows_universal");
+            set => WindowsUniversalApps.Set(value);
+        }
+
+        #endregion WindowsUniversalApp
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(string property, out bool matched)
+        {
+            matched = property == "al:android";
+            if (matched || property.StartsWith(":al:android"))
+            {
+                return new AndroidApplink("al:android");
+            }
+            matched = property == "al:ios";
+            if (matched || property.StartsWith(":al:ios"))
+            {
+                return new IosApplink("al:ios");
+            }
+            matched = property == "al:ipad";
+            if (matched || property.StartsWith(":al:ipad"))
+            {
+                return new IosApplink("al:ipad");
+            }
+            matched = property == "al:iphone";
+            if (matched || property.StartsWith(":al:iphone"))
+            {
+                return new IosApplink("al:iphone");
+            }
+            matched = property == "al:web";
+            if (matched || property.StartsWith(":al:web"))
+            {
+                return new Weblink("al:web");
+            }
+            matched = property == "al:windows";
+            if (matched || property.StartsWith(":al:windows"))
+            {
+                return new WindowsApplink("al:windows");
+            }
+            matched = property == "al:windows_phone";
+            if (matched || property.StartsWith(":al:windows_phone"))
+            {
+                return new WindowsApplink("al:windows_phone");
+            }
+            matched = property == "al:windows_universal";
+            if (matched || property.StartsWith(":al:windows_universal"))
+            {
+                return new WindowsApplink("al:windows_universal");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
     partial class GraphAudio
     {
         /// <summary>
