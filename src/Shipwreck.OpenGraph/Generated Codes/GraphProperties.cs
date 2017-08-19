@@ -143,6 +143,37 @@ namespace Shipwreck.OpenGraph
 
 #endregion Song
 
+#region Creator
+
+        public Profile Creator
+        {
+            get => Creators?.FirstOrDefault();
+        }
+
+        public IList<Profile> Creators
+        {
+            get => new GraphObjectChildCollection<Profile>(this, "creator");
+        }
+
+#endregion Creator
+
+    }
+    partial class MusicRadioStation
+    {
+#region Creator
+
+        public Profile Creator
+        {
+            get => Creators?.FirstOrDefault();
+        }
+
+        public IList<Profile> Creators
+        {
+            get => new GraphObjectChildCollection<Profile>(this, "creator");
+        }
+
+#endregion Creator
+
     }
     partial class VideoObject
     {
@@ -202,6 +233,23 @@ namespace Shipwreck.OpenGraph
         }
 
 #endregion Tag
+
+    }
+    partial class VideoEpisode
+    {
+#region Series
+
+        public VideoTVShow Series
+        {
+            get => AllSeries?.FirstOrDefault();
+        }
+
+        public IList<VideoTVShow> AllSeries
+        {
+            get => new GraphObjectChildCollection<VideoTVShow>(this, "series");
+        }
+
+#endregion Series
 
     }
     partial class Article

@@ -26,11 +26,16 @@ var properties = new []
     new { Class = "MusicAlbum", Name = "Musician", Property = "musician", Plural = (string)null, Type = "Profile" },
     
     new { Class = "MusicPlaylist", Name = "Song", Property = "song", Plural = (string)null, Type = "MusicAlbumSong" },
+    new { Class = "MusicPlaylist", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
+    
+    new { Class = "MusicRadioStation", Name = "Creator", Property = "creator", Plural = (string)null, Type = "Profile" },
     
     new { Class = "VideoObject", Name = "Actor", Property = "actor", Plural = (string)null, Type = "Actor" },
     new { Class = "VideoObject", Name = "Director", Property = "director", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Writer", Property = "writer", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },
+    
+    new { Class = "VideoEpisode", Name = "Series", Property = "series", Plural = "AllSeries", Type = "VideoTVShow" },
     
     new { Class = "Article", Name = "Author", Property = "author", Plural = (string)null, Type = "Profile" },
     new { Class = "Article", Name = "Tag", Property = "tag", Plural = (string)null, Type = "string" },

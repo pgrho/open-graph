@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public partial class MusicPlaylist : GraphObject
     {
@@ -13,12 +10,6 @@ namespace Shipwreck.OpenGraph
         internal MusicPlaylist(string path)
             : base(path)
         {
-        }
-
-        [DefaultValue(null)]
-        public Profile Creator
-        {
-            get => new GraphObjectChildCollection<Profile>(this, "creator").FirstOrDefault();
         }
 
         internal override GraphObject CreateNewChild(string property, out bool matched)
