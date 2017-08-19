@@ -22,15 +22,15 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("release_date", value);
         }
 
-        internal override bool TryAddMetadata(string property, string content, out GraphObject child)
+        internal override bool TryAddMetadata(string property, string content)
         {
-            child = null;
             if (!property.MachesPath(Path))
             {
                 return false;
             }
 
             bool matched;
+            GraphObject child = null;
             if (property.StartsWithChildPath(Path, "song", out matched))
             {
                 child = new MusicAlbumSong(Path + ":song");
@@ -46,7 +46,7 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            return base.TryAddMetadata(property, content, out child);
+            return base.TryAddMetadata(property, content);
         }
     }
 }

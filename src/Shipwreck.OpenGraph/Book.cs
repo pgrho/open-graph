@@ -29,23 +29,22 @@ namespace Shipwreck.OpenGraph
             set => SetLocalProperty("release_date", value);
         }
 
-        internal override bool TryAddMetadata(string property, string content, out GraphObject child)
+        internal override bool TryAddMetadata(string property, string content)
         {
             if (!property.MachesPath(Path))
             {
-                child = null;
                 return false;
             }
 
             if (property.StartsWithChildPath(Path, "author", out var matched))
             {
-                child = new Profile(Path + ":author");
+                var child = new Profile(Path + ":author");
                 Children.Add(child);
                 child.AddMetadataOrSetUrl(matched, property, content);
                 return true;
             }
 
-            return base.TryAddMetadata(property, content, out child);
+            return base.TryAddMetadata(property, content);
         }
     }
 }

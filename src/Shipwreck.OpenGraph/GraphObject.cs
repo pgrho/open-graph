@@ -98,26 +98,32 @@ namespace Shipwreck.OpenGraph
                 {
                     var obj = stack[i];
 
-                    if (obj.TryAddMetadata(kv.Property, kv.Content, out GraphObject c))
+                    if (obj.TryAddMetadata(kv.Property, kv.Content))
                     {
                         stack.RemoveRange(i + 1, stack.Count - i - 1);
 
-                        if (c != null)
+                        var c = obj._Children?.LastOrDefault();
+
+                        while (c != null)
                         {
                             stack.Add(c);
+
+                            c = c._Children?.LastOrDefault();
                         }
                         break;
+                    }
+                    else if (i > 0)
+                    {
+                        stack.RemoveRange(i, stack.Count - i);
                     }
                 }
             }
         }
 
-        internal virtual bool TryAddMetadata(string property, string content, out GraphObject child)
+        internal virtual bool TryAddMetadata(string property, string content)
         {
             if (!property.MachesPath(Path))
             {
-                child = null;
-
                 if (IsRoot)
                 {
                     LocalProperties.Add(new GraphProperty(property, content));
@@ -128,7 +134,7 @@ namespace Shipwreck.OpenGraph
             }
 
             bool matched;
-            child = null;
+            GraphObject child = null;
             if (property.StartsWithChildPath(Path, "image", out matched))
             {
                 child = new GraphImage(Path + ":image");

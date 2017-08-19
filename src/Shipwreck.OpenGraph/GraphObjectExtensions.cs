@@ -13,7 +13,7 @@
             }
             else
             {
-                obj.TryAddMetadata(property, content, out var c);
+                obj.TryAddMetadata(property, content);
             }
         }
     }
