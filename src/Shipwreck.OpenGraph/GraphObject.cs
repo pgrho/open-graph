@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,6 +7,7 @@ namespace Shipwreck.OpenGraph
 {
     public abstract partial class GraphObject
     {
+        internal List<GraphObject> _Children;
         internal List<GraphProperty> _LocalProperties;
 
         internal GraphObject(string path)
@@ -60,7 +60,22 @@ namespace Shipwreck.OpenGraph
             get => GetLocalProperty("site_name");
             set => SetLocalProperty("site_name", value);
         }
-         
+
+        #region Children
+
+        public IList<GraphObject> Children
+            => _Children ?? (_Children = new List<GraphObject>());
+
+        public bool ShouldSerializeChildren()
+            => _Children?.Count > 0;
+
+        public void ResetChildren()
+            => _Children?.Clear();
+
+        #endregion Children
+
+        #region LocalProperties
+
         public IList<GraphProperty> LocalProperties
             => _LocalProperties ?? (_LocalProperties = new List<GraphProperty>());
 
@@ -69,6 +84,8 @@ namespace Shipwreck.OpenGraph
 
         public void ResetLocalProperties()
             => _LocalProperties?.Clear();
+
+        #endregion LocalProperties
 
         internal void LoadProperties(IEnumerable<GraphProperty> properties)
         {
