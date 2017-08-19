@@ -22,6 +22,9 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override bool IsRoot => true;
 
+        /// <summary>
+        /// Gets a type specific <see cref="GraphObject" />.
+        /// </summary>
         public GraphObject TypeObject => _TypeObject;
 
         public static Graph FromXml(string xml)

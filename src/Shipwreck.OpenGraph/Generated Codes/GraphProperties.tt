@@ -37,7 +37,7 @@ var properties = new []
     new M("VideoObject", "Writer", "Profile"),
     new M("VideoObject", "Tag", "string"),
     
-    new M("VideoEpisode", "Series", "VideoTVShow") { Plural = "AllSeries" },
+    new M("VideoEpisode", "Series", "VideoTVShow") { Plural = "AllSeries", SummaryPlural = "all series" },
     
     new M("Article", "Author", "Profile"),
     new M("Article", "Tag", "string"),
@@ -84,7 +84,7 @@ var singleProperties = new []
     new M("Article", "ExpirationTime", "DateTime?"),
     new M("Article", "Section", "string"),
 
-    new M("Book", "ISBN", "string") { Property = "isbn" },
+    new M("Book", "ISBN", "string") { Property = "isbn", SummaryName = "ISBN" },
     new M("Book", "ReleaseDate", "DateTime?"),
 
     new M("Profile", "FirstName", "string"),
@@ -107,6 +107,9 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         var T = p.Type;
         var PN = p.Property;
 #>
+        /// <summary>
+        /// Gets or sets <#= p.SummaryName #>.
+        /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= N #>
@@ -127,12 +130,15 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         var PN = p.Property;
         var CT = T == "string" ? "GraphObjectPropertyCollection" : $"GraphObjectChildCollection<{T}>";
 #>
-#region <#= N #>
+        #region <#= N #>
 
 <#
         if (T == "string")
         {
 #>
+        /// <summary>
+        /// Gets or sets <#= p.SummaryName #>.
+        /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= N #>
@@ -145,10 +151,11 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         else
         {
 #>
+        /// <summary>
+        /// Gets or sets <#= p.SummaryName #>.
+        /// </summary>
         [DefaultValue(null)]
-#if !NETSTANDARD1_3
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
         public <#= T #> <#= N #>
         {
             get => <#= PL #>?.FirstOrDefault();
@@ -157,13 +164,16 @@ foreach (var C in properties.Select(p => p.Class).Concat(singleProperties.Select
         }
 #>
 
+        /// <summary>
+        /// Gets or sets a list of <#= p.SummaryPlural #>.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>(this, "<#= PN #>");
         }
 
-#endregion <#= N #>
+        #endregion <#= N #>
 
 <#
     }
@@ -211,6 +221,9 @@ var objectTypes = new []
 foreach (var T in objectTypes)
 {
 #>
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.<#= T #>" />.
+        /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= T #>
@@ -229,6 +242,8 @@ public class M
 {
     private string _Property;
     private string _Plural;
+    private string _SummaryName;
+    private string _SummaryPlural;
 
     public M(string c, string n, string t)
     {
@@ -276,6 +291,81 @@ public class M
     {
         get => _Plural ?? $"{Name}s";
         set => _Plural = value;
+    }
+    public string SummaryName
+    {
+        get
+        {
+            if (_SummaryName != null)
+            {
+                return _SummaryName;
+            }
+            var sb = new StringBuilder(Name);
+
+            for (var i = 0; i < sb.Length; i++)
+            {
+                var c = sb[i];
+                if ('A' <= c && c <= 'Z')
+                {
+                    if (i > 0)
+                    {
+                        sb[i] = ' ';
+                        sb.Insert(++i, char.ToLower(c));
+                    }
+                    else
+                    {
+                        sb[i] = char.ToLower(c);
+                    }
+                }
+            }
+
+            var fc = sb[0];
+
+            if (fc == 'a' || fc == 'e' || fc == 'i' || fc == 'o' || fc == 'u')
+            {
+                sb.Insert(0, "an ");
+            }
+            else
+            {
+                sb.Insert(0, "a ");
+            }
+
+            return sb.ToString();
+        }
+        set => _SummaryName = value;
+    }
+    public string SummaryPlural
+    {
+        get
+        {
+            if (_SummaryPlural != null)
+            {
+                return _SummaryPlural;
+            }
+            var sb = new StringBuilder(Plural);
+
+            for (var i = 0; i < sb.Length; i++)
+            {
+                var c = sb[i];
+                if ('A' <= c && c <= 'Z')
+                {
+                    if (i > 0)
+                    {
+                        sb[i] = ' ';
+                        sb.Insert(++i, char.ToLower(c));
+                    }
+                    else
+                    {
+                        sb[i] = char.ToLower(c);
+                    }
+                }
+            }
+            
+            sb.Insert(0, "all ");
+
+            return sb.ToString();
+        }
+        set => _SummaryPlural = value;
     }
 }
 #>
