@@ -15,11 +15,19 @@ namespace Shipwreck.OpenGraph
         {
         }
 
-        [DefaultValue(0)]
-        public int Duration { get; set; }
+        [DefaultValue(null)]
+        public int? Duration
+        {
+            get => GetLocalPropertyAsInt32("duration");
+            set => SetLocalProperty("duration", value);
+        }
 
-        [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
-        public DateTime ReleaseDate { get; set; }
+        [DefaultValue(null)]
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -49,32 +57,6 @@ namespace Shipwreck.OpenGraph
                 var w = new Profile(Path + ":writer");
                 Writers.Add(w);
                 child = w.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            child = null;
-            if (property.MachesChildPath(Path, "duration"))
-            {
-                if (Duration == 0 && int.TryParse(content, out int i))
-                {
-                    Duration = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "release_date"))
-            {
-                if (ReleaseDate == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
-                {
-                    ReleaseDate = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "tag"))
-            {
-                Tags.Add(content);
-
                 return true;
             }
 

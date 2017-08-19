@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -8,41 +9,123 @@ namespace Shipwreck.OpenGraph
     {
 #region AlternateLocale
 
-        private Collection<System.String> _AlternateLocales;
-        
-        public System.String AlternateLocale
+        public string AlternateLocale
         {
-            get => _AlternateLocales?.FirstOrDefault() ?? default(System.String);
-            set => CollectionHelper.SetCollection(ref _AlternateLocales, value);
+            get => GetLocalProperty("locale:alternate");
+            set => SetLocalProperty("locale:alternate", value);
         }
 
-        public Collection<System.String> AlternateLocales
+        public IList<string> AlternateLocales
         {
-            get => CollectionHelper.GetCollection(ref _AlternateLocales);
-            set => CollectionHelper.SetCollection(ref _AlternateLocales, value);
+            get => new GraphObjectPropertyCollection(this, "locale:alternate");
+            // set => CollectionHelper.SetCollection(ref _AlternateLocales, value);
         }
 
         public bool ShouldSerializeAlternateLocale()
-            => _AlternateLocales?.Count == 1;
+            => AlternateLocales?.Count == 1;
 
         public bool ShouldSerializeAlternateLocales()
-            => _AlternateLocales?.Count > 1;
-
-        public void ResetAlternateLocale()
-            => _AlternateLocales?.Clear();
+            => AlternateLocales?.Count > 1;
 
         public void ResetAlternateLocales()
-            => _AlternateLocales?.Clear();
+            => AlternateLocale = null;
 
 #endregion AlternateLocale
 
+    }
+    partial class VideoObject
+    {
+#region Tag
+
+        public string Tag
+        {
+            get => GetLocalProperty("tag");
+            set => SetLocalProperty("tag", value);
+        }
+
+        public IList<string> Tags
+        {
+            get => new GraphObjectPropertyCollection(this, "tag");
+            // set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => Tags?.Count > 1;
+
+        public void ResetTags()
+            => Tag = null;
+
+#endregion Tag
+
+    }
+    partial class Article
+    {
+#region Tag
+
+        public string Tag
+        {
+            get => GetLocalProperty("tag");
+            set => SetLocalProperty("tag", value);
+        }
+
+        public IList<string> Tags
+        {
+            get => new GraphObjectPropertyCollection(this, "tag");
+            // set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => Tags?.Count > 1;
+
+        public void ResetTags()
+            => Tag = null;
+
+#endregion Tag
+
+    }
+    partial class Book
+    {
+#region Tag
+
+        public string Tag
+        {
+            get => GetLocalProperty("tag");
+            set => SetLocalProperty("tag", value);
+        }
+
+        public IList<string> Tags
+        {
+            get => new GraphObjectPropertyCollection(this, "tag");
+            // set => CollectionHelper.SetCollection(ref _Tags, value);
+        }
+
+        public bool ShouldSerializeTag()
+            => Tags?.Count == 1;
+
+        public bool ShouldSerializeTags()
+            => Tags?.Count > 1;
+
+        public void ResetTags()
+            => Tag = null;
+
+#endregion Tag
+
+    }
+    partial class GraphObject
+    {
 #region Image
 
         private Collection<GraphImage> _Images;
         
         public GraphImage Image
         {
-            get => _Images?.FirstOrDefault() ?? default(GraphImage);
+            get => _Images?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Images, value);
         }
 
@@ -72,7 +155,7 @@ namespace Shipwreck.OpenGraph
         
         public GraphVideo Video
         {
-            get => _Videos?.FirstOrDefault() ?? default(GraphVideo);
+            get => _Videos?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Videos, value);
         }
 
@@ -102,7 +185,7 @@ namespace Shipwreck.OpenGraph
         
         public GraphAudio Audio
         {
-            get => _Audios?.FirstOrDefault() ?? default(GraphAudio);
+            get => _Audios?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Audios, value);
         }
 
@@ -135,7 +218,7 @@ namespace Shipwreck.OpenGraph
         
         public MusicSongAlbum Album
         {
-            get => _Albums?.FirstOrDefault() ?? default(MusicSongAlbum);
+            get => _Albums?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Albums, value);
         }
 
@@ -165,7 +248,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Musician
         {
-            get => _Musicians?.FirstOrDefault() ?? default(Profile);
+            get => _Musicians?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Musicians, value);
         }
 
@@ -198,7 +281,7 @@ namespace Shipwreck.OpenGraph
         
         public MusicAlbumSong Song
         {
-            get => _Songs?.FirstOrDefault() ?? default(MusicAlbumSong);
+            get => _Songs?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Songs, value);
         }
 
@@ -228,7 +311,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Musician
         {
-            get => _Musicians?.FirstOrDefault() ?? default(Profile);
+            get => _Musicians?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Musicians, value);
         }
 
@@ -261,7 +344,7 @@ namespace Shipwreck.OpenGraph
         
         public MusicAlbumSong Song
         {
-            get => _Songs?.FirstOrDefault() ?? default(MusicAlbumSong);
+            get => _Songs?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Songs, value);
         }
 
@@ -294,7 +377,7 @@ namespace Shipwreck.OpenGraph
         
         public Actor Actor
         {
-            get => _Actors?.FirstOrDefault() ?? default(Actor);
+            get => _Actors?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Actors, value);
         }
 
@@ -324,7 +407,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Director
         {
-            get => _Directors?.FirstOrDefault() ?? default(Profile);
+            get => _Directors?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Directors, value);
         }
 
@@ -354,7 +437,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Writer
         {
-            get => _Writers?.FirstOrDefault() ?? default(Profile);
+            get => _Writers?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Writers, value);
         }
 
@@ -378,36 +461,6 @@ namespace Shipwreck.OpenGraph
 
 #endregion Writer
 
-#region Tag
-
-        private Collection<System.String> _Tags;
-        
-        public System.String Tag
-        {
-            get => _Tags?.FirstOrDefault() ?? default(System.String);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public Collection<System.String> Tags
-        {
-            get => CollectionHelper.GetCollection(ref _Tags);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public bool ShouldSerializeTag()
-            => _Tags?.Count == 1;
-
-        public bool ShouldSerializeTags()
-            => _Tags?.Count > 1;
-
-        public void ResetTag()
-            => _Tags?.Clear();
-
-        public void ResetTags()
-            => _Tags?.Clear();
-
-#endregion Tag
-
     }
     partial class Article
     {
@@ -417,7 +470,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Author
         {
-            get => _Authors?.FirstOrDefault() ?? default(Profile);
+            get => _Authors?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Authors, value);
         }
 
@@ -440,36 +493,6 @@ namespace Shipwreck.OpenGraph
             => _Authors?.Clear();
 
 #endregion Author
-
-#region Tag
-
-        private Collection<System.String> _Tags;
-        
-        public System.String Tag
-        {
-            get => _Tags?.FirstOrDefault() ?? default(System.String);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public Collection<System.String> Tags
-        {
-            get => CollectionHelper.GetCollection(ref _Tags);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public bool ShouldSerializeTag()
-            => _Tags?.Count == 1;
-
-        public bool ShouldSerializeTags()
-            => _Tags?.Count > 1;
-
-        public void ResetTag()
-            => _Tags?.Clear();
-
-        public void ResetTags()
-            => _Tags?.Clear();
-
-#endregion Tag
 
     }
     partial class Book
@@ -480,7 +503,7 @@ namespace Shipwreck.OpenGraph
         
         public Profile Author
         {
-            get => _Authors?.FirstOrDefault() ?? default(Profile);
+            get => _Authors?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _Authors, value);
         }
 
@@ -503,36 +526,6 @@ namespace Shipwreck.OpenGraph
             => _Authors?.Clear();
 
 #endregion Author
-
-#region Tag
-
-        private Collection<System.String> _Tags;
-        
-        public System.String Tag
-        {
-            get => _Tags?.FirstOrDefault() ?? default(System.String);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public Collection<System.String> Tags
-        {
-            get => CollectionHelper.GetCollection(ref _Tags);
-            set => CollectionHelper.SetCollection(ref _Tags, value);
-        }
-
-        public bool ShouldSerializeTag()
-            => _Tags?.Count == 1;
-
-        public bool ShouldSerializeTags()
-            => _Tags?.Count > 1;
-
-        public void ResetTag()
-            => _Tags?.Clear();
-
-        public void ResetTags()
-            => _Tags?.Clear();
-
-#endregion Tag
 
     }
     partial class Graph

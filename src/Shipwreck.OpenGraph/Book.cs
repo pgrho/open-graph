@@ -16,10 +16,18 @@ namespace Shipwreck.OpenGraph
         }
 
         [DefaultValue(null)]
-        public string ISBN { get; set; }
+        public string ISBN
+        {
+            get => GetLocalProperty("isbn");
+            set => SetLocalProperty("isbn", value);
+        }
 
-        [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
-        public DateTime ReleaseDate { get; set; }
+        [DefaultValue(null)]
+        public DateTime? ReleaseDate
+        {
+            get => GetLocalPropertyAsDateTime("release_date");
+            set => SetLocalProperty("release_date", value);
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -34,33 +42,6 @@ namespace Shipwreck.OpenGraph
                 var a = new Profile(Path + ":author");
                 Authors.Add(a);
                 child = a.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            child = null;
-
-            if (property.MachesChildPath(Path, "isbn"))
-            {
-                if (ISBN == null)
-                {
-                    ISBN = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "release_date"))
-            {
-                if (ReleaseDate == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
-                {
-                    ReleaseDate = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "tag"))
-            {
-                Tags.Add(content);
-
                 return true;
             }
 

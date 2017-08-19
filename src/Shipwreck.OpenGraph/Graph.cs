@@ -239,9 +239,9 @@ namespace Shipwreck.OpenGraph
                                 break;
                         }
 
-                        if (_TypeObject != null && ShouldSerializeExtraProperties())
+                        if (_TypeObject != null && ShouldSerializeLocalProperties())
                         {
-                            _TypeObject.LoadProperties(ExtraProperties.Where(kv =>
+                            _TypeObject.LoadProperties(LocalProperties.Where(kv =>
                             {
                                 if (kv.Property == _TypeObject.Path)
                                 {
@@ -251,13 +251,13 @@ namespace Shipwreck.OpenGraph
                                 return kv.Property.MachesPath(_TypeObject.Path);
                             }));
 
-                            for (var i = ExtraProperties.Count - 1; i >= 0; i--)
+                            for (var i = LocalProperties.Count - 1; i >= 0; i--)
                             {
-                                var p = ExtraProperties[i].Property;
+                                var p = LocalProperties[i].Property;
                                 if (p.MachesPath(_TypeObject.Path)
                                     || p == _TypeObject.Path)
                                 {
-                                    ExtraProperties.RemoveAt(i);
+                                    LocalProperties.RemoveAt(i);
                                 }
                             }
                         }

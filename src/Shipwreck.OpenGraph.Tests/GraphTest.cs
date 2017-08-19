@@ -217,8 +217,6 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.Equal("The Rock", target.AlternateLocale);
-            Assert.True(target.ShouldSerializeAlternateLocale());
-            Assert.False(target.ShouldSerializeAlternateLocales());
         }
 
         [Fact]
@@ -235,8 +233,6 @@ namespace Shipwreck.OpenGraph
 
             Assert.Equal("The Rock", target.AlternateLocale);
             Assert.Equal(new[] { "The Rock", "The Rock 2" }, target.AlternateLocales);
-            Assert.False(target.ShouldSerializeAlternateLocale());
-            Assert.True(target.ShouldSerializeAlternateLocales());
         }
 
         #endregion AlternateLocale
@@ -504,8 +500,8 @@ namespace Shipwreck.OpenGraph
 
             Assert.NotNull(target.MusicSong);
             Assert.Equal("The Rock", target.MusicSong.Title);
-            Assert.Equal(2, target.ExtraProperties.Count);
-            Assert.Equal("The piyo", target.ExtraProperties[0].Content);
+            Assert.Equal(2, target.LocalProperties.Count);
+            Assert.Equal("The piyo", target.LocalProperties[0].Content);
         }
 
         #endregion _TypeObject

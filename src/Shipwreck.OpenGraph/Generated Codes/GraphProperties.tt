@@ -3,11 +3,71 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension="cs" #>
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+
+namespace Shipwreck.OpenGraph
+{
 <#
 
+var stringArrays = new []
+{
+    new { Class = "GraphObject", Name = "AlternateLocale", Property = "locale:alternate", Plural = (string)null },
+    new { Class = "VideoObject", Name = "Tag", Property = "tag", Plural = (string)null },
+    new { Class = "Article", Name = "Tag", Property = "tag", Plural = (string)null },
+    new { Class = "Book", Name = "Tag", Property = "tag", Plural = (string)null },
+};
+
+foreach (var g in stringArrays.GroupBy(p => p.Class))
+{
+
+#>
+    partial class <#= g.Key #>
+    {
+<#
+
+    foreach (var p in g)
+    {
+        var N = p.Name;
+        var PL = p.Plural ?? (N + 's');
+        var PN = p.Property;
+#>
+#region <#= N #>
+
+        public string <#= N #>
+        {
+            get => GetLocalProperty("<#= PN #>");
+            set => SetLocalProperty("<#= PN #>", value);
+        }
+
+        public IList<string> <#= PL #>
+        {
+            get => new GraphObjectPropertyCollection(this, "<#= PN #>");
+            // set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
+        }
+
+        public bool ShouldSerialize<#= N #>()
+            => <#= PL #>?.Count == 1;
+
+        public bool ShouldSerialize<#= PL #>()
+            => <#= PL #>?.Count > 1;
+
+        public void Reset<#= PL #>()
+            => <#= N #> = null;
+
+#endregion <#= N #>
+
+<#
+    }
+
+#>
+    }
+<#
+}
 var properties = new []
 {
-    new { Class = "GraphObject", Name = "AlternateLocale", Plural = (string)null, Type = typeof(string).FullName },
     new { Class = "GraphObject", Name = "Image", Plural = (string)null, Type = "GraphImage" },
     new { Class = "GraphObject", Name = "Video", Plural = (string)null, Type = "GraphVideo" },
     new { Class = "GraphObject", Name = "Audio", Plural = (string)null, Type = "GraphAudio" },
@@ -23,24 +83,11 @@ var properties = new []
     new { Class = "VideoObject", Name = "Actor", Plural = (string)null, Type = "Actor" },
     new { Class = "VideoObject", Name = "Director", Plural = (string)null, Type = "Profile" },
     new { Class = "VideoObject", Name = "Writer", Plural = (string)null, Type = "Profile" },
-    new { Class = "VideoObject", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
     
     new { Class = "Article", Name = "Author", Plural = (string)null, Type = "Profile" },
-    new { Class = "Article", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
     
     new { Class = "Book", Name = "Author", Plural = (string)null, Type = "Profile" },
-    new { Class = "Book", Name = "Tag", Plural = (string)null, Type = typeof(string).FullName },
-    
 };
-
-#>
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-
-namespace Shipwreck.OpenGraph
-{
-<#
 
 foreach (var g in properties.GroupBy(p => p.Class))
 {
@@ -64,7 +111,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         
         public <#= T #> <#= N #>
         {
-            get => _<#= PL #>?.FirstOrDefault() ?? default(<#= T #>);
+            get => _<#= PL #>?.FirstOrDefault();
             set => CollectionHelper.SetCollection(ref _<#= PL #>, value);
         }
 

@@ -14,8 +14,12 @@ namespace Shipwreck.OpenGraph
         {
         }
 
-        [DefaultValue(0)]
-        public int Duration { get; set; }
+        [DefaultValue(null)]
+        public int? Duration
+        {
+            get => GetLocalPropertyAsInt32("duration");
+            set => SetLocalProperty("duration", value);
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -38,17 +42,6 @@ namespace Shipwreck.OpenGraph
                 var m = new Profile(Path + ":musician");
                 Musicians.Add(m);
                 child = m.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            if (property.MachesChildPath(Path, "duration"))
-            {
-                if (Duration == 0 && int.TryParse(content, out int i))
-                {
-                    Duration = i;
-                }
-
-                child = null;
                 return true;
             }
 

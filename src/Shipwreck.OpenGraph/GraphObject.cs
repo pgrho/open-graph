@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace Shipwreck.OpenGraph
 {
     public abstract partial class GraphObject
     {
-        private List<GraphProperty> _ExtraProperties;
+        internal List<GraphProperty> _LocalProperties;
 
         internal GraphObject(string path)
         {
@@ -59,16 +60,15 @@ namespace Shipwreck.OpenGraph
             get => GetLocalProperty("site_name");
             set => SetLocalProperty("site_name", value);
         }
+         
+        public IList<GraphProperty> LocalProperties
+            => _LocalProperties ?? (_LocalProperties = new List<GraphProperty>());
 
-        // TODO: rename LocalProperties
-        public IList<GraphProperty> ExtraProperties
-            => _ExtraProperties ?? (_ExtraProperties = new List<GraphProperty>());
+        public bool ShouldSerializeLocalProperties()
+            => _LocalProperties?.Count > 0;
 
-        public bool ShouldSerializeExtraProperties()
-            => _ExtraProperties?.Count > 0;
-
-        public void ResetExtraProperties()
-            => _ExtraProperties?.Clear();
+        public void ResetLocalProperties()
+            => _LocalProperties?.Clear();
 
         internal void LoadProperties(IEnumerable<GraphProperty> properties)
         {
@@ -103,7 +103,7 @@ namespace Shipwreck.OpenGraph
 
                 if (IsRoot)
                 {
-                    ExtraProperties.Add(new GraphProperty(property, content));
+                    LocalProperties.Add(new GraphProperty(property, content));
                     return true;
                 }
 
@@ -150,29 +150,29 @@ namespace Shipwreck.OpenGraph
                 return true;
             }
 
-            ExtraProperties.Add(new GraphProperty(property, content));
+            LocalProperties.Add(new GraphProperty(property, content));
 
             return true;
         }
 
         public string GetLocalProperty(string property)
-            => _ExtraProperties?.FirstOrDefault(kv => kv.Property.MachesChildPath(Path, property)).Content;
+            => _LocalProperties?.FirstOrDefault(kv => kv.Property.MachesChildPath(Path, property)).Content;
 
         public void SetLocalProperty(string property, string content)
         {
-            if (_ExtraProperties != null)
+            if (_LocalProperties != null)
             {
-                for (int i = _ExtraProperties.Count - 1; i >= 0; i--)
+                for (int i = _LocalProperties.Count - 1; i >= 0; i--)
                 {
-                    if (_ExtraProperties[i].Property.MachesChildPath(Path, property))
+                    if (_LocalProperties[i].Property.MachesChildPath(Path, property))
                     {
-                        _ExtraProperties.RemoveAt(i);
+                        _LocalProperties.RemoveAt(i);
                     }
                 }
             }
             if (content != null)
             {
-                ExtraProperties.Add(new GraphProperty(Path + ":" + property, content));
+                LocalProperties.Add(new GraphProperty(Path + ":" + property, content));
             }
         }
 
@@ -181,7 +181,6 @@ namespace Shipwreck.OpenGraph
 
         public void SetLocalProperty(string property, int? value)
             => SetLocalProperty(property, value?.ToString("R"));
-
 
         public DateTime? GetLocalPropertyAsDateTime(string property)
             => DateTime.TryParse(GetLocalProperty(property), out DateTime i) ? i : (DateTime?)null;

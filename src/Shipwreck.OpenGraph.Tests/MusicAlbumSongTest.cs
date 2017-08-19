@@ -18,7 +18,7 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.NotNull(target.MusicAlbum);
-            Assert.Equal(new[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Disc));
+            Assert.Equal(new int?[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Disc));
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Shipwreck.OpenGraph
             var target = Graph.FromXml(html);
 
             Assert.NotNull(target.MusicAlbum);
-            Assert.Equal(new[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Track));
+            Assert.Equal(new int?[] { 55301 }, target.MusicAlbum.Songs.Select(a => a.Track));
         }
     }
 }

@@ -15,17 +15,33 @@ namespace Shipwreck.OpenGraph
         {
         }
 
-        [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
-        public DateTime PublishedTime { get; set; }
-
-        [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
-        public DateTime ModifiedTime { get; set; }
-
-        [DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")]
-        public DateTime ExpirationTime { get; set; }
+        [DefaultValue(null)]
+        public DateTime? PublishedTime
+        {
+            get => GetLocalPropertyAsDateTime("published_time");
+            set => SetLocalProperty("published_time", value);
+        }
 
         [DefaultValue(null)]
-        public string Section { get; set; }
+        public DateTime? ModifiedTime
+        {
+            get => GetLocalPropertyAsDateTime("modified_time");
+            set => SetLocalProperty("modified_time", value);
+        }
+
+        [DefaultValue(null)]
+        public DateTime? ExpirationTime
+        {
+            get => GetLocalPropertyAsDateTime("expiration_time");
+            set => SetLocalProperty("expiration_time", value);
+        }
+
+        [DefaultValue(null)]
+        public string Section
+        {
+            get => GetLocalProperty("section");
+            set => SetLocalProperty("section", value);
+        }
 
         internal override bool TryAddMetadata(string property, string content, out GraphObject child)
         {
@@ -39,51 +55,6 @@ namespace Shipwreck.OpenGraph
                 var a = new Profile(Path + ":author");
                 Authors.Add(a);
                 child = a.AddMetadataOrSetUrl(matched, property, content);
-                return true;
-            }
-
-            child = null;
-
-            if (property.MachesChildPath(Path, "published_time"))
-            {
-                if (PublishedTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
-                {
-                    PublishedTime = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "modified_time"))
-            {
-                if (ModifiedTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
-                {
-                    ModifiedTime = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "expiration_time"))
-            {
-                if (ExpirationTime == DateTime.MinValue && DateTime.TryParse(content, out DateTime i))
-                {
-                    ExpirationTime = i;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "section"))
-            {
-                if (Section == null)
-                {
-                    Section = content;
-                }
-
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "tag"))
-            {
-                Tags.Add(content);
-
                 return true;
             }
 

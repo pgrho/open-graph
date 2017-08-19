@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Shipwreck.OpenGraph
+﻿namespace Shipwreck.OpenGraph
 {
     public sealed class VideoMovie : VideoObject
     {
@@ -14,8 +11,4 @@ namespace Shipwreck.OpenGraph
         {
         }
     }
-
-
-
-
 }

@@ -13,42 +13,18 @@ namespace Shipwreck.OpenGraph
         {
         }
 
-        [DefaultValue(0)]
-        public int Disc { get; set; }
-
-        [DefaultValue(0)]
-        public int Track { get; set; }
-
-        internal override bool TryAddMetadata(string property, string content, out GraphObject child)
+        [DefaultValue(null)]
+        public int? Disc
         {
-            if (!property.MachesPath(Path))
-            {
-                child = null;
-                return false;
-            }
+            get => GetLocalPropertyAsInt32("disc");
+            set => SetLocalProperty("disc", value);
+        }
 
-            if (property.MachesChildPath(Path, "disc"))
-            {
-                if (Disc == 0 && int.TryParse(content, out int i))
-                {
-                    Disc = i;
-                }
-
-                child = null;
-                return true;
-            }
-            else if (property.MachesChildPath(Path, "track"))
-            {
-                if (Track == 0 && int.TryParse(content, out int i))
-                {
-                    Track = i;
-                }
-
-                child = null;
-                return true;
-            }
-
-            return base.TryAddMetadata(property, content, out child);
+        [DefaultValue(null)]
+        public int? Track
+        {
+            get => GetLocalPropertyAsInt32("track");
+            set => SetLocalProperty("track", value);
         }
     }
 }
