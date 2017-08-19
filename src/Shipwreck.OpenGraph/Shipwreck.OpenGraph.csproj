@@ -9,7 +9,13 @@
     <PackageProjectUrl>https://github.com/pgrho/open-graph</PackageProjectUrl>
     <Copyright></Copyright>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.0.4</Version>
+    <Version>1.1.0-pre</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Shipwreck.OpenGraph.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
