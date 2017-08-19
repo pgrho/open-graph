@@ -845,6 +845,31 @@ namespace Shipwreck.OpenGraph
 
         #endregion Author
 
+        #region Publisher
+
+        /// <summary>
+        /// Gets or sets a publisher.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Profile Publisher
+        {
+            get => GetChild<Profile>("publisher");
+            set => SetChild("publisher", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all publishers.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Profile> Publishers
+        {
+            get => new GraphObjectChildCollection<Profile>(this, "publisher");
+            set => SetChild<Profile>("publisher", value);
+        }
+
+        #endregion Publisher
+
         #region Tag
 
         /// <summary>
@@ -877,8 +902,81 @@ namespace Shipwreck.OpenGraph
             {
                 return new Profile(Path + ":author");
             }
+            if (property.StartsWithChildPath(Path, "publisher", out matched))
+            {
+                return new Profile(Path + ":publisher");
+            }
             return base.CreateNewChild(property, out matched);
         }
+    }
+    partial class Profile
+    {
+        /// <summary>
+        /// Gets or sets a content tier.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ContentTier
+        {
+            get => GetLocalProperty("content_tier");
+            set => SetLocalProperty("content_tier", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a first name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FirstName
+        {
+            get => GetLocalProperty("first_name");
+            set => SetLocalProperty("first_name", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a last name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string LastName
+        {
+            get => GetLocalProperty("last_name");
+            set => SetLocalProperty("last_name", value);
+        }
+
+        /// <summary>
+        /// Gets or sets an user name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string UserName
+        {
+            get => GetLocalProperty("username");
+            set => SetLocalProperty("username", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a gender.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Gender
+        {
+            get => GetLocalProperty("gender");
+            set => SetLocalProperty("gender", value);
+        }
+
+        /// <summary>
+        /// Gets or sets a role.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Role
+        {
+            get => GetLocalProperty("role");
+            set => SetLocalProperty("role", value);
+        }
+
     }
     partial class Book
     {
@@ -963,64 +1061,6 @@ namespace Shipwreck.OpenGraph
             }
             return base.CreateNewChild(property, out matched);
         }
-    }
-    partial class Profile
-    {
-        /// <summary>
-        /// Gets or sets a first name.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string FirstName
-        {
-            get => GetLocalProperty("first_name");
-            set => SetLocalProperty("first_name", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a last name.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string LastName
-        {
-            get => GetLocalProperty("last_name");
-            set => SetLocalProperty("last_name", value);
-        }
-
-        /// <summary>
-        /// Gets or sets an user name.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string UserName
-        {
-            get => GetLocalProperty("username");
-            set => SetLocalProperty("username", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a gender.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Gender
-        {
-            get => GetLocalProperty("gender");
-            set => SetLocalProperty("gender", value);
-        }
-
-        /// <summary>
-        /// Gets or sets a role.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Role
-        {
-            get => GetLocalProperty("role");
-            set => SetLocalProperty("role", value);
-        }
-
     }
     partial class Graph
     {

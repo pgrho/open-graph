@@ -67,7 +67,9 @@ var properties = new []
     new M("VideoEpisode", "Series", "VideoTVShow", isArray: true) { Plural = "AllSeries", SummaryPlural = "all series" },
 
     new M("Article", "Author", "Profile", isArray: true),
+    new M("Article", "Publisher", "Profile", isArray: true),
     new M("Article", "Tag", "string", isArray: true),
+    new M("Profile", "ContentTier", "string"),
     new M("Article", "PublishedTime", "DateTime?"),
     new M("Article", "ModifiedTime", "DateTime?"),
     new M("Article", "ExpirationTime", "DateTime?"),
