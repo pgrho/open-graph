@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Shipwreck.OpenGraph
@@ -851,5 +852,39 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion GetPrefixAttribute
+
+        #region WriteTo
+
+        [Fact]
+        public void WriteToTest()
+        {
+            var g = new Graph();
+            g.Type = "video.movie";
+            g.Title = "hoge";
+
+            g.IosApp = new IosApplink()
+            {
+                Url = "a"
+            };
+
+            g.VideoMovie = new VideoMovie()
+            {
+                Url = "aaa"
+            };
+
+            using (var sw = new StringWriter())
+            {
+                g.WriteTo(sw);
+
+                var actual = sw.ToString();
+
+                Assert.Equal("<meta property=\"og:type\" content=\"video.movie\" />"
+                    + "<meta property=\"og:title\" content=\"hoge\" />"
+                    + "<meta property=\"al:ios:url\" content=\"a\" />"
+                    + "<meta property=\"video:url\" content=\"aaa\" />", actual);
+            }
+        }
+
+        #endregion WriteTo
     }
 }

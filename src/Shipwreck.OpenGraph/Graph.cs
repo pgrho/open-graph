@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 using Shipwreck.OpenGraph.Internal;
@@ -376,5 +377,100 @@ namespace Shipwreck.OpenGraph
 
             return sb.Length > 0 ? sb.ToString() : null;
         }
+
+        #region WriteTo
+
+        private const string XHTML_NS = "http://www.w3.org/1999/xhtml";
+
+        /// <summary>
+        /// Writes HTML <c>%lt;meta&gt;</c> elements that represents this graph to the specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="writer">The <see cref="TextWriter" /> to be written.</param>
+        public void WriteTo(TextWriter writer)
+        {
+            using (var xw = XmlWriter.Create(writer, new XmlWriterSettings()
+            {
+                CloseOutput = true,
+                OmitXmlDeclaration = true,
+                ConformanceLevel = ConformanceLevel.Fragment
+            }))
+            {
+                WriteTo(xw);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously writes HTML <c>%lt;meta&gt;</c> elements that represents this graph to the specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="writer">The <see cref="TextWriter" /> to be written.</param>
+        /// <returns>A task that represents the asynchronous copy operation.</returns>
+        public async Task WriteToAsync(TextWriter writer)
+        {
+            using (var xw = XmlWriter.Create(writer, new XmlWriterSettings()
+            {
+                CloseOutput = true,
+                OmitXmlDeclaration = true,
+                ConformanceLevel = ConformanceLevel.Fragment
+            }))
+            {
+                await WriteToAsync(xw).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Writes HTML <c>%lt;meta&gt;</c> elements that represents this graph to the specified <see cref="XmlWriter"/>.
+        /// </summary>
+        /// <param name="writer">The <see cref="XmlWriter" /> to be written.</param>
+        /// <param name="isXhtml">The value injdicating whether output xhtml xmlns.</param>
+        public void WriteTo(XmlWriter writer, bool isXhtml = false)
+        {
+            foreach (var gp in this)
+            {
+                writer.WriteStartElement("meta", isXhtml ? XHTML_NS : null);
+                var path = gp.Property;
+                writer.WriteAttributeString("property", GetPrefixWithColon(path.Namespace) + path.Path);
+                writer.WriteAttributeString("content", gp.Content);
+
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously writes HTML <c>%lt;meta&gt;</c> elements that represents this graph to the specified <see cref="XmlWriter"/>.
+        /// </summary>
+        /// <param name="writer">The <see cref="XmlWriter" /> to be written.</param>
+        /// <param name="isXhtml">The value injdicating whether output xhtml xmlns.</param>
+        /// <returns>A task that represents the asynchronous copy operation.</returns>
+        public async Task WriteToAsync(XmlWriter writer, bool isXhtml = false)
+        {
+            foreach (var gp in this)
+            {
+                await writer.WriteStartElementAsync(null, "meta", isXhtml ? XHTML_NS : null).ConfigureAwait(false);
+
+                var path = gp.Property;
+                await writer.WriteAttributeStringAsync(null, "property", null, GetPrefixWithColon(path.Namespace) + path.Path).ConfigureAwait(false);
+                await writer.WriteAttributeStringAsync(null, "content", null, gp.Content).ConfigureAwait(false);
+
+                await writer.WriteEndElementAsync().ConfigureAwait(false);
+            }
+        }
+
+        private string GetPrefixWithColon(string @namespace)
+        {
+            var prefix = Namespaces.GetPrefix(@namespace);
+
+            if (prefix == null)
+            {
+                prefix = @namespace != null ? $"{{{@namespace}}}:" : null;
+            }
+            else
+            {
+                prefix += ":";
+            }
+
+            return prefix;
+        }
+
+        #endregion WriteTo
     }
 }
