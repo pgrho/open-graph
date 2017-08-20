@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.XPath;
+using Shipwreck.OpenGraph.Internal;
 
 namespace Shipwreck.OpenGraph
 {
@@ -106,63 +108,8 @@ namespace Shipwreck.OpenGraph
         public static Graph FromXmlReader(XmlReader xmlReader)
         {
             var r = new Graph();
-            r.LoadProperties(Enumerate(xmlReader));
+            r.LoadProperties(new XmlReaderGraphPropertyEnumerator(xmlReader));
             return r;
-        }
-
-        private static IEnumerable<GraphProperty> Enumerate(XmlReader reader)
-        {
-            var nest = 0;
-
-            var isHtml = false;
-            var isHead = false;
-
-            while (reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-
-                        var isEmpty = reader.IsEmptyElement;
-
-                        switch (++nest)
-                        {
-                            case 1:
-                                isHtml = "html".Equals(reader.LocalName, StringComparison.OrdinalIgnoreCase);
-                                break;
-
-                            case 2:
-                                isHead = isHtml && "head".Equals(reader.LocalName, StringComparison.OrdinalIgnoreCase);
-                                break;
-
-                            case 3:
-                                if (isHead && "meta".Equals(reader.LocalName, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    var p = reader.GetAttribute("property");
-                                    var c = reader.GetAttribute("content");
-                                    if (!string.IsNullOrEmpty(p) && c != null)
-                                    {
-                                        yield return new GraphProperty(p, c);
-                                    }
-                                }
-                                break;
-                        }
-
-                        if (isEmpty)
-                        {
-                            nest--;
-                        }
-
-                        break;
-
-                    case XmlNodeType.EndElement:
-                        if (--nest <= 1 && isHead)
-                        {
-                            yield break;
-                        }
-                        break;
-                }
-            }
         }
 
         /// <summary>
@@ -171,42 +118,12 @@ namespace Shipwreck.OpenGraph
         /// <param name="xmlDocument">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
 #if NETSTANDARD1_3
-
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
         {
             var r = new Graph();
-            r.LoadProperties(Enumerate(xmlDocument));
+            r.LoadProperties(new XmlDocumentGraphPropertyEnumerator(xmlDocument));
             return r;
         }
-
-        private static IEnumerable<GraphProperty> Enumerate(XmlDocument xmlDocument)
-        {
-            if ("html".Equals(xmlDocument.DocumentElement?.LocalName, StringComparison.OrdinalIgnoreCase))
-            {
-                foreach (XmlNode head in xmlDocument.DocumentElement.ChildNodes)
-                {
-                    if (head.NodeType == XmlNodeType.Element
-                        && "head".Equals(head.LocalName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        foreach (XmlNode meta in head.ChildNodes)
-                        {
-                            if (meta.NodeType == XmlNodeType.Element
-                                && "meta".Equals(meta.LocalName, StringComparison.OrdinalIgnoreCase))
-                            {
-                                var p = meta.Attributes["property"]?.Value;
-                                var c = meta.Attributes["content"]?.Value;
-                                if (p != null && c != null)
-                                {
-                                    yield return new GraphProperty(p, c);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
 #else
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
         {
@@ -310,7 +227,7 @@ namespace Shipwreck.OpenGraph
 
                         if (_TypeObject != null && ShouldSerializeLocalProperties())
                         {
-                            _TypeObject.LoadProperties(LocalProperties.Where(kv =>
+                            _TypeObject.LoadProperties(new WrappedGraphPropertyEnumerator(LocalProperties.Where(kv =>
                             {
                                 if (kv.Property == _TypeObject.Path)
                                 {
@@ -318,7 +235,7 @@ namespace Shipwreck.OpenGraph
                                     return false;
                                 }
                                 return kv.Property.MachesPath(_TypeObject.Path);
-                            }));
+                            })/* TODO: NamespaceCollection */));
 
                             for (var i = LocalProperties.Count - 1; i >= 0; i--)
                             {

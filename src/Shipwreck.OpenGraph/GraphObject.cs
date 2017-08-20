@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Shipwreck.OpenGraph.Internal;
 
 namespace Shipwreck.OpenGraph
 {
@@ -122,40 +123,46 @@ namespace Shipwreck.OpenGraph
         internal static bool IsValidProperty(string property)
             => property != null && _PropertyPattern.IsMatch(property);
 
-        internal void LoadProperties(IEnumerable<GraphProperty> properties)
+        internal void LoadProperties<T>(T properties)
+            where T : IGraphPropertyEnumerator
         {
-            var stack = new List<GraphObject>(2);
+            var stack = new List<GraphObject>(3);
             stack.Add(this);
 
-            foreach (var kv in properties)
+            using (properties)
             {
-                //ignores property without colon.
-                if (!IsValidProperty(kv.Property))
+                while (properties.MoveNext())
                 {
-                    continue;
-                }
+                    var kv = properties.Current;
 
-                for (int i = stack.Count - 1; i >= 0; i--)
-                {
-                    var obj = stack[i];
-
-                    if (obj.TryAddMetadata(kv.Property, kv.Content))
+                    //ignores property without colon.
+                    if (!IsValidProperty(kv.Property))
                     {
-                        stack.RemoveRange(i + 1, stack.Count - i - 1);
-
-                        var c = obj._Children?.LastOrDefault();
-
-                        while (c != null)
-                        {
-                            stack.Add(c);
-
-                            c = c._Children?.LastOrDefault();
-                        }
-                        break;
+                        continue;
                     }
-                    else if (i > 0)
+
+                    for (int i = stack.Count - 1; i >= 0; i--)
                     {
-                        stack.RemoveRange(i, stack.Count - i);
+                        var obj = stack[i];
+
+                        if (obj.TryAddMetadata(kv.Property, kv.Content))
+                        {
+                            stack.RemoveRange(i + 1, stack.Count - i - 1);
+
+                            var c = obj._Children?.LastOrDefault();
+
+                            while (c != null)
+                            {
+                                stack.Add(c);
+
+                                c = c._Children?.LastOrDefault();
+                            }
+                            break;
+                        }
+                        else if (i > 0)
+                        {
+                            stack.RemoveRange(i, stack.Count - i);
+                        }
                     }
                 }
             }

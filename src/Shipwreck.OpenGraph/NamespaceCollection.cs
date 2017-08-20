@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace Shipwreck.OpenGraph
 {
@@ -52,6 +54,10 @@ namespace Shipwreck.OpenGraph
 
         #endregion Constants
 
+        private static readonly Regex _SplitPattern = new Regex("(?<!:)\\s+");
+
+        internal static readonly NamespaceCollection Default = new NamespaceCollection();
+
         private readonly Dictionary<string, string> _Map;
 
         /// <summary>
@@ -91,6 +97,36 @@ namespace Shipwreck.OpenGraph
                     }
                     _Map[prefix] = value;
                 }
+            }
+        }
+
+        internal void LoadPrefixAttribute(string value)
+        {
+            if (value != null)
+            {
+                foreach (var p in _SplitPattern.Split(value))
+                {
+                    var i = p.IndexOf(':');
+                    if (i > 0)
+                    {
+                        var pre = p.Substring(0, i).Trim();
+                        var ns = p.Substring(i + 1).Trim();
+
+                        if (!string.IsNullOrEmpty(pre) && !string.IsNullOrEmpty(ns))
+                        {
+                            this[pre] = ns;
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void LoadNameTable(XmlNameTable nameTable)
+        {
+            var m = new XmlNamespaceManager(nameTable);
+            foreach (var kv in m.GetNamespacesInScope(XmlNamespaceScope.ExcludeXml))
+            {
+                this[kv.Key] = kv.Value;
             }
         }
     }
