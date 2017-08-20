@@ -56,5 +56,12 @@ namespace Shipwreck.OpenGraph
             => Object.GetHashCode() ^ Property.GetHashCode();
 
         #endregion Object Methods
+
+        /// <inheritdoc />
+        internal override void InsertInternalItem(int index, GraphObject internalItem)
+        {
+            internalItem.Path = Property;
+            base.InsertInternalItem(index, internalItem);
+        }
     }
 }

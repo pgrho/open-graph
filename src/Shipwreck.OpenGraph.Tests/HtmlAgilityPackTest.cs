@@ -91,7 +91,7 @@ namespace Shipwreck.OpenGraph
                     Locale = "en_US",
                     Url = "http://examples.opengraphprotocol.us/book-isbn10.html",
 
-                    Image = new GraphImage(new PropertyName(NamespaceCollection.OpenGraph, "image"))
+                    Image = new GraphImage
                     {
                         Url = "http://examples.opengraphprotocol.us/media/images/50.png",
                         SecureUrl = "https://d72cgtgi6hvvl.cloudfront.net/media/images/50.png",
@@ -100,7 +100,7 @@ namespace Shipwreck.OpenGraph
                         Type = "image/png"
                     },
 
-                    Book = new Book()
+                    Book = new Book
                     {
                         ["release_date"] = "2011-10-24",
                         ISBN = "1451648537",
@@ -120,7 +120,7 @@ namespace Shipwreck.OpenGraph
                     Locale = "en_US",
                     Url = "http://examples.opengraphprotocol.us/video-movie.html",
 
-                    Image = new GraphImage(new PropertyName(NamespaceCollection.OpenGraph, "image"))
+                    Image = new GraphImage
                     {
                         Url = "http://examples.opengraphprotocol.us/media/images/train.jpg",
                         SecureUrl = "https://d72cgtgi6hvvl.cloudfront.net/media/images/train.jpg",
@@ -131,7 +131,7 @@ namespace Shipwreck.OpenGraph
 
                     Videos = new[]
                     {
-                        new GraphVideo(new PropertyName(NamespaceCollection.OpenGraph, "video"))
+                        new GraphVideo
                         {
                             Url ="http://fpdownload.adobe.com/strobe/FlashMediaPlayback.swf?src=http%3A%2F%2Fexamples.opengraphprotocol.us%2Fmedia%2Fvideo%2Ftrain.mp4",
                             SecureUrl = "https://fpdownload.adobe.com/strobe/FlashMediaPlayback.swf?src=https%3A%2F%2Fd72cgtgi6hvvl.cloudfront.net%2Fmedia%2Fvideo%2Ftrain.mp4",
@@ -139,7 +139,7 @@ namespace Shipwreck.OpenGraph
                             Width = 472,
                             Height = 296
                         },
-                        new GraphVideo(new PropertyName(NamespaceCollection.OpenGraph, "video"))
+                        new GraphVideo
                         {
                             Url ="http://examples.opengraphprotocol.us/media/video/train.mp4",
                             SecureUrl = "https://d72cgtgi6hvvl.cloudfront.net/media/video/train.mp4",
@@ -147,7 +147,7 @@ namespace Shipwreck.OpenGraph
                             Width = 472,
                             Height = 296
                         },
-                        new GraphVideo(new PropertyName(NamespaceCollection.OpenGraph, "video"))
+                        new GraphVideo
                         {
                             Url ="http://examples.opengraphprotocol.us/media/video/train.webm",
                             SecureUrl = "https://d72cgtgi6hvvl.cloudfront.net/media/video/train.webm",
@@ -157,10 +157,10 @@ namespace Shipwreck.OpenGraph
                         },
                     },
 
-                    VideoMovie = new VideoMovie()
+                    VideoMovie = new VideoMovie
                     {
                         ["release_date"] = "1895-12-28",
-                        Director = new Profile(new PropertyName(NamespaceCollection.Video, "director"))
+                        Director = new Profile
                         {
                             Url = "http://examples.opengraphprotocol.us/profile.html"
                         },

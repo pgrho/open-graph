@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Shipwreck.OpenGraph.Internal;
 
 namespace Shipwreck.OpenGraph
@@ -22,7 +21,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="path">A property path for this instance.</param>
         internal GraphObject(PropertyName path)
         {
-            Path = path;
+            _Path = path;
         }
 
         #region Properties
@@ -53,7 +52,48 @@ namespace Shipwreck.OpenGraph
             }
         }
 
-        internal PropertyName Path { get; }
+        private PropertyName _Path;
+
+        internal PropertyName Path
+        {
+            get => _Path;
+            set
+            {
+                if (value != _Path)
+                {
+                    if (_LocalProperties != null)
+                    {
+                        for (int i = 0; i < _LocalProperties.Count; i++)
+                        {
+                            var kv = _LocalProperties[i];
+                            var p = kv.Property;
+
+                            if (p.StartsWith(_Path))
+                            {
+                                _LocalProperties[i] = new GraphProperty
+                                    (
+                                        value + (_Path.Path == null ? p.Path : p.Path.Substring(_Path.Path.Length + 1)),
+                                        kv.Content);
+                            }
+                        }
+                    }
+                    if (_Children != null)
+                    {
+                        for (int i = 0; i < _Children.Count; i++)
+                        {
+                            var c = _Children[i];
+                            var p = c.Path;
+
+                            if (p.StartsWith(_Path))
+                            {
+                                c.Path = value + (_Path.Path == null ? p.Path : p.Path.Substring(_Path.Path.Length + 1));
+                            }
+                        }
+                    }
+                    _Path = value;
+                }
+            }
+        }
 
         #region Children
 
