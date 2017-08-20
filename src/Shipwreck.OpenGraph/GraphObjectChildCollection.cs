@@ -6,7 +6,7 @@ namespace Shipwreck.OpenGraph
     /// Represents a collection that filters elements in <see cref="GraphObject.Children"/> which has specified property path and is instance of <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
+    public sealed class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
         where T : GraphObject
     {
         internal GraphObjectChildCollection(GraphObject @object, PropertyName property)
@@ -30,7 +30,7 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         internal override bool ShouldInclude(GraphObject internalItem)
-            => internalItem is T && internalItem.Path.StartsWith(Property);
+            => internalItem is T && internalItem.Path == Property;
 
         /// <inheritdoc />
         internal override T ToItem(GraphObject internalItem)

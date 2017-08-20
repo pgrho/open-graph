@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
@@ -311,7 +310,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<AndroidApplink> AndroidApps
         {
-            get => new GraphChildCollection<AndroidApplink>(this, new PropertyName(NamespaceCollection.Applink, "android"));
+            get => new GraphObjectChildCollection<AndroidApplink>(this, new PropertyName(NamespaceCollection.Applink, "android"));
             set => AndroidApps.Set(value);
         }
 
@@ -336,7 +335,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IosApps
         {
-            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ios"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ios"));
             set => IosApps.Set(value);
         }
 
@@ -361,7 +360,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPadApps
         {
-            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ipad"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ipad"));
             set => IPadApps.Set(value);
         }
 
@@ -386,7 +385,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPhoneApps
         {
-            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "iphone"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "iphone"));
             set => IPhoneApps.Set(value);
         }
 
@@ -411,7 +410,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Weblink> WebApps
         {
-            get => new GraphChildCollection<Weblink>(this, new PropertyName(NamespaceCollection.Applink, "web"));
+            get => new GraphObjectChildCollection<Weblink>(this, new PropertyName(NamespaceCollection.Applink, "web"));
             set => WebApps.Set(value);
         }
 
@@ -436,7 +435,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows"));
             set => WindowsApps.Set(value);
         }
 
@@ -461,7 +460,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsPhoneApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_phone"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_phone"));
             set => WindowsPhoneApps.Set(value);
         }
 
@@ -486,7 +485,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsUniversalApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_universal"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_universal"));
             set => WindowsUniversalApps.Set(value);
         }
 

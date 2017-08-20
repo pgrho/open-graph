@@ -6,7 +6,6 @@
 <#@ output extension="cs" #>
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
@@ -174,7 +173,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var T = p.Type;
         var PN = p.Path;
         var CT = T == "string" ? $"GraphObjectPropertyCollection(this, this.Path + \"{PN}\")"
-                            : p.OverridesPath ?  $"GraphChildCollection<{T}>(this, {PN})"
+                            : p.OverridesPath ?  $"GraphObjectChildCollection<{T}>(this, {PN})"
                             : $"GraphObjectChildCollection<{T}>(this, this.Path + \"{PN}\")";
 #>
         #region <#= N #>
