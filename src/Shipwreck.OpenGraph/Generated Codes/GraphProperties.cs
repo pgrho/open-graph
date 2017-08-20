@@ -270,19 +270,19 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal virtual GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "image", out matched))
+            if (property.StartsWith(Path, "image", out matched, skipCompareProperty: true))
             {
                 return new GraphImage(Path + "image");
             }
-            if (property.StartsWith(Path, "video", out matched))
+            if (property.StartsWith(Path, "video", out matched, skipCompareProperty: true))
             {
                 return new GraphVideo(Path + "video");
             }
-            if (property.StartsWith(Path, "audio", out matched))
+            if (property.StartsWith(Path, "audio", out matched, skipCompareProperty: true))
             {
                 return new GraphAudio(Path + "audio");
             }
-            if (property.StartsWith(Path, "restrictions", out matched))
+            if (property.StartsWith(Path, "restrictions", out matched, skipCompareProperty: true))
             {
                 return new GraphRestriction(Path + "restrictions");
             }
@@ -915,15 +915,15 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "album", out matched))
+            if (property.StartsWith(Path, "album", out matched, skipCompareProperty: true))
             {
                 return new MusicAlbum(Path + "album");
             }
-            if (property.StartsWith(Path, "musician", out matched))
+            if (property.StartsWith(Path, "musician", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "musician");
             }
-            if (property.StartsWith(Path, "preview_url", out matched))
+            if (property.StartsWith(Path, "preview_url", out matched, skipCompareProperty: true))
             {
                 return new GraphAudio(Path + "preview_url");
             }
@@ -1029,11 +1029,11 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "song", out matched))
+            if (property.StartsWith(Path, "song", out matched, skipCompareProperty: true))
             {
                 return new MusicSong(Path + "song");
             }
-            if (property.StartsWith(Path, "musician", out matched))
+            if (property.StartsWith(Path, "musician", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "musician");
             }
@@ -1106,11 +1106,11 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "creator", out matched))
+            if (property.StartsWith(Path, "creator", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "creator");
             }
-            if (property.StartsWith(Path, "song", out matched))
+            if (property.StartsWith(Path, "song", out matched, skipCompareProperty: true))
             {
                 return new MusicSong(Path + "song");
             }
@@ -1147,7 +1147,7 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "creator", out matched))
+            if (property.StartsWith(Path, "creator", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "creator");
             }
@@ -1281,15 +1281,15 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "actor", out matched))
+            if (property.StartsWith(Path, "actor", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "actor");
             }
-            if (property.StartsWith(Path, "director", out matched))
+            if (property.StartsWith(Path, "director", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "director");
             }
-            if (property.StartsWith(Path, "writer", out matched))
+            if (property.StartsWith(Path, "writer", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "writer");
             }
@@ -1326,7 +1326,7 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "series", out matched))
+            if (property.StartsWith(Path, "series", out matched, skipCompareProperty: true))
             {
                 return new VideoTVShow(Path + "series");
             }
@@ -1457,11 +1457,11 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "author", out matched))
+            if (property.StartsWith(Path, "author", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "author");
             }
-            if (property.StartsWith(Path, "publisher", out matched))
+            if (property.StartsWith(Path, "publisher", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "publisher");
             }
@@ -1600,7 +1600,7 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "book", out matched))
+            if (property.StartsWith(Path, "book", out matched, skipCompareProperty: true))
             {
                 return new Book(Path + "book");
             }
@@ -1800,11 +1800,11 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWith(Path, "author", out matched))
+            if (property.StartsWith(Path, "author", out matched, skipCompareProperty: true))
             {
                 return new Profile(Path + "author");
             }
-            if (property.StartsWith(Path, "genre", out matched))
+            if (property.StartsWith(Path, "genre", out matched, skipCompareProperty: true))
             {
                 return new BookGenre(Path + "genre");
             }

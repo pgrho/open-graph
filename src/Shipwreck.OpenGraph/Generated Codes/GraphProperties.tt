@@ -264,7 +264,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
             else
             {
 #>
-            if (property.StartsWith(Path, "<#= p.Path #>", out matched))
+            if (property.StartsWith(Path, "<#= p.Path #>", out matched, skipCompareProperty: true))
             {
                 return new <#= p.Type #>(Path + "<#= p.Path #>");
             }

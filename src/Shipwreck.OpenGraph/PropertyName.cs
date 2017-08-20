@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace Shipwreck.OpenGraph
 {
@@ -75,21 +76,44 @@ namespace Shipwreck.OpenGraph
         public static bool Equals(PropertyName left, PropertyName right)
             => left == right;
 
-        #endregion Static Methods
-
-        public static PropertyName operator +(PropertyName left, string path)
+        /// <summary>
+        /// Addes path string to the specified property name.
+        /// </summary>
+        /// <param name="property">The base property path.</param>
+        /// <param name="path">The path to append.</param>
+        /// <returns>Combined path of <paramref name="property"/> and <paramref name="path"/>.</returns>
+        public static PropertyName operator +(PropertyName property, string path)
         {
             if (string.IsNullOrEmpty(path))
             {
-                return left;
+                return property;
             }
-            if (string.IsNullOrEmpty(left.Path))
+            if (string.IsNullOrEmpty(property.Path))
             {
-                return new PropertyName(left.Namespace, path);
+                return new PropertyName(property.Namespace, path);
             }
 
-            return new PropertyName(left.Namespace, left.Path + ":" + path);
+            if (path[0] == ':')
+            {
+#if DEBUG
+                Debug.Fail("Invalid path to append.");
+#endif
+                return new PropertyName(property.Namespace, property.Path + path);
+            }
+
+            return new PropertyName(property.Namespace, property.Path + ":" + path);
         }
+
+        /// <summary>
+        /// Addes path string to the specified property name.
+        /// </summary>
+        /// <param name="property">The base property path.</param>
+        /// <param name="path">The path to append.</param>
+        /// <returns>Combined path of <paramref name="property"/> and <paramref name="path"/>.</returns>
+        public static PropertyName Add(PropertyName property, string path)
+            => property + path;
+
+        #endregion Static Methods
 
         #region Instance Methods
 
@@ -105,6 +129,15 @@ namespace Shipwreck.OpenGraph
         public bool Equals(PropertyName other)
             => this == other;
 
+        /// <summary>
+        /// Determines whether this path instance match the specified combined path.
+        /// </summary>
+        /// <param name="property">The base path to compare.</param>
+        /// <param name="path">The child path to compare.</param>
+        /// <returns><c>true</c> if <paramref name="property"/> and <paramref name="property"/> match this property; otherwise, <c>false</c>.</returns>
+        public bool Equals(PropertyName property, string path)
+            => StartsWith(property, path, out var b) && b;
+
         /// <inheritdoc />
         public override int GetHashCode()
             => (Namespace?.GetHashCode() ?? 0) ^ (Path?.GetHashCode() ?? 0);
@@ -113,42 +146,68 @@ namespace Shipwreck.OpenGraph
         public override string ToString()
             => Namespace == null ? Path : $"{{{Namespace}}}{Path}";
 
-        public bool StartsWith(PropertyName other)
-            => Namespace == other.Namespace
-                && (other.Path == null
-                    || (Path?.StartsWith(other.Path) == true
-                        && (Path.Length == other.Path.Length
-                        || (Path.Length > other.Path.Length && Path[other.Path.Length] == ':'))));
+        /// <summary>
+        /// Determines whether the namespace URI and the beginning of this path instance match the specified <see cref="PropertyName"/>.
+        /// </summary>
+        /// <param name="value">The path to compare.</param>
+        /// <returns><c>true</c> if <paramref name="value"/> matches the beginning of this property; otherwise, <c>false</c>.</returns>
+        public bool StartsWith(PropertyName value)
+            => StartsWith(value, out _);
 
-        public bool Equals(PropertyName parentPath, string childPath)
-            => StartsWith(parentPath, childPath, out var b) && b;
-
-        public bool StartsWith(PropertyName parentPath, string childPath)
-            => StartsWith(parentPath, childPath, out _);
-
-        internal bool StartsWith(PropertyName parentPath, out bool matched)
+        internal bool StartsWith(PropertyName value, out bool matched)
         {
-            // TODO: avoid string allocation
-            if (StartsWith(parentPath))
+            if (Namespace == value.Namespace)
             {
-                matched = this == parentPath;
-                return true;
+                if (value.Path == null)
+                {
+                    matched = Path == null;
+                    return true;
+                }
+                if (Path?.StartsWith(value.Path) == true)
+                {
+                    matched = Path.Length == value.Path.Length;
+                    return matched || (Path.Length > value.Path.Length && Path[value.Path.Length] == ':');
+                }
             }
-            matched = false;
-            return false;
+            return matched = false;
         }
 
-        internal bool StartsWith(PropertyName parentPath, string childPath, out bool matched, bool skipOther = false)
+        /// <summary>
+        /// Determines whether the namespace URI and the beginning of this path instance match the specified combined path.
+        /// </summary>
+        /// <param name="property">The base path to compare.</param>
+        /// <param name="path">The child path to compare.</param>
+        /// <returns><c>true</c> if <paramref name="property"/> and <paramref name="property"/> match the beginning of this property; otherwise, <c>false</c>.</returns>
+        public bool StartsWith(PropertyName property, string path)
+            => StartsWith(property, path, out _);
+
+        internal bool StartsWith(PropertyName property, string path, out bool matched, bool skipCompareProperty = false)
         {
-            // TODO: avoid string allocation
-            var op = parentPath + childPath;
-            if (StartsWith(op))
+            var pl = Path?.Length ?? 0;
+            var i = (property.Path?.Length + 1) ?? 0;
+            var tl = i + path.Length;
+
+            if (skipCompareProperty ? pl >= tl : StartsWith(property))
             {
-                matched = this == op;
-                return true;
+                for (var j = 0; j < path.Length; j++)
+                {
+                    if (path[j] != Path[i + j])
+                    {
+                        return matched = false;
+                    }
+                }
+
+                if (pl == tl)
+                {
+                    return matched = true;
+                }
+                else
+                {
+                    matched = false;
+                    return Path[tl] == ':';
+                }
             }
-            matched = false;
-            return false;
+            return matched = false;
         }
     }
 
