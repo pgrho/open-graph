@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphImage" /> class.
         /// </summary>
         public GraphImage()
-            : this(new PropertyName(NamespaceCollection.OpenGraph))
+            : this(new PropertyName(NamespaceCollection.OpenGraph, "image"))
         {
         }
 

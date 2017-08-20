@@ -9,7 +9,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="AndroidApplink" /> class.
         /// </summary>
         public AndroidApplink()
-            : this(new PropertyName(NamespaceCollection.Applink))
+            : this(new PropertyName(NamespaceCollection.Applink, "android"))
         {
         }
 

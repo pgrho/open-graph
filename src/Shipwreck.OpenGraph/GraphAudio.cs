@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphAudio" /> class.
         /// </summary>
         public GraphAudio()
-            : this(new PropertyName(NamespaceCollection.OpenGraph))
+            : this(new PropertyName(NamespaceCollection.OpenGraph, "audio"))
         {
         }
 

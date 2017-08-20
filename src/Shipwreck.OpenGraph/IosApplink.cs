@@ -9,7 +9,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="IosApplink" /> class.
         /// </summary>
         public IosApplink()
-            : this(new PropertyName(NamespaceCollection.Applink))
+            : this(new PropertyName(NamespaceCollection.Applink, "ios"))
         {
         }
 

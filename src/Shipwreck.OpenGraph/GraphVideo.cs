@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphVideo" /> class.
         /// </summary>
         public GraphVideo()
-            : this(new PropertyName(NamespaceCollection.OpenGraph))
+            : this(new PropertyName(NamespaceCollection.OpenGraph, "video"))
         {
         }
 
