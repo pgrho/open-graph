@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 using Shipwreck.OpenGraph.Internal;
@@ -308,6 +309,72 @@ namespace Shipwreck.OpenGraph
                     yield return kv;
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns a prefix attribute value that is needed to describe this graph.
+        /// </summary>
+        /// <returns>A string that defines all namespaces used by this instance.</returns>
+        public string GetPrefixAttribute()
+        {
+            List<string> ns = null;
+
+            void addNamespace(PropertyName p)
+            {
+                if (p.Namespace != null)
+                {
+                    if (ns == null)
+                    {
+                        ns = new List<string>(4);
+                        ns.Add(p.Namespace);
+                    }
+                    else if (!ns.Contains(p.Namespace))
+                    {
+                        ns.Add(p.Namespace);
+                    }
+                }
+            }
+
+            if (_LocalProperties != null)
+            {
+                foreach (var kv in _LocalProperties)
+                {
+                    addNamespace(kv.Property);
+                }
+            }
+
+            if (_Children != null)
+            {
+                foreach (var c in _Children)
+                {
+                    addNamespace(c.Path);
+                }
+            }
+            if (_TypeObject != null)
+            {
+                addNamespace(_TypeObject.Path);
+            }
+
+            if (ns == null)
+            {
+                return null;
+            }
+            var sb = new StringBuilder(32);
+
+            foreach (var n in ns)
+            {
+                var p = Namespaces.GetPrefix(n);
+                if (p != null)
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(' ');
+                    }
+                    sb.Append(p).Append(':').Append(n);
+                }
+            }
+
+            return sb.Length > 0 ? sb.ToString() : null;
         }
     }
 }

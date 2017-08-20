@@ -106,6 +106,14 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Returns a prefix for the specified namespace URI.
+        /// </summary>
+        /// <param name="namespace">The namespace URI.</param>
+        /// <returns>A prefix for <paramref name="namespace"/>.</returns>
+        public string GetPrefix(string @namespace)
+            => _Map.FirstOrDefault(kv => kv.Value == @namespace).Key;
+
         internal void LoadPrefixAttribute(string value)
         {
             if (value != null)

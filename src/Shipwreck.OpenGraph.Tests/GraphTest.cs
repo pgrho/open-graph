@@ -827,5 +827,29 @@ namespace Shipwreck.OpenGraph
         #endregion WindowsUniversalApp
 
         #endregion Applink
+
+        #region GetPrefixAttribute
+
+        [Fact]
+        public void GetPrefixAttributeTest()
+        {
+            var g = new Graph();
+            g.Type = "video.movie";
+            g.Title = "hoge";
+
+            g.IosApp = new IosApplink()
+            {
+                Url = "a"
+            };
+
+            g.VideoMovie = new VideoMovie()
+            {
+                Url = "aaa"
+            };
+
+            Assert.Equal($"og:{NamespaceCollection.OpenGraph} al:{NamespaceCollection.Applink} video:{NamespaceCollection.Video}", g.GetPrefixAttribute());
+        }
+
+        #endregion GetPrefixAttribute
     }
 }
