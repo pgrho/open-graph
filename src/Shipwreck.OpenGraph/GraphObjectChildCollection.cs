@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph
@@ -10,14 +9,14 @@ namespace Shipwreck.OpenGraph
     public class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
         where T : GraphObject
     {
-        internal GraphObjectChildCollection(GraphObject @object, string property)
+        internal GraphObjectChildCollection(GraphObject @object, PropertyName property)
         {
             Object = @object;
             Property = property;
         }
 
         internal GraphObject Object { get; }
-        internal string Property { get; }
+        internal PropertyName Property { get; }
 
         #region Template Methods
 
@@ -31,7 +30,7 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         internal override bool ShouldInclude(GraphObject internalItem)
-            => internalItem is T && internalItem.Path.MachesChildPath(Object.Path, Property);
+            => internalItem is T && internalItem.Path.StartsWith(Property);
 
         /// <inheritdoc />
         internal override T ToItem(GraphObject internalItem)

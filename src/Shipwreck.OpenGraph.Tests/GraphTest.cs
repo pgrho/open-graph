@@ -544,7 +544,7 @@ namespace Shipwreck.OpenGraph
         {
             var html = @"<html prefix='og: http://ogp.me/ns#'>
 <head>
-<meta property='hoge:title' content='The piyo' />
+<meta property='video:title' content='The piyo' />
 <meta property='music:title' content='The Rock' />
 <meta property='og:type' content='music.song' />
 </head>

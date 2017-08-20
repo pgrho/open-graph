@@ -12,9 +12,9 @@ namespace Shipwreck.OpenGraph
         /// <summary>
         /// Initializes a new instance of <see cref="GraphProperty"/> struct with property name and content.
         /// </summary>
-        /// <param name="property">The  name of this property.</param>
+        /// <param name="property">The name of this property.</param>
         /// <param name="content">The content for this property.</param>
-        public GraphProperty(string property, string content)
+        public GraphProperty(PropertyName property, string content)
         {
             Property = property;
             Content = content;
@@ -27,7 +27,7 @@ namespace Shipwreck.OpenGraph
         /// <summary>
         /// Gets or sets a name of this property.
         /// </summary>
-        public string Property { get; set; }
+        public PropertyName Property { get; set; }
 
         /// <summary>
         /// Gets or sets a content for this property.
@@ -83,7 +83,7 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         public override int GetHashCode()
-            => (Property?.GetHashCode() ?? 0) ^ (Content?.GetHashCode() ?? 0);
+            => Property.GetHashCode() ^ (Content?.GetHashCode() ?? 0);
 
         /// <inheritdoc />
         public override string ToString()

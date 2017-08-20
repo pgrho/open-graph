@@ -9,7 +9,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="WindowsApplink" /> class.
         /// </summary>
         public WindowsApplink()
-            : this("al")
+            : this(new PropertyName(NamespaceCollection.Applink))
         {
         }
 
@@ -17,7 +17,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="WindowsApplink" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal WindowsApplink(string path)
+        internal WindowsApplink(PropertyName path)
             : base(path)
         {
         }

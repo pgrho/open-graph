@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="Book" /> class.
         /// </summary>
         public Book()
-            : this("book")
+            : this(new PropertyName(NamespaceCollection.Book))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="Book" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal Book(string path)
+        internal Book(PropertyName path)
             : base(path)
         {
         }

@@ -9,7 +9,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="Weblink" /> class.
         /// </summary>
         public Weblink()
-            : this("al")
+            : this(new PropertyName(NamespaceCollection.Applink))
         {
         }
 
@@ -17,7 +17,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="Weblink" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal Weblink(string path)
+        internal Weblink(PropertyName path)
             : base(path)
         {
         }

@@ -137,7 +137,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AlternateLocales
         {
-            get => new GraphObjectPropertyCollection(this, "locale:alternate");
+            get => new GraphObjectPropertyCollection(this, this.Path + "locale:alternate");
             set => SetLocalProperty("locale:alternate", value);
         }
 
@@ -162,7 +162,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphImage> Images
         {
-            get => new GraphObjectChildCollection<GraphImage>(this, "image");
+            get => new GraphObjectChildCollection<GraphImage>(this, this.Path + "image");
             set => Images.Set(value);
         }
 
@@ -187,7 +187,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphVideo> Videos
         {
-            get => new GraphObjectChildCollection<GraphVideo>(this, "video");
+            get => new GraphObjectChildCollection<GraphVideo>(this, this.Path + "video");
             set => Videos.Set(value);
         }
 
@@ -212,7 +212,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphAudio> Audios
         {
-            get => new GraphObjectChildCollection<GraphAudio>(this, "audio");
+            get => new GraphObjectChildCollection<GraphAudio>(this, this.Path + "audio");
             set => Audios.Set(value);
         }
 
@@ -237,7 +237,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphRestriction> Restrictions
         {
-            get => new GraphObjectChildCollection<GraphRestriction>(this, "restrictions");
+            get => new GraphObjectChildCollection<GraphRestriction>(this, this.Path + "restrictions");
             set => Restrictions.Set(value);
         }
 
@@ -262,30 +262,30 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> SeeAlsos
         {
-            get => new GraphObjectPropertyCollection(this, "see_also");
+            get => new GraphObjectPropertyCollection(this, this.Path + "see_also");
             set => SetLocalProperty("see_also", value);
         }
 
         #endregion SeeAlso
 
         /// <inheritdoc />
-        internal virtual GraphObject CreateNewChild(string property, out bool matched)
+        internal virtual GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "image", out matched))
+            if (property.StartsWith(Path, "image", out matched))
             {
-                return new GraphImage(Path + ":image");
+                return new GraphImage(Path + "image");
             }
-            if (property.StartsWithChildPath(Path, "video", out matched))
+            if (property.StartsWith(Path, "video", out matched))
             {
-                return new GraphVideo(Path + ":video");
+                return new GraphVideo(Path + "video");
             }
-            if (property.StartsWithChildPath(Path, "audio", out matched))
+            if (property.StartsWith(Path, "audio", out matched))
             {
-                return new GraphAudio(Path + ":audio");
+                return new GraphAudio(Path + "audio");
             }
-            if (property.StartsWithChildPath(Path, "restrictions", out matched))
+            if (property.StartsWith(Path, "restrictions", out matched))
             {
-                return new GraphRestriction(Path + ":restrictions");
+                return new GraphRestriction(Path + "restrictions");
             }
             return null;
         }
@@ -311,7 +311,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<AndroidApplink> AndroidApps
         {
-            get => new GraphChildCollection<AndroidApplink>(this, "al:android");
+            get => new GraphChildCollection<AndroidApplink>(this, new PropertyName(NamespaceCollection.Applink, "android"));
             set => AndroidApps.Set(value);
         }
 
@@ -336,7 +336,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IosApps
         {
-            get => new GraphChildCollection<IosApplink>(this, "al:ios");
+            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ios"));
             set => IosApps.Set(value);
         }
 
@@ -361,7 +361,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPadApps
         {
-            get => new GraphChildCollection<IosApplink>(this, "al:ipad");
+            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ipad"));
             set => IPadApps.Set(value);
         }
 
@@ -386,7 +386,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPhoneApps
         {
-            get => new GraphChildCollection<IosApplink>(this, "al:iphone");
+            get => new GraphChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "iphone"));
             set => IPhoneApps.Set(value);
         }
 
@@ -411,7 +411,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Weblink> WebApps
         {
-            get => new GraphChildCollection<Weblink>(this, "al:web");
+            get => new GraphChildCollection<Weblink>(this, new PropertyName(NamespaceCollection.Applink, "web"));
             set => WebApps.Set(value);
         }
 
@@ -436,7 +436,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, "al:windows");
+            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows"));
             set => WindowsApps.Set(value);
         }
 
@@ -461,7 +461,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsPhoneApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, "al:windows_phone");
+            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_phone"));
             set => WindowsPhoneApps.Set(value);
         }
 
@@ -486,54 +486,78 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsUniversalApps
         {
-            get => new GraphChildCollection<WindowsApplink>(this, "al:windows_universal");
+            get => new GraphChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_universal"));
             set => WindowsUniversalApps.Set(value);
         }
 
         #endregion WindowsUniversalApp
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            matched = property == "al:android";
-            if (matched || property.StartsWith(":al:android"))
             {
-                return new AndroidApplink("al:android");
+                var p = new PropertyName(NamespaceCollection.Applink, "android");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new AndroidApplink(p);
+                }
             }
-            matched = property == "al:ios";
-            if (matched || property.StartsWith(":al:ios"))
             {
-                return new IosApplink("al:ios");
+                var p = new PropertyName(NamespaceCollection.Applink, "ios");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new IosApplink(p);
+                }
             }
-            matched = property == "al:ipad";
-            if (matched || property.StartsWith(":al:ipad"))
             {
-                return new IosApplink("al:ipad");
+                var p = new PropertyName(NamespaceCollection.Applink, "ipad");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new IosApplink(p);
+                }
             }
-            matched = property == "al:iphone";
-            if (matched || property.StartsWith(":al:iphone"))
             {
-                return new IosApplink("al:iphone");
+                var p = new PropertyName(NamespaceCollection.Applink, "iphone");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new IosApplink(p);
+                }
             }
-            matched = property == "al:web";
-            if (matched || property.StartsWith(":al:web"))
             {
-                return new Weblink("al:web");
+                var p = new PropertyName(NamespaceCollection.Applink, "web");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new Weblink(p);
+                }
             }
-            matched = property == "al:windows";
-            if (matched || property.StartsWith(":al:windows"))
             {
-                return new WindowsApplink("al:windows");
+                var p = new PropertyName(NamespaceCollection.Applink, "windows");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new WindowsApplink(p);
+                }
             }
-            matched = property == "al:windows_phone";
-            if (matched || property.StartsWith(":al:windows_phone"))
             {
-                return new WindowsApplink("al:windows_phone");
+                var p = new PropertyName(NamespaceCollection.Applink, "windows_phone");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new WindowsApplink(p);
+                }
             }
-            matched = property == "al:windows_universal";
-            if (matched || property.StartsWith(":al:windows_universal"))
             {
-                return new WindowsApplink("al:windows_universal");
+                var p = new PropertyName(NamespaceCollection.Applink, "windows_universal");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new WindowsApplink(p);
+                }
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -689,7 +713,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AllowedCountries
         {
-            get => new GraphObjectPropertyCollection(this, "country:allowed");
+            get => new GraphObjectPropertyCollection(this, this.Path + "country:allowed");
             set => SetLocalProperty("country:allowed", value);
         }
 
@@ -714,7 +738,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> DisallowedCountries
         {
-            get => new GraphObjectPropertyCollection(this, "country:disallowed");
+            get => new GraphObjectPropertyCollection(this, this.Path + "country:disallowed");
             set => SetLocalProperty("country:disallowed", value);
         }
 
@@ -739,7 +763,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Contents
         {
-            get => new GraphObjectPropertyCollection(this, "content");
+            get => new GraphObjectPropertyCollection(this, this.Path + "content");
             set => SetLocalProperty("content", value);
         }
 
@@ -833,7 +857,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicAlbum> Albums
         {
-            get => new GraphObjectChildCollection<MusicAlbum>(this, "album");
+            get => new GraphObjectChildCollection<MusicAlbum>(this, this.Path + "album");
             set => Albums.Set(value);
         }
 
@@ -858,7 +882,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Musicians
         {
-            get => new GraphObjectChildCollection<Profile>(this, "musician");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "musician");
             set => Musicians.Set(value);
         }
 
@@ -883,26 +907,26 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphAudio> Previews
         {
-            get => new GraphObjectChildCollection<GraphAudio>(this, "preview_url");
+            get => new GraphObjectChildCollection<GraphAudio>(this, this.Path + "preview_url");
             set => Previews.Set(value);
         }
 
         #endregion Preview
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "album", out matched))
+            if (property.StartsWith(Path, "album", out matched))
             {
-                return new MusicAlbum(Path + ":album");
+                return new MusicAlbum(Path + "album");
             }
-            if (property.StartsWithChildPath(Path, "musician", out matched))
+            if (property.StartsWith(Path, "musician", out matched))
             {
-                return new Profile(Path + ":musician");
+                return new Profile(Path + "musician");
             }
-            if (property.StartsWithChildPath(Path, "preview_url", out matched))
+            if (property.StartsWith(Path, "preview_url", out matched))
             {
-                return new GraphAudio(Path + ":preview_url");
+                return new GraphAudio(Path + "preview_url");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -972,7 +996,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicSong> Songs
         {
-            get => new GraphObjectChildCollection<MusicSong>(this, "song");
+            get => new GraphObjectChildCollection<MusicSong>(this, this.Path + "song");
             set => Songs.Set(value);
         }
 
@@ -997,22 +1021,22 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Musicians
         {
-            get => new GraphObjectChildCollection<Profile>(this, "musician");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "musician");
             set => Musicians.Set(value);
         }
 
         #endregion Musician
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "song", out matched))
+            if (property.StartsWith(Path, "song", out matched))
             {
-                return new MusicSong(Path + ":song");
+                return new MusicSong(Path + "song");
             }
-            if (property.StartsWithChildPath(Path, "musician", out matched))
+            if (property.StartsWith(Path, "musician", out matched))
             {
-                return new Profile(Path + ":musician");
+                return new Profile(Path + "musician");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1049,7 +1073,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Creators
         {
-            get => new GraphObjectChildCollection<Profile>(this, "creator");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "creator");
             set => Creators.Set(value);
         }
 
@@ -1074,22 +1098,22 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicSong> Songs
         {
-            get => new GraphObjectChildCollection<MusicSong>(this, "song");
+            get => new GraphObjectChildCollection<MusicSong>(this, this.Path + "song");
             set => Songs.Set(value);
         }
 
         #endregion Song
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "creator", out matched))
+            if (property.StartsWith(Path, "creator", out matched))
             {
-                return new Profile(Path + ":creator");
+                return new Profile(Path + "creator");
             }
-            if (property.StartsWithChildPath(Path, "song", out matched))
+            if (property.StartsWith(Path, "song", out matched))
             {
-                return new MusicSong(Path + ":song");
+                return new MusicSong(Path + "song");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1115,18 +1139,18 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Creators
         {
-            get => new GraphObjectChildCollection<Profile>(this, "creator");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "creator");
             set => Creators.Set(value);
         }
 
         #endregion Creator
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "creator", out matched))
+            if (property.StartsWith(Path, "creator", out matched))
             {
-                return new Profile(Path + ":creator");
+                return new Profile(Path + "creator");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1174,7 +1198,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Actors
         {
-            get => new GraphObjectChildCollection<Profile>(this, "actor");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "actor");
             set => Actors.Set(value);
         }
 
@@ -1199,7 +1223,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Directors
         {
-            get => new GraphObjectChildCollection<Profile>(this, "director");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "director");
             set => Directors.Set(value);
         }
 
@@ -1224,7 +1248,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Writers
         {
-            get => new GraphObjectChildCollection<Profile>(this, "writer");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "writer");
             set => Writers.Set(value);
         }
 
@@ -1249,26 +1273,26 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new GraphObjectPropertyCollection(this, "tag");
+            get => new GraphObjectPropertyCollection(this, this.Path + "tag");
             set => SetLocalProperty("tag", value);
         }
 
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "actor", out matched))
+            if (property.StartsWith(Path, "actor", out matched))
             {
-                return new Profile(Path + ":actor");
+                return new Profile(Path + "actor");
             }
-            if (property.StartsWithChildPath(Path, "director", out matched))
+            if (property.StartsWith(Path, "director", out matched))
             {
-                return new Profile(Path + ":director");
+                return new Profile(Path + "director");
             }
-            if (property.StartsWithChildPath(Path, "writer", out matched))
+            if (property.StartsWith(Path, "writer", out matched))
             {
-                return new Profile(Path + ":writer");
+                return new Profile(Path + "writer");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1294,18 +1318,18 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<VideoTVShow> AllSeries
         {
-            get => new GraphObjectChildCollection<VideoTVShow>(this, "series");
+            get => new GraphObjectChildCollection<VideoTVShow>(this, this.Path + "series");
             set => AllSeries.Set(value);
         }
 
         #endregion Series
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "series", out matched))
+            if (property.StartsWith(Path, "series", out matched))
             {
-                return new VideoTVShow(Path + ":series");
+                return new VideoTVShow(Path + "series");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1375,7 +1399,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Authors
         {
-            get => new GraphObjectChildCollection<Profile>(this, "author");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "author");
             set => Authors.Set(value);
         }
 
@@ -1400,7 +1424,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Publishers
         {
-            get => new GraphObjectChildCollection<Profile>(this, "publisher");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "publisher");
             set => Publishers.Set(value);
         }
 
@@ -1425,22 +1449,22 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new GraphObjectPropertyCollection(this, "tag");
+            get => new GraphObjectPropertyCollection(this, this.Path + "tag");
             set => SetLocalProperty("tag", value);
         }
 
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "author", out matched))
+            if (property.StartsWith(Path, "author", out matched))
             {
-                return new Profile(Path + ":author");
+                return new Profile(Path + "author");
             }
-            if (property.StartsWithChildPath(Path, "publisher", out matched))
+            if (property.StartsWith(Path, "publisher", out matched))
             {
-                return new Profile(Path + ":publisher");
+                return new Profile(Path + "publisher");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1543,7 +1567,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Book> Books
         {
-            get => new GraphObjectChildCollection<Book>(this, "book");
+            get => new GraphObjectChildCollection<Book>(this, this.Path + "book");
             set => Books.Set(value);
         }
 
@@ -1568,18 +1592,18 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Genres
         {
-            get => new GraphObjectPropertyCollection(this, "genre");
+            get => new GraphObjectPropertyCollection(this, this.Path + "genre");
             set => SetLocalProperty("genre", value);
         }
 
         #endregion Genre
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "book", out matched))
+            if (property.StartsWith(Path, "book", out matched))
             {
-                return new Book(Path + ":book");
+                return new Book(Path + "book");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -1693,7 +1717,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Authors
         {
-            get => new GraphObjectChildCollection<Profile>(this, "author");
+            get => new GraphObjectChildCollection<Profile>(this, this.Path + "author");
             set => Authors.Set(value);
         }
 
@@ -1718,7 +1742,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<BookGenre> Genres
         {
-            get => new GraphObjectChildCollection<BookGenre>(this, "genre");
+            get => new GraphObjectChildCollection<BookGenre>(this, this.Path + "genre");
             set => Genres.Set(value);
         }
 
@@ -1743,7 +1767,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AlternateLanguages
         {
-            get => new GraphObjectPropertyCollection(this, "language:alternate");
+            get => new GraphObjectPropertyCollection(this, this.Path + "language:alternate");
             set => SetLocalProperty("language:alternate", value);
         }
 
@@ -1768,22 +1792,22 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new GraphObjectPropertyCollection(this, "tag");
+            get => new GraphObjectPropertyCollection(this, this.Path + "tag");
             set => SetLocalProperty("tag", value);
         }
 
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(string property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
-            if (property.StartsWithChildPath(Path, "author", out matched))
+            if (property.StartsWith(Path, "author", out matched))
             {
-                return new Profile(Path + ":author");
+                return new Profile(Path + "author");
             }
-            if (property.StartsWithChildPath(Path, "genre", out matched))
+            if (property.StartsWith(Path, "genre", out matched))
             {
-                return new BookGenre(Path + ":genre");
+                return new BookGenre(Path + "genre");
             }
             return base.CreateNewChild(property, out matched);
         }

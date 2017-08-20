@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="Article" /> class.
         /// </summary>
         public Article()
-            : this("article")
+            : this(new PropertyName(NamespaceCollection.Article))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="Article" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal Article(string path)
+        internal Article(PropertyName path)
             : base(path)
         {
         }

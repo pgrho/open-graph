@@ -13,8 +13,6 @@ namespace Shipwreck.OpenGraph
     /// </summary>
     public abstract partial class GraphObject : IEnumerable<GraphProperty>
     {
-        private static readonly Regex _PropertyPattern = new Regex("^[a-z][a-z0-9_]*(:[a-z][a-z0-9_]*)+$", RegexOptions.IgnoreCase);
-
         internal GraphObjectCollection _Children;
         internal List<GraphProperty> _LocalProperties;
 
@@ -22,7 +20,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="GraphObject" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal GraphObject(string path)
+        internal GraphObject(PropertyName path)
         {
             Path = path;
         }
@@ -34,7 +32,28 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         public GraphObject Parent { get; internal set; }
 
-        internal string Path { get; }
+        /// <summary>
+        /// Gets a root graph that this instance belongs to.
+        /// </summary>
+        public Graph Graph
+        {
+            get
+            {
+                var n = this;
+                while (n != null)
+                {
+                    var g = n as Graph;
+                    if (g != null)
+                    {
+                        return g;
+                    }
+                    n = n.Parent;
+                }
+                return null;
+            }
+        }
+
+        internal PropertyName Path { get; }
 
         #region Children
 
@@ -120,23 +139,59 @@ namespace Shipwreck.OpenGraph
 
         #endregion Properties
 
-        internal static bool IsValidProperty(string property)
-            => property != null && _PropertyPattern.IsMatch(property);
-
         internal void LoadProperties<T>(T properties)
             where T : IGraphPropertyEnumerator
         {
             var stack = new List<GraphObject>(3);
             stack.Add(this);
 
+            NamespaceCollection ns = null;
+
             using (properties)
             {
                 while (properties.MoveNext())
                 {
+                    if (ns == null)
+                    {
+                        var g = Graph;
+                        if (g != null)
+                        {
+                            if (g.ShouldSerializeNamespaces())
+                            {
+                                ns = g.Namespaces;
+                            }
+                            else
+                            {
+                                ns = g.Namespaces = properties.Namespaces;
+                            }
+                        }
+                        else
+                        {
+                            ns = NamespaceCollection.Default;
+                        }
+                    }
+
                     var kv = properties.Current;
 
-                    //ignores property without colon.
-                    if (!IsValidProperty(kv.Property))
+                    // TODO: lookup namespace if needed
+                    if (kv.Property.Namespace == null)
+                    {
+                        var i = kv.Property.Path?.IndexOf(':') ?? 0;
+                        if (i <= 0)
+                        {
+                            continue;
+                        }
+
+                        var uri = ns[kv.Property.Path.Substring(0, i).Trim()];
+                        if (uri == null)
+                        {
+                            continue;
+                        }
+
+                        kv.Property = new PropertyName(uri.Trim(), kv.Property.Path.Substring(i + 1));
+                    }
+
+                    if (string.IsNullOrEmpty(kv.Property.Path))
                     {
                         continue;
                     }
@@ -168,9 +223,9 @@ namespace Shipwreck.OpenGraph
             }
         }
 
-        internal virtual bool TryAddMetadata(string property, string content)
+        internal virtual bool TryAddMetadata(PropertyName property, string content)
         {
-            var pathMatched = property.MachesPath(Path);
+            var pathMatched = property.StartsWith(Path, out var b) && !b;
 
             if (pathMatched || Parent == null)
             {
@@ -183,7 +238,7 @@ namespace Shipwreck.OpenGraph
                     return true;
                 }
 
-                if (pathMatched && property.MachesChildPath(Path, "url"))
+                if (pathMatched && property.Equals(Path, "url"))
                 {
                     if (Url == null)
                     {
@@ -207,7 +262,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The local name of the property.</param>
         /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public string GetLocalProperty(string property)
-            => _LocalProperties?.FirstOrDefault(kv => kv.Property.MachesChildPath(Path, property)).Content;
+            => _LocalProperties?.FirstOrDefault(kv => kv.Property.Equals(Path, property)).Content;
 
         /// <summary>
         /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="content"/>.
@@ -220,7 +275,7 @@ namespace Shipwreck.OpenGraph
             {
                 for (int i = _LocalProperties.Count - 1; i >= 0; i--)
                 {
-                    if (_LocalProperties[i].Property.MachesChildPath(Path, property))
+                    if (_LocalProperties[i].Property.Equals(Path, property))
                     {
                         _LocalProperties.RemoveAt(i);
                     }
@@ -228,7 +283,7 @@ namespace Shipwreck.OpenGraph
             }
             if (content != null)
             {
-                LocalProperties.Add(new GraphProperty(Path + ":" + property, content));
+                LocalProperties.Add(new GraphProperty(Path + property, content));
             }
         }
 
@@ -299,7 +354,7 @@ namespace Shipwreck.OpenGraph
         internal void SetLocalProperty(string property, IEnumerable<string> values)
         {
             var pc = values as GraphObjectPropertyCollection;
-            if (pc?.Object == this && pc.Property == property)
+            if (pc?.Object == this && pc.Property.Equals(Path, property))
             {
                 return;
             }
@@ -309,7 +364,7 @@ namespace Shipwreck.OpenGraph
             {
                 foreach (var v in values)
                 {
-                    LocalProperties.Add(new GraphProperty(Path + ":" + property, v));
+                    LocalProperties.Add(new GraphProperty(Path + property, v));
                 }
             }
         }

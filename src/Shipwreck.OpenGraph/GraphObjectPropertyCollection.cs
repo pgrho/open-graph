@@ -7,14 +7,14 @@ namespace Shipwreck.OpenGraph
     /// </summary>
     public sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>
     {
-        internal GraphObjectPropertyCollection(GraphObject @object, string property)
+        internal GraphObjectPropertyCollection(GraphObject @object, PropertyName property)
         {
             Object = @object;
             Property = property;
         }
 
         internal GraphObject Object { get; }
-        internal string Property { get; }
+        internal PropertyName Property { get; }
 
         /// <inheritdoc />
         internal override IList<GraphProperty> PeekInternalList()
@@ -26,14 +26,13 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         internal override bool ShouldInclude(GraphProperty internalItem)
-            => internalItem.Property.MachesChildPath(Object.Path, Property);
-
+            => internalItem.Property == Property;
         /// <inheritdoc />
         internal override string ToItem(GraphProperty internalItem)
             => internalItem.Content;
 
         /// <inheritdoc />
         internal override GraphProperty ToInternalItem(string item)
-            => new GraphProperty(Object.Path + ":" + Property, item);
+            => new GraphProperty(Property, item);
     }
 }

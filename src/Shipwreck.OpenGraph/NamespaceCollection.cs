@@ -52,6 +52,11 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         public const string Profile = "http://ogp.me/ns/profile#";
 
+        /// <summary>
+        /// Defined Namespace URI for `al.*` type.
+        /// </summary>
+        public const string Applink = "http://ogp.me/ns/al#";
+
         #endregion Constants
 
         private static readonly Regex _SplitPattern = new Regex("(?<!:)\\s+");
@@ -75,6 +80,7 @@ namespace Shipwreck.OpenGraph
                 ["book"] = Book,
                 ["books"] = Books,
                 ["profile"] = Profile,
+                ["al"] = Applink,
             };
         }
 

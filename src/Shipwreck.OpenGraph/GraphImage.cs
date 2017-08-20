@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphImage" /> class.
         /// </summary>
         public GraphImage()
-            : this("og")
+            : this(new PropertyName(NamespaceCollection.OpenGraph))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="GraphImage" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal GraphImage(string path)
+        internal GraphImage(PropertyName path)
             : base(path)
         {
         }

@@ -33,14 +33,14 @@ var properties = new []
     new M("GraphObject", "TimeToLive", "Int32?") { Path = "ttl" },
     new M("GraphObject", "UpdatedTime", "DateTime?"),
     
-    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "al:android", OverridesPath = true },
-    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "al:ios", OverridesPath = true },
-    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "al:ipad", OverridesPath = true },
-    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "al:iphone", OverridesPath = true },
-    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "al:web", OverridesPath = true },
-    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "al:windows", OverridesPath = true },
-    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "al:windows_phone", OverridesPath = true },
-    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "al:windows_universal", OverridesPath = true },
+    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"android\")", OverridesPath = true },
+    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"ios\")", OverridesPath = true },
+    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"ipad\")", OverridesPath = true },
+    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"iphone\")", OverridesPath = true },
+    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"web\")", OverridesPath = true },
+    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows\")", OverridesPath = true },
+    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows_phone\")", OverridesPath = true },
+    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows_universal\")", OverridesPath = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -173,7 +173,9 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var PL = p.Plural ?? (N + 's');
         var T = p.Type;
         var PN = p.Path;
-        var CT = T == "string" ? "GraphObjectPropertyCollection" : p.OverridesPath ?  $"GraphChildCollection<{T}>" : $"GraphObjectChildCollection<{T}>";
+        var CT = T == "string" ? $"GraphObjectPropertyCollection(this, this.Path + \"{PN}\")"
+                            : p.OverridesPath ?  $"GraphChildCollection<{T}>(this, {PN})"
+                            : $"GraphObjectChildCollection<{T}>(this, this.Path + \"{PN}\")";
 #>
         #region <#= N #>
 
@@ -198,7 +200,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<<#= T #>> <#= PL #>
         {
-            get => new <#= CT #>(this, "<#= PN #>");
+            get => new <#= CT #>;
             set => SetLocalProperty("<#= PN #>", value);
         }
 <#
@@ -223,7 +225,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<<#= T #>> <#= PL #>
         {
-            get => new <#= CT #>(this, "<#= PN #>");
+            get => new <#= CT #>;
             set => <#= PL #>.Set(value);
         }
 <#
@@ -242,7 +244,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var isBase = C == "GraphObject";
 #>
         /// <inheritdoc />
-        internal <#= isBase ? "virtual" : "override" #> GraphObject CreateNewChild(string property, out bool matched)
+        internal <#= isBase ? "virtual" : "override" #> GraphObject CreateNewChild(PropertyName property, out bool matched)
         {
 <#
         foreach (var p in children)
@@ -250,19 +252,22 @@ foreach (var g in properties.GroupBy(p => p.Class))
             if (p.OverridesPath)
             {
 #>
-            matched = property == "<#= p.Path #>";
-            if (matched || property.StartsWith(":<#= p.Path #>"))
             {
-                return new <#= p.Type #>("<#= p.Path #>");
+                var p = <#= p.Path #>;
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new <#= p.Type #>(p);
+                }
             }
 <#
             }
             else
             {
 #>
-            if (property.StartsWithChildPath(Path, "<#= p.Path #>", out matched))
+            if (property.StartsWith(Path, "<#= p.Path #>", out matched))
             {
-                return new <#= p.Type #>(Path + ":<#= p.Path #>");
+                return new <#= p.Type #>(Path + "<#= p.Path #>");
             }
 <#
             }

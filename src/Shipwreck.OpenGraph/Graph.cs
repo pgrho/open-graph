@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="Graph" /> class.
         /// </summary>
         public Graph()
-            : base("og")
+            : base(new PropertyName(NamespaceCollection.OpenGraph))
         {
         }
 
@@ -53,6 +52,28 @@ namespace Shipwreck.OpenGraph
                 }
             }
         }
+
+        #region Namespaces
+
+        private NamespaceCollection _Namespaces;
+
+        /// <summary>
+        /// Gets the namespace collection that was used to load this graph.
+        /// </summary>
+        public NamespaceCollection Namespaces
+        {
+            get => _Namespaces ?? NamespaceCollection.Default;
+            internal set => _Namespaces = value;
+        }
+
+        /// <summary>
+        /// Returns whether serialization processes should serialize the contents of the <see cref="Namespaces"/> property on instances of this class.
+        /// </summary>
+        /// <returns><c>true</c> if the <see cref="Namespaces"/> property value should be serialized; otherwise, <c>false</c>.</returns>
+        public bool ShouldSerializeNamespaces()
+            => _Namespaces != null;
+
+        #endregion Namespaces
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified XHTML text.
@@ -118,12 +139,14 @@ namespace Shipwreck.OpenGraph
         /// <param name="xmlDocument">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
 #if NETSTANDARD1_3
+
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
         {
             var r = new Graph();
             r.LoadProperties(new XmlDocumentGraphPropertyEnumerator(xmlDocument));
             return r;
         }
+
 #else
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
         {
@@ -156,11 +179,11 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <inheritdoc />
-        internal override bool TryAddMetadata(string property, string content)
+        internal override bool TryAddMetadata(PropertyName property, string content)
         {
-            if (property.MachesPath(Path))
+            if (property.StartsWith(Path))
             {
-                if (property.MachesChildPath(Path, "type"))
+                if (property.Equals(Path, "type"))
                 {
                     if (Type == null)
                     {
@@ -177,11 +200,11 @@ namespace Shipwreck.OpenGraph
                                 break;
 
                             case "books.author":
-                                Profile = new Profile("books");
+                                Profile = new Profile(new PropertyName(NamespaceCollection.Books));
                                 break;
 
                             case "books.book":
-                                Book = new Book("books");
+                                Book = new Book(new PropertyName(NamespaceCollection.Books));
                                 break;
 
                             case "books.genre":
@@ -234,14 +257,13 @@ namespace Shipwreck.OpenGraph
                                     _TypeObject.Url = _TypeObject.Url ?? kv.Content;
                                     return false;
                                 }
-                                return kv.Property.MachesPath(_TypeObject.Path);
-                            })/* TODO: NamespaceCollection */));
+                                return kv.Property.StartsWith(_TypeObject.Path);
+                            }), Namespaces));
 
                             for (var i = LocalProperties.Count - 1; i >= 0; i--)
                             {
                                 var p = LocalProperties[i].Property;
-                                if (p.MachesPath(_TypeObject.Path)
-                                    || p == _TypeObject.Path)
+                                if (p.StartsWith(_TypeObject.Path))
                                 {
                                     LocalProperties.RemoveAt(i);
                                 }

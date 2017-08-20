@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="Profile" /> class.
         /// </summary>
         public Profile()
-            : this("profile")
+            : this(new PropertyName(NamespaceCollection.Profile))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="Profile" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal Profile(string path)
+        internal Profile(PropertyName path)
             : base(path)
         {
         }

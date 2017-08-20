@@ -7,7 +7,7 @@
     public sealed class GraphChildCollection<T> : GraphObjectChildCollection<T>
         where T : GraphObject
     {
-        internal GraphChildCollection(Graph @object, string property)
+        internal GraphChildCollection(Graph @object, PropertyName property)
             : base(@object, property)
         {
         }

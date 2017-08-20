@@ -10,6 +10,16 @@ namespace Shipwreck.OpenGraph
         #region Constructors
 
         /// <summary>
+        /// Initializes a new instance of <see cref="PropertyName"/> struct with namespace URI.
+        /// </summary>
+        /// <param name="xmlns">The  namespace URI of this property.</param>
+        public PropertyName(string xmlns)
+        {
+            Namespace = xmlns;
+            Path = null;
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="PropertyName"/> struct with namespace URI and property path.
         /// </summary>
         /// <param name="xmlns">The  namespace URI of this property.</param>
@@ -67,6 +77,20 @@ namespace Shipwreck.OpenGraph
 
         #endregion Static Methods
 
+        public static PropertyName operator +(PropertyName left, string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return left;
+            }
+            if (string.IsNullOrEmpty(left.Path))
+            {
+                return new PropertyName(left.Namespace, path);
+            }
+
+            return new PropertyName(left.Namespace, left.Path + ":" + path);
+        }
+
         #region Instance Methods
 
         /// <inheritdoc />
@@ -89,6 +113,44 @@ namespace Shipwreck.OpenGraph
         public override string ToString()
             => Namespace == null ? Path : $"{{{Namespace}}}{Path}";
 
-        #endregion Instance Methods
+        public bool StartsWith(PropertyName other)
+            => Namespace == other.Namespace
+                && (other.Path == null
+                    || (Path?.StartsWith(other.Path) == true
+                        && (Path.Length == other.Path.Length
+                        || (Path.Length > other.Path.Length && Path[other.Path.Length] == ':'))));
+
+        public bool Equals(PropertyName parentPath, string childPath)
+            => StartsWith(parentPath, childPath, out var b) && b;
+
+        public bool StartsWith(PropertyName parentPath, string childPath)
+            => StartsWith(parentPath, childPath, out _);
+
+        internal bool StartsWith(PropertyName parentPath, out bool matched)
+        {
+            // TODO: avoid string allocation
+            if (StartsWith(parentPath))
+            {
+                matched = this == parentPath;
+                return true;
+            }
+            matched = false;
+            return false;
+        }
+
+        internal bool StartsWith(PropertyName parentPath, string childPath, out bool matched, bool skipOther = false)
+        {
+            // TODO: avoid string allocation
+            var op = parentPath + childPath;
+            if (StartsWith(op))
+            {
+                matched = this == op;
+                return true;
+            }
+            matched = false;
+            return false;
+        }
     }
+
+    #endregion Instance Methods
 }
