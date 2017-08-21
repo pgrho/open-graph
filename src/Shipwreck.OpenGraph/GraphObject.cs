@@ -21,6 +21,10 @@ namespace Shipwreck.OpenGraph
         /// <param name="path">A property path for this instance.</param>
         internal GraphObject(PropertyPath path)
         {
+            if (path.IsRelative)
+            {
+                throw new ArgumentException($"{nameof(GraphObject)}.{nameof(Path)} must be absolute.");
+            }
             _Path = path;
         }
 
@@ -54,13 +58,21 @@ namespace Shipwreck.OpenGraph
 
         private PropertyPath _Path;
 
-        internal PropertyPath Path
+        /// <summary>
+        /// Gets a property path or namespace URI for this instance.
+        /// </summary>
+        public PropertyPath Path
         {
             get => _Path;
             set
             {
                 if (value != _Path)
                 {
+                    if (value.IsRelative)
+                    {
+                        throw new ArgumentException($"{nameof(GraphObject)}.{nameof(Path)} must be absolute.");
+                    }
+
                     if (_LocalProperties != null)
                     {
                         for (int i = 0; i < _LocalProperties.Count; i++)
