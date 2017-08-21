@@ -173,9 +173,9 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var PL = p.Plural ?? (N + 's');
         var T = p.Type;
         var PN = p.Path;
-        var CT = T == "string" ? $"GraphObjectPropertyCollection(this, this.Path + \"{PN}\")"
-                            : p.OverridesPath ?  $"GraphObjectChildCollection<{T}>(this, {PN})"
-                            : $"GraphObjectChildCollection<{T}>(this, this.Path + \"{PN}\")";
+        var CT = T == "string" ? $"PropertyEntryPartialCollection(this, this.Path + \"{PN}\")"
+                            : p.OverridesPath ?  $"GraphObjectPartialCollection<{T}>(this, {PN})"
+                            : $"GraphObjectPartialCollection<{T}>(this, this.Path + \"{PN}\")";
 #>
         #region <#= N #>
 

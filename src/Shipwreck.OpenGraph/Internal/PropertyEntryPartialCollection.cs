@@ -5,9 +5,9 @@ namespace Shipwreck.OpenGraph.Internal
     /// <summary>
     /// Represents a collection that filters elements in <see cref="GraphObject.LocalProperties"/> which has specified property path.
     /// </summary>
-    internal sealed class GraphObjectPropertyCollection : PartialCollection<string, PropertyEntry>
+    internal sealed class PropertyEntryPartialCollection : PartialCollection<string, PropertyEntry>
     {
-        internal GraphObjectPropertyCollection(GraphObject @object, PropertyPath property)
+        internal PropertyEntryPartialCollection(GraphObject @object, PropertyPath property)
         {
             Object = @object;
             Property = property;

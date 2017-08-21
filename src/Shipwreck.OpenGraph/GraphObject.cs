@@ -393,7 +393,7 @@ namespace Shipwreck.OpenGraph
 
         internal void SetLocalProperty(string property, IEnumerable<string> values)
         {
-            var pc = values as GraphObjectPropertyCollection;
+            var pc = values as PropertyEntryPartialCollection;
             if (pc?.Object == this && pc.Property.Equals(Path, property))
             {
                 return;
