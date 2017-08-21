@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="MusicPlaylist" /> class.
         /// </summary>
         public MusicPlaylist()
-            : this(new PropertyName(NamespaceCollection.Music))
+            : this(new PropertyPath(NamespaceCollection.Music))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="MusicPlaylist" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal MusicPlaylist(PropertyName path)
+        internal MusicPlaylist(PropertyPath path)
             : base(path)
         {
         }

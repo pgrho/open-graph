@@ -9,14 +9,14 @@ namespace Shipwreck.OpenGraph.Internal
     internal sealed class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
         where T : GraphObject
     {
-        internal GraphObjectChildCollection(GraphObject @object, PropertyName property)
+        internal GraphObjectChildCollection(GraphObject @object, PropertyPath property)
         {
             Object = @object;
             Property = property;
         }
 
         internal GraphObject Object { get; }
-        internal PropertyName Property { get; }
+        internal PropertyPath Property { get; }
 
         #region Template Methods
 

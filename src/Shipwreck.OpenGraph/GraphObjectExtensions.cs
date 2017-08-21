@@ -2,7 +2,7 @@
 {
     internal static class GraphObjectExtensions
     {
-        internal static void AddMetadataOrSetUrl(this GraphObject obj, bool setUrl, PropertyName property, string content)
+        internal static void AddMetadataOrSetUrl(this GraphObject obj, bool setUrl, PropertyPath property, string content)
         {
             if (setUrl)
             {

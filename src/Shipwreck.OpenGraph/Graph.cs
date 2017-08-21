@@ -21,7 +21,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="Graph" /> class.
         /// </summary>
         public Graph()
-            : base(new PropertyName(NamespaceCollection.OpenGraph))
+            : base(new PropertyPath(NamespaceCollection.OpenGraph))
         {
         }
 
@@ -181,7 +181,7 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <inheritdoc />
-        internal override bool TryAddMetadata(PropertyName property, string content)
+        internal override bool TryAddMetadata(PropertyPath property, string content)
         {
             if (property.StartsWith(Path))
             {
@@ -202,11 +202,11 @@ namespace Shipwreck.OpenGraph
                                 break;
 
                             case "books.author":
-                                Profile = new Profile(new PropertyName(NamespaceCollection.Books));
+                                Profile = new Profile(new PropertyPath(NamespaceCollection.Books));
                                 break;
 
                             case "books.book":
-                                Book = new Book(new PropertyName(NamespaceCollection.Books));
+                                Book = new Book(new PropertyPath(NamespaceCollection.Books));
                                 break;
 
                             case "books.genre":
@@ -320,7 +320,7 @@ namespace Shipwreck.OpenGraph
         {
             List<string> ns = null;
 
-            void addNamespace(PropertyName p)
+            void addNamespace(PropertyPath p)
             {
                 if (p.Namespace != null)
                 {

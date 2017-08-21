@@ -269,7 +269,7 @@ namespace Shipwreck.OpenGraph
         #endregion SeeAlso
 
         /// <inheritdoc />
-        internal virtual GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal virtual GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "image", out matched, skipCompareProperty: true))
             {
@@ -311,7 +311,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<AndroidApplink> AndroidApps
         {
-            get => new GraphObjectChildCollection<AndroidApplink>(this, new PropertyName(NamespaceCollection.Applink, "android"));
+            get => new GraphObjectChildCollection<AndroidApplink>(this, new PropertyPath(NamespaceCollection.Applink, "android"));
             set => AndroidApps.Set(value);
         }
 
@@ -336,7 +336,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IosApps
         {
-            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ios"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyPath(NamespaceCollection.Applink, "ios"));
             set => IosApps.Set(value);
         }
 
@@ -361,7 +361,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPadApps
         {
-            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "ipad"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyPath(NamespaceCollection.Applink, "ipad"));
             set => IPadApps.Set(value);
         }
 
@@ -386,7 +386,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<IosApplink> IPhoneApps
         {
-            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyName(NamespaceCollection.Applink, "iphone"));
+            get => new GraphObjectChildCollection<IosApplink>(this, new PropertyPath(NamespaceCollection.Applink, "iphone"));
             set => IPhoneApps.Set(value);
         }
 
@@ -411,7 +411,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Weblink> WebApps
         {
-            get => new GraphObjectChildCollection<Weblink>(this, new PropertyName(NamespaceCollection.Applink, "web"));
+            get => new GraphObjectChildCollection<Weblink>(this, new PropertyPath(NamespaceCollection.Applink, "web"));
             set => WebApps.Set(value);
         }
 
@@ -436,7 +436,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsApps
         {
-            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyPath(NamespaceCollection.Applink, "windows"));
             set => WindowsApps.Set(value);
         }
 
@@ -461,7 +461,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsPhoneApps
         {
-            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_phone"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyPath(NamespaceCollection.Applink, "windows_phone"));
             set => WindowsPhoneApps.Set(value);
         }
 
@@ -486,17 +486,17 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<WindowsApplink> WindowsUniversalApps
         {
-            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyName(NamespaceCollection.Applink, "windows_universal"));
+            get => new GraphObjectChildCollection<WindowsApplink>(this, new PropertyPath(NamespaceCollection.Applink, "windows_universal"));
             set => WindowsUniversalApps.Set(value);
         }
 
         #endregion WindowsUniversalApp
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "android");
+                var p = new PropertyPath(NamespaceCollection.Applink, "android");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -504,7 +504,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "ios");
+                var p = new PropertyPath(NamespaceCollection.Applink, "ios");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -512,7 +512,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "ipad");
+                var p = new PropertyPath(NamespaceCollection.Applink, "ipad");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -520,7 +520,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "iphone");
+                var p = new PropertyPath(NamespaceCollection.Applink, "iphone");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -528,7 +528,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "web");
+                var p = new PropertyPath(NamespaceCollection.Applink, "web");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -536,7 +536,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "windows");
+                var p = new PropertyPath(NamespaceCollection.Applink, "windows");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -544,7 +544,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "windows_phone");
+                var p = new PropertyPath(NamespaceCollection.Applink, "windows_phone");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -552,7 +552,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
             {
-                var p = new PropertyName(NamespaceCollection.Applink, "windows_universal");
+                var p = new PropertyPath(NamespaceCollection.Applink, "windows_universal");
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -914,7 +914,7 @@ namespace Shipwreck.OpenGraph
         #endregion Preview
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "album", out matched, skipCompareProperty: true))
             {
@@ -1028,7 +1028,7 @@ namespace Shipwreck.OpenGraph
         #endregion Musician
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "song", out matched, skipCompareProperty: true))
             {
@@ -1105,7 +1105,7 @@ namespace Shipwreck.OpenGraph
         #endregion Song
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "creator", out matched, skipCompareProperty: true))
             {
@@ -1146,7 +1146,7 @@ namespace Shipwreck.OpenGraph
         #endregion Creator
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "creator", out matched, skipCompareProperty: true))
             {
@@ -1280,7 +1280,7 @@ namespace Shipwreck.OpenGraph
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "actor", out matched, skipCompareProperty: true))
             {
@@ -1325,7 +1325,7 @@ namespace Shipwreck.OpenGraph
         #endregion Series
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "series", out matched, skipCompareProperty: true))
             {
@@ -1456,7 +1456,7 @@ namespace Shipwreck.OpenGraph
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "author", out matched, skipCompareProperty: true))
             {
@@ -1599,7 +1599,7 @@ namespace Shipwreck.OpenGraph
         #endregion Genre
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "book", out matched, skipCompareProperty: true))
             {
@@ -1799,7 +1799,7 @@ namespace Shipwreck.OpenGraph
         #endregion Tag
 
         /// <inheritdoc />
-        internal override GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
             if (property.StartsWith(Path, "author", out matched, skipCompareProperty: true))
             {

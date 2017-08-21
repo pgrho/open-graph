@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphAudio" /> class.
         /// </summary>
         public GraphAudio()
-            : this(new PropertyName(NamespaceCollection.OpenGraph, "audio"))
+            : this(new PropertyPath(NamespaceCollection.OpenGraph, "audio"))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="GraphAudio" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal GraphAudio(PropertyName path)
+        internal GraphAudio(PropertyPath path)
             : base(path)
         {
         }

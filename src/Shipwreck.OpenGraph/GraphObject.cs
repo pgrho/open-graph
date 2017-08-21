@@ -19,7 +19,7 @@ namespace Shipwreck.OpenGraph
         /// Initializes a new instance of the <see cref="GraphObject" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal GraphObject(PropertyName path)
+        internal GraphObject(PropertyPath path)
         {
             _Path = path;
         }
@@ -52,9 +52,9 @@ namespace Shipwreck.OpenGraph
             }
         }
 
-        private PropertyName _Path;
+        private PropertyPath _Path;
 
-        internal PropertyName Path
+        internal PropertyPath Path
         {
             get => _Path;
             set
@@ -228,7 +228,7 @@ namespace Shipwreck.OpenGraph
                             continue;
                         }
 
-                        kv.Property = new PropertyName(uri.Trim(), kv.Property.Path.Substring(i + 1));
+                        kv.Property = new PropertyPath(uri.Trim(), kv.Property.Path.Substring(i + 1));
                     }
 
                     if (string.IsNullOrEmpty(kv.Property.Path))
@@ -263,7 +263,7 @@ namespace Shipwreck.OpenGraph
             }
         }
 
-        internal virtual bool TryAddMetadata(PropertyName property, string content)
+        internal virtual bool TryAddMetadata(PropertyPath property, string content)
         {
             var pathMatched = property.StartsWith(Path, out var b) && !b;
 

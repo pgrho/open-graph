@@ -14,7 +14,7 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         /// <param name="property">The name of this property.</param>
         /// <param name="content">The content for this property.</param>
-        public GraphProperty(PropertyName property, string content)
+        public GraphProperty(PropertyPath property, string content)
         {
             Property = property;
             Content = content;
@@ -27,7 +27,7 @@ namespace Shipwreck.OpenGraph
         /// <summary>
         /// Gets or sets a name of this property.
         /// </summary>
-        public PropertyName Property { get; set; }
+        public PropertyPath Property { get; set; }
 
         /// <summary>
         /// Gets or sets a content for this property.

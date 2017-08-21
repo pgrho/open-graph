@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="MusicRadioStation" /> class.
         /// </summary>
         public MusicRadioStation()
-            : this(new PropertyName(NamespaceCollection.Music))
+            : this(new PropertyPath(NamespaceCollection.Music))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="MusicRadioStation" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal MusicRadioStation(PropertyName path)
+        internal MusicRadioStation(PropertyPath path)
             : base(path)
         {
         }

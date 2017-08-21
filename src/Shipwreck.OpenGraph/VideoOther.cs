@@ -16,7 +16,7 @@
         /// Initializes a new instance of the <see cref="VideoOther" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal VideoOther(PropertyName path)
+        internal VideoOther(PropertyPath path)
             : base(path)
         {
         }

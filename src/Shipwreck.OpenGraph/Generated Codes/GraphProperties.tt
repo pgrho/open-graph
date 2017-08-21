@@ -33,14 +33,14 @@ var properties = new []
     new M("GraphObject", "TimeToLive", "Int32?") { Path = "ttl" },
     new M("GraphObject", "UpdatedTime", "DateTime?"),
     
-    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"android\")", OverridesPath = true },
-    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"ios\")", OverridesPath = true },
-    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"ipad\")", OverridesPath = true },
-    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"iphone\")", OverridesPath = true },
-    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"web\")", OverridesPath = true },
-    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows\")", OverridesPath = true },
-    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows_phone\")", OverridesPath = true },
-    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "new PropertyName(NamespaceCollection.Applink, \"windows_universal\")", OverridesPath = true },
+    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"android\")", OverridesPath = true },
+    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"ios\")", OverridesPath = true },
+    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"ipad\")", OverridesPath = true },
+    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"iphone\")", OverridesPath = true },
+    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"web\")", OverridesPath = true },
+    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows\")", OverridesPath = true },
+    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows_phone\")", OverridesPath = true },
+    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows_universal\")", OverridesPath = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -244,7 +244,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var isBase = C == "GraphObject";
 #>
         /// <inheritdoc />
-        internal <#= isBase ? "virtual" : "override" #> GraphObject CreateNewChild(PropertyName property, out bool matched)
+        internal <#= isBase ? "virtual" : "override" #> GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
 <#
         foreach (var p in children)

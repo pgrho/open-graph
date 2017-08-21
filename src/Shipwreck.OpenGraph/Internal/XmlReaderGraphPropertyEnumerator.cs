@@ -32,7 +32,7 @@ namespace Shipwreck.OpenGraph.Internal
         }
 
         public GraphProperty Current
-            => new GraphProperty(new PropertyName(null, _Property), _Content);
+            => new GraphProperty(new PropertyPath(null, _Property), _Content);
 
         object IEnumerator.Current
             => Current;

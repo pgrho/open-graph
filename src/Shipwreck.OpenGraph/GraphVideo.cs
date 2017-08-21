@@ -9,7 +9,7 @@
         /// Initializes a new instance of the <see cref="GraphVideo" /> class.
         /// </summary>
         public GraphVideo()
-            : this(new PropertyName(NamespaceCollection.OpenGraph, "video"))
+            : this(new PropertyPath(NamespaceCollection.OpenGraph, "video"))
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="GraphVideo" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal GraphVideo(PropertyName path)
+        internal GraphVideo(PropertyPath path)
             : base(path)
         {
         }

@@ -29,7 +29,7 @@ namespace Shipwreck.OpenGraph.Internal
                 {
                     var e = (XmlElement)_Head.ChildNodes[_Index];
 
-                    return new GraphProperty(new PropertyName(null, e.GetAttribute("property")), "content");
+                    return new GraphProperty(new PropertyPath(null, e.GetAttribute("property")), "content");
                 }
                 return default(GraphProperty);
             }

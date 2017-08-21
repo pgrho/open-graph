@@ -4,28 +4,28 @@ using System.Diagnostics;
 namespace Shipwreck.OpenGraph
 {
     /// <summary>
-    /// Defines a property name with namespace URI.
+    /// Defines a property path with namespace URI.
     /// </summary>
-    public struct PropertyName : IEquatable<PropertyName>
+    public struct PropertyPath : IEquatable<PropertyPath>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="PropertyName"/> struct with namespace URI.
+        /// Initializes a new instance of <see cref="PropertyPath"/> struct with namespace URI.
         /// </summary>
         /// <param name="xmlns">The  namespace URI of this property.</param>
-        public PropertyName(string xmlns)
+        public PropertyPath(string xmlns)
         {
             Namespace = xmlns;
             Path = null;
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="PropertyName"/> struct with namespace URI and property path.
+        /// Initializes a new instance of <see cref="PropertyPath"/> struct with namespace URI and property path.
         /// </summary>
         /// <param name="xmlns">The  namespace URI of this property.</param>
         /// <param name="path">The property path without prefix.</param>
-        public PropertyName(string xmlns, string path)
+        public PropertyPath(string xmlns, string path)
         {
             Namespace = xmlns;
             Path = path;
@@ -50,30 +50,30 @@ namespace Shipwreck.OpenGraph
         #region Static Methods
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="PropertyName" /> values are equal.
+        /// Returns a value that indicates whether two <see cref="PropertyPath" /> values are equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(PropertyName left, PropertyName right)
+        public static bool operator ==(PropertyPath left, PropertyPath right)
             => left.Namespace == right.Namespace && left.Path == right.Path;
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="PropertyName" /> values have difference equal.
+        /// Returns a value that indicates whether two <see cref="PropertyPath" /> values have difference equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(PropertyName left, PropertyName right)
+        public static bool operator !=(PropertyPath left, PropertyPath right)
             => left.Namespace != right.Namespace || left.Path != right.Path;
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="PropertyName" /> values are equal.
+        /// Returns a value that indicates whether two <see cref="PropertyPath" /> values are equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, <c>false</c>.</returns>
-        public static bool Equals(PropertyName left, PropertyName right)
+        public static bool Equals(PropertyPath left, PropertyPath right)
             => left == right;
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The base property path.</param>
         /// <param name="path">The path to append.</param>
         /// <returns>Combined path of <paramref name="property"/> and <paramref name="path"/>.</returns>
-        public static PropertyName operator +(PropertyName property, string path)
+        public static PropertyPath operator +(PropertyPath property, string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -90,7 +90,7 @@ namespace Shipwreck.OpenGraph
             }
             if (string.IsNullOrEmpty(property.Path))
             {
-                return new PropertyName(property.Namespace, path);
+                return new PropertyPath(property.Namespace, path);
             }
 
             if (path[0] == ':')
@@ -98,10 +98,10 @@ namespace Shipwreck.OpenGraph
 #if DEBUG
                 Debug.Fail("Invalid path to append.");
 #endif
-                return new PropertyName(property.Namespace, property.Path + path);
+                return new PropertyPath(property.Namespace, property.Path + path);
             }
 
-            return new PropertyName(property.Namespace, property.Path + ":" + path);
+            return new PropertyPath(property.Namespace, property.Path + ":" + path);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The base property path.</param>
         /// <param name="path">The path to append.</param>
         /// <returns>Combined path of <paramref name="property"/> and <paramref name="path"/>.</returns>
-        public static PropertyName Add(PropertyName property, string path)
+        public static PropertyPath Add(PropertyPath property, string path)
             => property + path;
 
         #endregion Static Methods
@@ -119,14 +119,14 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         public override bool Equals(object obj)
-            => obj is PropertyName && this == (PropertyName)obj;
+            => obj is PropertyPath && this == (PropertyPath)obj;
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(PropertyName other)
+        public bool Equals(PropertyPath other)
             => this == other;
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The base path to compare.</param>
         /// <param name="path">The child path to compare.</param>
         /// <returns><c>true</c> if <paramref name="property"/> and <paramref name="property"/> match this property; otherwise, <c>false</c>.</returns>
-        public bool Equals(PropertyName property, string path)
+        public bool Equals(PropertyPath property, string path)
             => StartsWith(property, path, out var b) && b;
 
         /// <inheritdoc />
@@ -147,14 +147,14 @@ namespace Shipwreck.OpenGraph
             => Namespace == null ? Path : $"{{{Namespace}}}{Path}";
 
         /// <summary>
-        /// Determines whether the namespace URI and the beginning of this path instance match the specified <see cref="PropertyName"/>.
+        /// Determines whether the namespace URI and the beginning of this path instance match the specified <see cref="PropertyPath"/>.
         /// </summary>
         /// <param name="value">The path to compare.</param>
         /// <returns><c>true</c> if <paramref name="value"/> matches the beginning of this property; otherwise, <c>false</c>.</returns>
-        public bool StartsWith(PropertyName value)
+        public bool StartsWith(PropertyPath value)
             => StartsWith(value, out _);
 
-        internal bool StartsWith(PropertyName value, out bool matched)
+        internal bool StartsWith(PropertyPath value, out bool matched)
         {
             if (Namespace == value.Namespace)
             {
@@ -178,10 +178,10 @@ namespace Shipwreck.OpenGraph
         /// <param name="property">The base path to compare.</param>
         /// <param name="path">The child path to compare.</param>
         /// <returns><c>true</c> if <paramref name="property"/> and <paramref name="property"/> match the beginning of this property; otherwise, <c>false</c>.</returns>
-        public bool StartsWith(PropertyName property, string path)
+        public bool StartsWith(PropertyPath property, string path)
             => StartsWith(property, path, out _);
 
-        internal bool StartsWith(PropertyName property, string path, out bool matched, bool skipCompareProperty = false)
+        internal bool StartsWith(PropertyPath property, string path, out bool matched, bool skipCompareProperty = false)
         {
             var pl = Path?.Length ?? 0;
             var i = (property.Path?.Length + 1) ?? 0;

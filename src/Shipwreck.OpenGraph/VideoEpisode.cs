@@ -16,7 +16,7 @@
         /// Initializes a new instance of the <see cref="VideoEpisode" /> class with specified property path.
         /// </summary>
         /// <param name="path">A property path for this instance.</param>
-        internal VideoEpisode(PropertyName path)
+        internal VideoEpisode(PropertyPath path)
             : base(path)
         {
         }
