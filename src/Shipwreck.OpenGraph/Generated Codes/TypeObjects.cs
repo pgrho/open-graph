@@ -7,6 +7,50 @@ namespace Shipwreck.OpenGraph
         #region TypeObject
 
         /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Article" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Article Article
+        {
+            get => _TypeObject as Article;
+            set => TypeObject = value ?? (_TypeObject is Article ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Book" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Book Book
+        {
+            get => _TypeObject as Book;
+            set => TypeObject = value ?? (_TypeObject is Book ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Profile" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Profile Profile
+        {
+            get => _TypeObject as Profile;
+            set => TypeObject = value ?? (_TypeObject is Profile ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.BookGenre" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public BookGenre BookGenre
+        {
+            get => _TypeObject as BookGenre;
+            set => TypeObject = value ?? (_TypeObject is BookGenre ? null : _TypeObject);
+        }
+
+        /// <summary>
         /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.MusicSong" />.
         /// </summary>
         [DefaultValue(null)]
@@ -94,48 +138,56 @@ namespace Shipwreck.OpenGraph
             set => TypeObject = value ?? (_TypeObject is VideoOther ? null : _TypeObject);
         }
 
-        /// <summary>
-        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Article" />.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Article Article
-        {
-            get => _TypeObject as Article;
-            set => TypeObject = value ?? (_TypeObject is Article ? null : _TypeObject);
-        }
 
-        /// <summary>
-        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Book" />.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Book Book
+        private GraphObject CreateTypeObject()
         {
-            get => _TypeObject as Book;
-            set => TypeObject = value ?? (_TypeObject is Book ? null : _TypeObject);
-        }
+            switch (Type)
+            {
+                case "article":
+                    return new Article(new PropertyPath(NamespaceCollection.Article));
 
-        /// <summary>
-        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.BookGenre" />.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public BookGenre BookGenre
-        {
-            get => _TypeObject as BookGenre;
-            set => TypeObject = value ?? (_TypeObject is BookGenre ? null : _TypeObject);
-        }
+                case "book":
+                    return new Book(new PropertyPath(NamespaceCollection.Book));
 
-        /// <summary>
-        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Profile" />.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Profile Profile
-        {
-            get => _TypeObject as Profile;
-            set => TypeObject = value ?? (_TypeObject is Profile ? null : _TypeObject);
+                case "books.author":
+                    return new Profile(new PropertyPath(NamespaceCollection.Books));
+
+                case "books.book":
+                    return new Book(new PropertyPath(NamespaceCollection.Books));
+
+                case "books.genre":
+                    return new BookGenre(new PropertyPath(NamespaceCollection.Books));
+
+                case "music.song":
+                    return new MusicSong(new PropertyPath(NamespaceCollection.Music));
+
+                case "music.album":
+                    return new MusicAlbum(new PropertyPath(NamespaceCollection.Music));
+
+                case "music.playlist":
+                    return new MusicPlaylist(new PropertyPath(NamespaceCollection.Music));
+
+                case "music.radio_station":
+                    return new MusicRadioStation(new PropertyPath(NamespaceCollection.Music));
+
+                case "profile":
+                    return new Profile(new PropertyPath(NamespaceCollection.Profile));
+
+                case "video.movie":
+                    return new VideoMovie(new PropertyPath(NamespaceCollection.Video));
+
+                case "video.episode":
+                    return new VideoEpisode(new PropertyPath(NamespaceCollection.Video));
+
+                case "video.tv_show":
+                    return new VideoTVShow(new PropertyPath(NamespaceCollection.Video));
+
+                case "video.other":
+                    return new VideoOther(new PropertyPath(NamespaceCollection.Video));
+
+            }
+
+            return null;
         }
 
         #endregion TypeObject

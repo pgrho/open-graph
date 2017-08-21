@@ -5,18 +5,24 @@
 <#
 var types = new []
 {
+    new T("article"),
+
+    new T("book"),
+    new T("books.author") { Type = "Profile" },
+    new T("books.book") { Type = "Book" },
+    new T("books.genre") { Type = "BookGenre" },
+
     new T("music.song"),
     new T("music.album"),
     new T("music.playlist"),
     new T("music.radio_station"),
+
+    new T("profile"),
+
     new T("video.movie"),
     new T("video.episode"),
     new T("video.tv_show") { Type = "VideoTVShow" },
     new T("video.other"),
-    new T("article"),
-    new T("book"),
-    new T("books.genre") { Type = "BookGenre" },
-    new T("profile")
 };
 
 #>
@@ -29,8 +35,8 @@ namespace Shipwreck.OpenGraph
         #region TypeObject
 
 <#
-        foreach (var T in types.Select(t => t.Type).Distinct())
-        {
+foreach (var T in types.Select(t => t.Type).Distinct())
+{
 #>
         /// <summary>
         /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.<#= T #>" />.
@@ -44,8 +50,28 @@ namespace Shipwreck.OpenGraph
         }
 
 <#
-        }
+}
 #>
+
+        private GraphObject CreateTypeObject()
+        {
+            switch (Type)
+            {
+<#
+foreach (var t in types)
+{
+#>
+                case "<#= t.Path #>":
+                    return new <#= t.Type #>(<#= t.GetPropertyPath() #>);
+
+<#
+}
+#>
+            }
+
+            return null;
+        }
+
         #endregion TypeObject
     }
 }<#+
@@ -70,6 +96,21 @@ public class T
             return string.Concat(Path.Split('.', '_').Select(s => char.ToUpper(s[0]) + s.Substring(1)));
         }
         set => _Type =value;
+    }
+
+    public string GetPropertyPath()
+    {
+        string ns;
+        var i = Path.IndexOf('.');
+        if (i >= 0)
+        {
+            ns = Path.Substring(0, i);
+        }
+        else
+        {
+            ns = Path;
+        }
+        return $"new PropertyPath(NamespaceCollection.{char.ToUpper(ns[0])}{ns.Substring(1)})";
     }
 }
 

@@ -230,87 +230,34 @@ namespace Shipwreck.OpenGraph
                     {
                         Type = content;
 
-                        switch (content)
+                        _TypeObject = CreateTypeObject();
+                        if (_TypeObject != null)
                         {
-                            case "article":
-                                Article = new Article();
-                                break;
+                            _TypeObject.Parent = this;
 
-                            case "book":
-                                Book = new Book();
-                                break;
-
-                            case "books.author":
-                                Profile = new Profile(new PropertyPath(NamespaceCollection.Books));
-                                break;
-
-                            case "books.book":
-                                Book = new Book(new PropertyPath(NamespaceCollection.Books));
-                                break;
-
-                            case "books.genre":
-                                BookGenre = new BookGenre();
-                                break;
-
-                            case "music.song":
-                                MusicSong = new MusicSong();
-                                break;
-
-                            case "music.album":
-                                MusicAlbum = new MusicAlbum();
-                                break;
-
-                            case "music.playlist":
-                                MusicPlaylist = new MusicPlaylist();
-                                break;
-
-                            case "music.radio_station":
-                                MusicRadioStation = new MusicRadioStation();
-                                break;
-
-                            case "profile":
-                                Profile = new Profile();
-                                break;
-
-                            case "video.movie":
-                                VideoMovie = new VideoMovie();
-                                break;
-
-                            case "video.episode":
-                                VideoEpisode = new VideoEpisode();
-                                break;
-
-                            case "video.tv_show":
-                                VideoTVShow = new VideoTVShow();
-                                break;
-
-                            case "video.other":
-                                VideoOther = new VideoOther();
-                                break;
-                        }
-
-                        if (_TypeObject != null && ShouldSerializeLocalProperties())
-                        {
-                            List<int> removed = null;
-                            _TypeObject.LoadProperties(new WrappedPropertyEntryEnumerator(GetLocalProperties().Where((kv, i) =>
+                            if (ShouldSerializeLocalProperties())
                             {
-                                if (kv.Property == _TypeObject.Path)
+                                List<int> removed = null;
+                                _TypeObject.LoadProperties(new WrappedPropertyEntryEnumerator(GetLocalProperties().Where((kv, i) =>
                                 {
-                                    _TypeObject.Url = _TypeObject.Url ?? kv.Content;
-                                    (removed ?? (removed = new List<int>())).Add(i);
+                                    if (kv.Property == _TypeObject.Path)
+                                    {
+                                        _TypeObject.Url = _TypeObject.Url ?? kv.Content;
+                                        (removed ?? (removed = new List<int>())).Add(i);
+                                        return false;
+                                    }
+                                    if (kv.Property.StartsWith(_TypeObject.Path))
+                                    {
+                                        (removed ?? (removed = new List<int>())).Add(i);
+                                        return true;
+                                    }
                                     return false;
-                                }
-                                if (kv.Property.StartsWith(_TypeObject.Path))
-                                {
-                                    (removed ?? (removed = new List<int>())).Add(i);
-                                    return true;
-                                }
-                                return false;
-                            }), Namespaces));
+                                }), Namespaces));
 
-                            for (var i = (removed?.Count ?? 0) - 1; i >= 0; i--)
-                            {
-                                LocalProperties.RemoveAt(removed[i]);
+                                for (var i = (removed?.Count ?? 0) - 1; i >= 0; i--)
+                                {
+                                    LocalProperties.RemoveAt(removed[i]);
+                                }
                             }
                         }
                     }
