@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net452</TargetFrameworks>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Shipwreck.OpenGraph.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>shipwreck.jp</Authors>
     <Company />
@@ -9,15 +10,13 @@
     <PackageProjectUrl>https://github.com/pgrho/open-graph</PackageProjectUrl>
     <Copyright></Copyright>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Version>1.1.1-pre</Version>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Shipwreck.OpenGraph.xml</DocumentationFile>
+    <Version>1.2.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" /> 
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
     <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
   </ItemGroup>
