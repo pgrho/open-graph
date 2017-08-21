@@ -15,9 +15,8 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         /// <param name="xmlns">The  namespace URI of this property.</param>
         public PropertyPath(string xmlns)
+            : this(xmlns, null)
         {
-            Namespace = xmlns;
-            Path = null;
         }
 
         /// <summary>
@@ -27,8 +26,8 @@ namespace Shipwreck.OpenGraph
         /// <param name="path">The property path without prefix.</param>
         public PropertyPath(string xmlns, string path)
         {
-            Namespace = xmlns;
-            Path = path;
+            Namespace = string.IsNullOrEmpty(xmlns) ? null : xmlns;
+            Path = string.IsNullOrEmpty(path) ? null : path;
         }
 
         #endregion Constructors
@@ -44,6 +43,18 @@ namespace Shipwreck.OpenGraph
         /// Gets or sets a property path without prefix.
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has no value.
+        /// </summary>
+        public bool IsEmpty
+            => Namespace == null && Path == null;
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="Namespace"/> is null.
+        /// </summary>
+        public bool IsRelative
+            => Namespace == null;
 
         #endregion Properties
 
