@@ -301,11 +301,15 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        #region Output Methods
+
+        #region Get Namespaces
+
         /// <summary>
-        /// Returns a prefix attribute value that is needed to describe this graph.
+        /// Returns a sequence of namespace URI that is needed to describe this graph.
         /// </summary>
-        /// <returns>A string that defines all namespaces used by this instance.</returns>
-        public string GetPrefixAttribute()
+        /// <returns>A  sequence of namespace URI.</returns>
+        public IEnumerable<string> GetNamespaces()
         {
             List<string> ns = null;
 
@@ -343,18 +347,27 @@ namespace Shipwreck.OpenGraph
                 addNamespace(_TypeObject.Path);
             }
 
-            if (ns == null)
-            {
-                return null;
-            }
-            var sb = new StringBuilder(32);
+            return ns ?? Enumerable.Empty<string>();
+        }
 
-            foreach (var n in ns)
+        /// <summary>
+        /// Returns a prefix attribute value that is needed to describe this graph.
+        /// </summary>
+        /// <returns>A string that defines all namespaces used by this instance.</returns>
+        public string GetPrefixAttribute()
+        {
+            StringBuilder sb = null;
+
+            foreach (var n in GetNamespaces())
             {
                 var p = Namespaces.GetPrefix(n);
                 if (p != null)
                 {
-                    if (sb.Length > 0)
+                    if (sb == null)
+                    {
+                        sb = new StringBuilder(64);
+                    }
+                    else
                     {
                         sb.Append(' ');
                     }
@@ -364,6 +377,8 @@ namespace Shipwreck.OpenGraph
 
             return sb.Length > 0 ? sb.ToString() : null;
         }
+
+        #endregion Get Namespaces
 
         #region WriteTo
 
@@ -382,7 +397,7 @@ namespace Shipwreck.OpenGraph
                 ConformanceLevel = ConformanceLevel.Fragment
             }))
             {
-                WriteTo(xw);
+                WriteXmlTo(xw);
             }
         }
 
@@ -400,7 +415,7 @@ namespace Shipwreck.OpenGraph
                 ConformanceLevel = ConformanceLevel.Fragment
             }))
             {
-                await WriteToAsync(xw).ConfigureAwait(false);
+                await WriteXmlToAsync(xw).ConfigureAwait(false);
             }
         }
 
@@ -409,7 +424,7 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         /// <param name="writer">The <see cref="XmlWriter" /> to be written.</param>
         /// <param name="isXhtml">The value injdicating whether output xhtml xmlns.</param>
-        public void WriteTo(XmlWriter writer, bool isXhtml = false)
+        public void WriteXmlTo(XmlWriter writer, bool isXhtml = false)
         {
             foreach (var gp in this)
             {
@@ -428,7 +443,7 @@ namespace Shipwreck.OpenGraph
         /// <param name="writer">The <see cref="XmlWriter" /> to be written.</param>
         /// <param name="isXhtml">The value injdicating whether output xhtml xmlns.</param>
         /// <returns>A task that represents the asynchronous copy operation.</returns>
-        public async Task WriteToAsync(XmlWriter writer, bool isXhtml = false)
+        public async Task WriteXmlToAsync(XmlWriter writer, bool isXhtml = false)
         {
             foreach (var gp in this)
             {
@@ -459,5 +474,26 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion WriteTo
+
+        /// <summary>
+        /// Returns a sequence of HTML <c>%lt;meta&gt;</c> elements that represents this graph.
+        /// </summary>
+        /// <param name="xmlDocument">The <see cref="XmlDocument" /> to create elements.</param>
+        /// <param name="isXhtml">The value injdicating whether output xhtml xmlns.</param>
+        public IEnumerable<XmlElement> EnumerateMetaElements(XmlDocument xmlDocument, bool isXhtml = false)
+        {
+            foreach (var pe in this)
+            {
+                var e = xmlDocument.CreateElement(null, "meta", isXhtml ? XHTML_NS : null);
+
+                var path = pe.Property;
+                e.SetAttribute("property", GetPrefixWithColon(path.Namespace) + path.Path);
+                e.SetAttribute("content", pe.Content);
+
+                yield return e;
+            }
+        }
+
+        #endregion Output Methods
     }
 }
