@@ -27,7 +27,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AlternateLocales
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "locale:alternate");
+            get => new PropertyEntryPartialCollection(this, "locale:alternate");
             set => SetLocalProperty("locale:alternate", value);
         }
 
@@ -52,7 +52,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphImage> Images
         {
-            get => new GraphObjectPartialCollection<GraphImage>(this, this.Path + "image");
+            get => new GraphObjectPartialCollection<GraphImage>(this, "image");
             set => Images.Set(value);
         }
 
@@ -77,7 +77,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphVideo> Videos
         {
-            get => new GraphObjectPartialCollection<GraphVideo>(this, this.Path + "video");
+            get => new GraphObjectPartialCollection<GraphVideo>(this, "video");
             set => Videos.Set(value);
         }
 
@@ -102,7 +102,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphAudio> Audios
         {
-            get => new GraphObjectPartialCollection<GraphAudio>(this, this.Path + "audio");
+            get => new GraphObjectPartialCollection<GraphAudio>(this, "audio");
             set => Audios.Set(value);
         }
 
@@ -127,7 +127,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphRestriction> Restrictions
         {
-            get => new GraphObjectPartialCollection<GraphRestriction>(this, this.Path + "restrictions");
+            get => new GraphObjectPartialCollection<GraphRestriction>(this, "restrictions");
             set => Restrictions.Set(value);
         }
 
@@ -152,7 +152,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> SeeAlsos
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "see_also");
+            get => new PropertyEntryPartialCollection(this, "see_also");
             set => SetLocalProperty("see_also", value);
         }
 
@@ -531,6 +531,86 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion WindowsUniversalApp
+
+        #region FacebookAdmin
+
+        /// <summary>
+        /// Gets or sets a facebook admin.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FacebookAdmin
+        {
+            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "admins"));
+            set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "admins"), value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all facebook admins.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> FacebookAdmins
+        {
+            get => new PropertyEntryPartialCollection(this, new PropertyPath(NamespaceCollection.Facebook, "admins"));
+            set => SetLocalProperty("fb:admins", value);
+        }
+
+        #endregion FacebookAdmin
+
+        #region FacebookAppId
+
+        /// <summary>
+        /// Gets or sets a facebook app id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FacebookAppId
+        {
+            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "app_id"));
+            set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "app_id"), value);
+        }
+
+        #endregion FacebookAppId
+
+        #region FacebookPage
+
+        /// <summary>
+        /// Gets or sets a facebook page.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FacebookPage
+        {
+            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "pages"));
+            set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "pages"), value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all facebook pages.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<string> FacebookPages
+        {
+            get => new PropertyEntryPartialCollection(this, new PropertyPath(NamespaceCollection.Facebook, "pages"));
+            set => SetLocalProperty("fb:pages", value);
+        }
+
+        #endregion FacebookPage
+
+        #region FacebookProfileId
+
+        /// <summary>
+        /// Gets or sets a facebook profile id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FacebookProfileId
+        {
+            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "profile_id"));
+            set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "profile_id"), value);
+        }
+
+        #endregion FacebookProfileId
 
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
@@ -919,7 +999,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AllowedCountries
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "country:allowed");
+            get => new PropertyEntryPartialCollection(this, "country:allowed");
             set => SetLocalProperty("country:allowed", value);
         }
 
@@ -944,7 +1024,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> DisallowedCountries
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "country:disallowed");
+            get => new PropertyEntryPartialCollection(this, "country:disallowed");
             set => SetLocalProperty("country:disallowed", value);
         }
 
@@ -984,7 +1064,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Contents
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "content");
+            get => new PropertyEntryPartialCollection(this, "content");
             set => SetLocalProperty("content", value);
         }
 
@@ -1012,7 +1092,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicAlbum> Albums
         {
-            get => new GraphObjectPartialCollection<MusicAlbum>(this, this.Path + "album");
+            get => new GraphObjectPartialCollection<MusicAlbum>(this, "album");
             set => Albums.Set(value);
         }
 
@@ -1037,7 +1117,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Musicians
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "musician");
+            get => new GraphObjectPartialCollection<Profile>(this, "musician");
             set => Musicians.Set(value);
         }
 
@@ -1062,7 +1142,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<GraphAudio> Previews
         {
-            get => new GraphObjectPartialCollection<GraphAudio>(this, this.Path + "preview_url");
+            get => new GraphObjectPartialCollection<GraphAudio>(this, "preview_url");
             set => Previews.Set(value);
         }
 
@@ -1197,7 +1277,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicSong> Songs
         {
-            get => new GraphObjectPartialCollection<MusicSong>(this, this.Path + "song");
+            get => new GraphObjectPartialCollection<MusicSong>(this, "song");
             set => Songs.Set(value);
         }
 
@@ -1222,7 +1302,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Musicians
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "musician");
+            get => new GraphObjectPartialCollection<Profile>(this, "musician");
             set => Musicians.Set(value);
         }
 
@@ -1323,7 +1403,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Creators
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "creator");
+            get => new GraphObjectPartialCollection<Profile>(this, "creator");
             set => Creators.Set(value);
         }
 
@@ -1348,7 +1428,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<MusicSong> Songs
         {
-            get => new GraphObjectPartialCollection<MusicSong>(this, this.Path + "song");
+            get => new GraphObjectPartialCollection<MusicSong>(this, "song");
             set => Songs.Set(value);
         }
 
@@ -1404,7 +1484,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Creators
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "creator");
+            get => new GraphObjectPartialCollection<Profile>(this, "creator");
             set => Creators.Set(value);
         }
 
@@ -1441,7 +1521,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Actors
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "actor");
+            get => new GraphObjectPartialCollection<Profile>(this, "actor");
             set => Actors.Set(value);
         }
 
@@ -1466,7 +1546,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Directors
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "director");
+            get => new GraphObjectPartialCollection<Profile>(this, "director");
             set => Directors.Set(value);
         }
 
@@ -1491,7 +1571,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Writers
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "writer");
+            get => new GraphObjectPartialCollection<Profile>(this, "writer");
             set => Writers.Set(value);
         }
 
@@ -1516,7 +1596,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "tag");
+            get => new PropertyEntryPartialCollection(this, "tag");
             set => SetLocalProperty("tag", value);
         }
 
@@ -1591,7 +1671,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<VideoTVShow> AllSeries
         {
-            get => new GraphObjectPartialCollection<VideoTVShow>(this, this.Path + "series");
+            get => new GraphObjectPartialCollection<VideoTVShow>(this, "series");
             set => AllSeries.Set(value);
         }
 
@@ -1628,7 +1708,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Authors
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "author");
+            get => new GraphObjectPartialCollection<Profile>(this, "author");
             set => Authors.Set(value);
         }
 
@@ -1653,7 +1733,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Publishers
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "publisher");
+            get => new GraphObjectPartialCollection<Profile>(this, "publisher");
             set => Publishers.Set(value);
         }
 
@@ -1678,7 +1758,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "tag");
+            get => new PropertyEntryPartialCollection(this, "tag");
             set => SetLocalProperty("tag", value);
         }
 
@@ -1794,7 +1874,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Book> Books
         {
-            get => new GraphObjectPartialCollection<Book>(this, this.Path + "book");
+            get => new GraphObjectPartialCollection<Book>(this, "book");
             set => Books.Set(value);
         }
 
@@ -1819,7 +1899,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Genres
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "genre");
+            get => new PropertyEntryPartialCollection(this, "genre");
             set => SetLocalProperty("genre", value);
         }
 
@@ -1946,7 +2026,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<Profile> Authors
         {
-            get => new GraphObjectPartialCollection<Profile>(this, this.Path + "author");
+            get => new GraphObjectPartialCollection<Profile>(this, "author");
             set => Authors.Set(value);
         }
 
@@ -1971,7 +2051,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<BookGenre> Genres
         {
-            get => new GraphObjectPartialCollection<BookGenre>(this, this.Path + "genre");
+            get => new GraphObjectPartialCollection<BookGenre>(this, "genre");
             set => Genres.Set(value);
         }
 
@@ -1996,7 +2076,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> AlternateLanguages
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "language:alternate");
+            get => new PropertyEntryPartialCollection(this, "language:alternate");
             set => SetLocalProperty("language:alternate", value);
         }
 
@@ -2021,7 +2101,7 @@ namespace Shipwreck.OpenGraph
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<string> Tags
         {
-            get => new PropertyEntryPartialCollection(this, this.Path + "tag");
+            get => new PropertyEntryPartialCollection(this, "tag");
             set => SetLocalProperty("tag", value);
         }
 

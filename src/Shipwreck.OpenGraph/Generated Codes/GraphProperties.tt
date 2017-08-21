@@ -41,6 +41,10 @@ var properties = new []
     new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "al:windows", IsAbsolute = true },
     new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "al:windows_phone", IsAbsolute = true },
     new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "al:windows_universal", IsAbsolute = true },
+    new M("Graph", "FacebookAdmin", "string", isArray: true) { Path = "fb:admins", IsAbsolute = true },
+    new M("Graph", "FacebookAppId", "string") { Path = "fb:app_id", IsAbsolute = true },
+    new M("Graph", "FacebookPage", "string", isArray: true) { Path = "fb:pages", IsAbsolute = true },
+    new M("Graph", "FacebookProfileId", "string") { Path = "fb:profile_id", IsAbsolute = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -160,9 +164,9 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var PL = p.Plural ?? (N + 's');
         var T = p.Type;
         var PN = p.Path;
-        var CT = T == "string" ? $"PropertyEntryPartialCollection(this, this.Path + \"{PN}\")"
-                            : p.IsAbsolute ?  $"GraphObjectPartialCollection<{T}>(this, {p.GetPropertyPath()})"
-                            : $"GraphObjectPartialCollection<{T}>(this, this.Path + \"{PN}\")";
+        var pathExpression = p.IsAbsolute ? p.GetPropertyPath() : $"\"{p.Path}\"";
+        var CT = $"{(T == "string" ? "PropertyEntryPartialCollection" : $"GraphObjectPartialCollection<{T}>")}(this, {pathExpression})";
+
 #>
         #region <#= N #>
 
@@ -178,8 +182,8 @@ foreach (var g in properties.GroupBy(p => p.Class))
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public <#= T #> <#= N #>
         {
-            get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>("<#= PN #>");
-            set => SetLocalProperty("<#= PN #>", value);
+            get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>(<#= pathExpression #>);
+            set => SetLocalProperty(<#= pathExpression #>, value);
         }
 <#
             if (p.IsArray)

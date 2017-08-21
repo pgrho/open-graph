@@ -80,7 +80,7 @@ namespace Shipwreck.OpenGraph
                             var kv = _LocalProperties[i];
                             var p = kv.Property;
 
-                            if (p.StartsWith(_Path))
+                            if (!p.IsRelative && p.StartsWith(_Path))
                             {
                                 _LocalProperties[i] = new PropertyEntry
                                     (
@@ -309,15 +309,20 @@ namespace Shipwreck.OpenGraph
         #region Local Property accessors
 
         /// <summary>
-        /// Returns a first value of the specified property.
+        /// Returns a first value of the local property path.
         /// </summary>
         /// <param name="property">The local name of the property.</param>
         /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public string GetLocalProperty(string property)
-            => _LocalProperties?.FirstOrDefault(kv => kv.Property.Equals(Path, property)).Content;
+            => _LocalProperties
+                ?.FirstOrDefault
+                    (
+                        kv => kv.Property.IsRelative ? kv.Property.Path == property
+                            : kv.Property.Equals(Path, property)
+                    ).Content;
 
         /// <summary>
-        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="content"/>.
+        /// Removes current <see cref="LocalProperties"/> items that local name is <paramref name="property"/> and adds a item that value is <paramref name="content"/>.
         /// </summary>
         /// <param name="property">The local name of the property.</param>
         /// <param name="content">A new value to set.</param>
@@ -327,7 +332,8 @@ namespace Shipwreck.OpenGraph
             {
                 for (int i = _LocalProperties.Count - 1; i >= 0; i--)
                 {
-                    if (_LocalProperties[i].Property.Equals(Path, property))
+                    var p = _LocalProperties[i].Property;
+                    if (p.IsRelative ? p.Path == property : p.Equals(Path, property))
                     {
                         _LocalProperties.RemoveAt(i);
                     }
@@ -335,7 +341,7 @@ namespace Shipwreck.OpenGraph
             }
             if (content != null)
             {
-                LocalProperties.Add(new PropertyEntry(Path + property, content));
+                LocalProperties.Add(new PropertyEntry(new PropertyPath(null, property), content));
             }
         }
 
@@ -433,7 +439,14 @@ namespace Shipwreck.OpenGraph
             {
                 foreach (var kv in _LocalProperties)
                 {
-                    yield return kv;
+                    if (kv.Property.IsRelative)
+                    {
+                        yield return new PropertyEntry(Path + kv.Property.Path, kv.Content);
+                    }
+                    else
+                    {
+                        yield return kv;
+                    }
                 }
             }
 
@@ -451,5 +464,27 @@ namespace Shipwreck.OpenGraph
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
+
+        /// <summary>
+        /// Returns a sequence of local properties is absolute path.
+        /// </summary>
+        /// <returns>Sequence of local properties.</returns>
+        public IEnumerable<PropertyEntry> GetLocalProperties()
+        {
+            if (_LocalProperties != null)
+            {
+                foreach (var kv in _LocalProperties)
+                {
+                    if (kv.Property.IsRelative)
+                    {
+                        yield return new PropertyEntry(Path + kv.Property.Path, kv.Content);
+                    }
+                    else
+                    {
+                        yield return kv;
+                    }
+                }
+            }
+        }
     }
 }

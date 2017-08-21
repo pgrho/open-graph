@@ -15,6 +15,10 @@ namespace Shipwreck.OpenGraph.Internal
             Property = property;
         }
 
+        internal GraphObjectPartialCollection(GraphObject @object, string relativePath)
+            : this(@object, new PropertyPath(null, relativePath))
+        { }
+
         internal GraphObject Object { get; }
         internal PropertyPath Property { get; }
 
@@ -30,8 +34,7 @@ namespace Shipwreck.OpenGraph.Internal
 
         /// <inheritdoc />
         internal override bool ShouldInclude(GraphObject internalItem)
-            => Property.IsRelative ? internalItem.Path.Equals(Object.Path, Property.Path)
-                : Property == internalItem.Path;
+            => Property.EqualsWithBasePath(internalItem.Path, Object.Path);
 
         /// <inheritdoc />
         internal override T ToItem(GraphObject internalItem)
@@ -61,7 +64,7 @@ namespace Shipwreck.OpenGraph.Internal
         /// <inheritdoc />
         internal override void InsertInternalItem(int index, GraphObject internalItem)
         {
-            internalItem.Path = Property;
+            internalItem.Path = Property.IsRelative ? Object.Path + Property.Path : Property;
             base.InsertInternalItem(index, internalItem);
         }
     }

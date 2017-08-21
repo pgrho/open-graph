@@ -28,9 +28,9 @@ namespace Shipwreck.OpenGraph
             Assert.Equal(expected.GetType(), actual.GetType());
             Assert.Equal(expected.Path, actual.Path);
 
-            foreach (var pn in expected.LocalProperties.Concat(actual.LocalProperties).Select(p => p.Property).Distinct())
+            foreach (var pn in expected.GetLocalProperties().Concat(actual.GetLocalProperties()).Select(p => p.Property).Distinct())
             {
-                var evs = expected.LocalProperties.Where(p => p.Property == pn).ToArray();
+                var evs = expected.GetLocalProperties().Where(p => p.Property == pn).ToArray();
 
                 if (!evs.Any())
                 {
@@ -38,7 +38,7 @@ namespace Shipwreck.OpenGraph
                     continue;
                 }
 
-                Assert.Equal(evs, actual.LocalProperties.Where(p => p.Property == pn));
+                Assert.Equal(evs, actual.GetLocalProperties().Where(p => p.Property == pn));
             }
 
             foreach (var pn in expected.Children.Concat(actual.Children).Select(p => p.Path).Distinct())

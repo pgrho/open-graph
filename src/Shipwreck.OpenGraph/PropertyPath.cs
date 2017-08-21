@@ -220,7 +220,21 @@ namespace Shipwreck.OpenGraph
             }
             return matched = false;
         }
-    }
 
-    #endregion Instance Methods
+        /// <summary>
+        /// Determines whether this path instance match the specified path considering relative path.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <param name="basePath">The base path.</param>
+        /// <returns><c>true</c> if <paramref name="other"/> matches this property; otherwise, <c>false</c>.</returns>
+        public bool EqualsWithBasePath(PropertyPath other, PropertyPath basePath)
+            // 1. Same type: direct compare
+            => IsRelative == other.IsRelative ? this == other
+                // 2. this is relative: compare by argument.
+                : IsRelative ? other.Equals(basePath, Path)
+                // 3. this is absolute: compare by this.
+                : Equals(basePath, other.Path);
+
+        #endregion Instance Methods
+    }
 }

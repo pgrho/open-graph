@@ -78,6 +78,45 @@ namespace Shipwreck.OpenGraph
         #endregion Namespaces
 
         /// <summary>
+        /// Returns a first value of the specified property.
+        /// </summary>
+        /// <param name="property">The path of the property.</param>
+        /// <returns>The value of the first entry in <see cref="GraphObject.LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public string GetLocalProperty(PropertyPath property)
+        {
+            if (property.IsRelative)
+            {
+                return GetLocalProperty(property.Path);
+            }
+            return _LocalProperties
+                        ?.FirstOrDefault(kv => property.EqualsWithBasePath(kv.Property, Path))
+                        .Content;
+        }
+
+        /// <summary>
+        /// Removes current <see cref="GraphObject.LocalProperties"/> items that path is <paramref name="property"/> and adds a item that value is <paramref name="content"/>.
+        /// </summary>
+        /// <param name="property">The path of the property.</param>
+        /// <param name="content">A new value to set.</param>
+        public void SetLocalProperty(PropertyPath property, string content)
+        {
+            if (_LocalProperties != null)
+            {
+                for (int i = _LocalProperties.Count - 1; i >= 0; i--)
+                {
+                    if (property.EqualsWithBasePath(_LocalProperties[i].Property, Path))
+                    {
+                        _LocalProperties.RemoveAt(i);
+                    }
+                }
+            }
+            if (content != null)
+            {
+                LocalProperties.Add(new PropertyEntry(property, content));
+            }
+        }
+
+        /// <summary>
         /// Creates a <see cref="Graph" /> from the specified XHTML text.
         /// </summary>
         /// <param name="xml">XHTML text that contains Open Graph.</param>
@@ -322,17 +361,15 @@ namespace Shipwreck.OpenGraph
 
             void addNamespace(PropertyPath p)
             {
-                if (p.Namespace != null)
+                var v = p.Namespace ?? Path.Namespace;
+                if (ns == null)
                 {
-                    if (ns == null)
-                    {
-                        ns = new List<string>(4);
-                        ns.Add(p.Namespace);
-                    }
-                    else if (!ns.Contains(p.Namespace))
-                    {
-                        ns.Add(p.Namespace);
-                    }
+                    ns = new List<string>(4);
+                    ns.Add(v);
+                }
+                else if (!ns.Contains(v))
+                {
+                    ns.Add(v);
                 }
             }
 
