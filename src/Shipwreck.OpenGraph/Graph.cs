@@ -291,23 +291,26 @@ namespace Shipwreck.OpenGraph
 
                         if (_TypeObject != null && ShouldSerializeLocalProperties())
                         {
-                            _TypeObject.LoadProperties(new WrappedPropertyEntryEnumerator(LocalProperties.Where(kv =>
+                            List<int> removed = null;
+                            _TypeObject.LoadProperties(new WrappedPropertyEntryEnumerator(GetLocalProperties().Where((kv, i) =>
                             {
                                 if (kv.Property == _TypeObject.Path)
                                 {
                                     _TypeObject.Url = _TypeObject.Url ?? kv.Content;
+                                    (removed ?? (removed = new List<int>())).Add(i);
                                     return false;
                                 }
-                                return kv.Property.StartsWith(_TypeObject.Path);
+                                if (kv.Property.StartsWith(_TypeObject.Path))
+                                {
+                                    (removed ?? (removed = new List<int>())).Add(i);
+                                    return true;
+                                }
+                                return false;
                             }), Namespaces));
 
-                            for (var i = LocalProperties.Count - 1; i >= 0; i--)
+                            for (var i = (removed?.Count ?? 0) - 1; i >= 0; i--)
                             {
-                                var p = LocalProperties[i].Property;
-                                if (p.StartsWith(_TypeObject.Path))
-                                {
-                                    LocalProperties.RemoveAt(i);
-                                }
+                                LocalProperties.RemoveAt(removed[i]);
                             }
                         }
                     }
