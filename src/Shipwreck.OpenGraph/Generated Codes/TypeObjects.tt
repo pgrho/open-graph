@@ -1,0 +1,76 @@
+<#@ template language="C#" debug="True" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ output extension="cs" #>
+<#
+var types = new []
+{
+    new T("music.song"),
+    new T("music.album"),
+    new T("music.playlist"),
+    new T("music.radio_station"),
+    new T("video.movie"),
+    new T("video.episode"),
+    new T("video.tv_show") { Type = "VideoTVShow" },
+    new T("video.other"),
+    new T("article"),
+    new T("book"),
+    new T("books.genre") { Type = "BookGenre" },
+    new T("profile")
+};
+
+#>
+using System.ComponentModel;
+
+namespace Shipwreck.OpenGraph
+{
+    partial class Graph : GraphObject
+    {
+        #region TypeObject
+
+<#
+        foreach (var T in types.Select(t => t.Type).Distinct())
+        {
+#>
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.<#= T #>" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public <#= T #> <#= T #>
+        {
+            get => _TypeObject as <#= T #>;
+            set => TypeObject = value ?? (_TypeObject is <#= T #> ? null : _TypeObject);
+        }
+
+<#
+        }
+#>
+        #endregion TypeObject
+    }
+}<#+
+
+public class T
+{
+    private string _Type;
+    public T(string p)
+    {
+        Path = p;
+    }
+    public string Path { get; }
+
+    public string Type
+    {
+        get
+        {
+            if (_Type != null)
+            {
+                return _Type;
+            }
+            return string.Concat(Path.Split('.', '_').Select(s => char.ToUpper(s[0]) + s.Substring(1)));
+        }
+        set => _Type =value;
+    }
+}
+
+#>

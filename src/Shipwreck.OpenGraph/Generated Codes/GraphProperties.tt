@@ -274,34 +274,6 @@ foreach (var g in properties.GroupBy(p => p.Class))
         }
 <#
     }
-    if (C == "Graph")
-    {
-#>
-
-        #region TypeObject
-
-<#
-        foreach (var T in objectTypes)
-        {
-#>
-        /// <summary>
-        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.<#= T #>" />.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public <#= T #> <#= T #>
-        {
-            get => _TypeObject as <#= T #>;
-            set => TypeObject = value ?? (_TypeObject is <#= T #> ? null : _TypeObject);
-        }
-
-<#
-        }
-#>
-
-        #endregion TypeObject
-<#
-    }
 #>
     }
 <#

@@ -27,6 +27,11 @@
       <LastGenOutput>GraphProperties.cs</LastGenOutput>
       <LastOutputs>.\GraphProperties.cs</LastOutputs>
     </None>
+    <None Update="Generated Codes\TypeObjects.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypeObjects.cs</LastGenOutput>
+      <LastOutputs>.\TypeObjects.cs</LastOutputs>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +43,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GraphProperties.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generated Codes\TypeObjects.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TypeObjects.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
