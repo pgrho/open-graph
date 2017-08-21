@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 
-namespace Shipwreck.OpenGraph
+namespace Shipwreck.OpenGraph.Internal
 {
     /// <summary>
     /// Represents a collection that filters elements in <see cref="GraphObject.Children"/> which has specified property path and is instance of <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public sealed class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
+    internal sealed class GraphObjectChildCollection<T> : PartialCollection<T, GraphObject>
         where T : GraphObject
     {
         internal GraphObjectChildCollection(GraphObject @object, PropertyName property)

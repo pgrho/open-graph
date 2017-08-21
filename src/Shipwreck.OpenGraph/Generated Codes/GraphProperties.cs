@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Shipwreck.OpenGraph.Internal;
 
 namespace Shipwreck.OpenGraph
 {

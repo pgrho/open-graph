@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace Shipwreck.OpenGraph
+namespace Shipwreck.OpenGraph.Internal
 {
     /// <summary>
     /// Represents a collection that filters elements in <see cref="GraphObject.LocalProperties"/> which has specified property path.
     /// </summary>
-    public sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>
+    internal sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>
     {
         internal GraphObjectPropertyCollection(GraphObject @object, PropertyName property)
         {

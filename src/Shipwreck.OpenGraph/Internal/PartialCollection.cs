@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Shipwreck.OpenGraph
+namespace Shipwreck.OpenGraph.Internal
 {
     /// <summary>
     /// Represents a collection that filters elements in another collection which matches condition.
     /// </summary>
-    public abstract class PartialCollection<TItem, TInternal> : IList<TItem>, IReadOnlyCollection<TItem>, IList
+    internal abstract class PartialCollection<TItem, TInternal> : IList<TItem>, IReadOnlyCollection<TItem>, IList
     {
         internal PartialCollection()
         {
