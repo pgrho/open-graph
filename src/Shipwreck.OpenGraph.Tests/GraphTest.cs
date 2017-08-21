@@ -975,6 +975,18 @@ namespace Shipwreck.OpenGraph
                 Url = "a"
             };
 
+            g.Videos = new[]
+            {
+                new GraphVideo
+                {
+                    Url = "http://ani.tv",
+                    Image = new GraphImage
+                    {
+                        Url = "kashikoma"
+                    }
+                }
+            };
+
             g.VideoMovie = new VideoMovie()
             {
                 Url = "aaa"
@@ -989,6 +1001,8 @@ namespace Shipwreck.OpenGraph
                 Assert.Equal("<meta property=\"og:type\" content=\"video.movie\" />"
                     + "<meta property=\"og:title\" content=\"hoge\" />"
                     + "<meta property=\"al:ios:url\" content=\"a\" />"
+                    + "<meta property=\"og:video:url\" content=\"http://ani.tv\" />"
+                    + "<meta property=\"og:video:image:url\" content=\"kashikoma\" />"
                     + "<meta property=\"video:url\" content=\"aaa\" />", actual);
             }
         }
