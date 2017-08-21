@@ -30,7 +30,8 @@ namespace Shipwreck.OpenGraph.Internal
 
         /// <inheritdoc />
         internal override bool ShouldInclude(GraphObject internalItem)
-            => internalItem is T && internalItem.Path == Property;
+            => Property.IsRelative ? internalItem.Path.Equals(Object.Path, Property.Path)
+                : Property == internalItem.Path;
 
         /// <inheritdoc />
         internal override T ToItem(GraphObject internalItem)

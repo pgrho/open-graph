@@ -26,7 +26,13 @@ namespace Shipwreck.OpenGraph.Internal
 
         /// <inheritdoc />
         internal override bool ShouldInclude(PropertyEntry internalItem)
-            => internalItem.Property == Property;
+            // 1. Same type: direct compare
+            => Property.IsRelative == internalItem.Property.IsRelative ? Property == internalItem.Property
+                // 2. this.Property is relative: compare by argument.
+                : Property.IsRelative ? internalItem.Property.Equals(Object.Path, Property.Path)
+                // 3. this.Property is absolute: compare by Property.
+                : Property.Equals(Object.Path, internalItem.Property.Path);
+
         /// <inheritdoc />
         internal override string ToItem(PropertyEntry internalItem)
             => internalItem.Content;
