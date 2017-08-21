@@ -829,6 +829,114 @@ namespace Shipwreck.OpenGraph
 
         #endregion Applink
 
+        #region fb:*
+
+        #region FacebookAdmin
+
+        [Fact]
+        public void FacebookAdminTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:admins' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookAdmin);
+        }
+
+        [Fact]
+        public void FacebookAdminsTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:admins' content='The Rock' />
+<meta property='fb:admins' content='puri' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookAdmin);
+            Assert.Equal(new[] { "The Rock", "puri" }, target.FacebookAdmins);
+        }
+
+        #endregion FacebookAdmin
+
+        #region FacebookAppId
+
+        [Fact]
+        public void FacebookAppIdTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:app_id' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookAppId);
+        }
+
+        #endregion FacebookAppId
+
+        #region FacebookPage
+
+        [Fact]
+        public void FacebookPageTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:pages' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookPage);
+        }
+
+        [Fact]
+        public void FacebookPagesTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:pages' content='The Rock' />
+<meta property='fb:pages' content='puri' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookPage);
+            Assert.Equal(new[] { "The Rock", "puri" }, target.FacebookPages);
+        }
+
+        #endregion FacebookPage
+
+        #region FacebookProfileId
+
+        [Fact]
+        public void FacebookProfileIdTest()
+        {
+            var html = @"<html prefix='og: http://ogp.me/ns#'>
+<head>
+<meta property='fb:profile_id' content='The Rock' />
+</head>
+</html>";
+
+            var target = Graph.FromXml(html);
+
+            Assert.Equal("The Rock", target.FacebookProfileId);
+        }
+
+        #endregion FacebookProfileId
+
+        #endregion fb:*
+
         #region GetPrefixAttribute
 
         [Fact]
