@@ -33,14 +33,14 @@ var properties = new []
     new M("GraphObject", "TimeToLive", "Int32?") { Path = "ttl" },
     new M("GraphObject", "UpdatedTime", "DateTime?"),
     
-    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"android\")", OverridesPath = true },
-    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"ios\")", OverridesPath = true },
-    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"ipad\")", OverridesPath = true },
-    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"iphone\")", OverridesPath = true },
-    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"web\")", OverridesPath = true },
-    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows\")", OverridesPath = true },
-    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows_phone\")", OverridesPath = true },
-    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "new PropertyPath(NamespaceCollection.Applink, \"windows_universal\")", OverridesPath = true },
+    new M("Graph", "AndroidApp", "AndroidApplink", isArray: true) { Path = "al:android", IsAbsolute = true },
+    new M("Graph", "IosApp", "IosApplink", isArray: true) { Path = "al:ios", IsAbsolute = true },
+    new M("Graph", "IPadApp", "IosApplink", isArray: true) { Path = "al:ipad", IsAbsolute = true },
+    new M("Graph", "IPhoneApp", "IosApplink", isArray: true) { Path = "al:iphone", IsAbsolute = true },
+    new M("Graph", "WebApp", "Weblink", isArray: true) { Path = "al:web", IsAbsolute = true },
+    new M("Graph", "WindowsApp", "WindowsApplink", isArray: true) { Path = "al:windows", IsAbsolute = true },
+    new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "al:windows_phone", IsAbsolute = true },
+    new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "al:windows_universal", IsAbsolute = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -139,6 +139,13 @@ var properties = new []
     new M("WindowsApplink", "AppName", "string"),
 };
 
+var objectTypes = new []
+{
+    "MusicSong", "MusicAlbum", "MusicPlaylist", "MusicRadioStation",
+    "VideoMovie", "VideoEpisode", "VideoTVShow", "VideoOther",
+    "Article", "Book", "BookGenre", "Profile"
+};
+
 foreach (var g in properties.GroupBy(p => p.Class))
 {
     var C = g.Key;
@@ -147,11 +154,22 @@ foreach (var g in properties.GroupBy(p => p.Class))
     partial class <#= C #>
     {
 <#
-    foreach (var p in g.Where(e => !e.IsArray))
+    foreach (var p in g)
     {
         var N = p.Name;
+        var PL = p.Plural ?? (N + 's');
         var T = p.Type;
         var PN = p.Path;
+        var CT = T == "string" ? $"PropertyEntryPartialCollection(this, this.Path + \"{PN}\")"
+                            : p.IsAbsolute ?  $"GraphObjectPartialCollection<{T}>(this, {p.GetPropertyPath()})"
+                            : $"GraphObjectPartialCollection<{T}>(this, this.Path + \"{PN}\")";
+#>
+        #region <#= N #>
+
+<#
+        
+        if (p.IsLocalValue)
+        {
 #>
         /// <summary>
         /// Gets or sets <#= p.SummaryName #>.
@@ -163,36 +181,10 @@ foreach (var g in properties.GroupBy(p => p.Class))
             get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>("<#= PN #>");
             set => SetLocalProperty("<#= PN #>", value);
         }
-
 <#
-    }
-
-    foreach (var p in g.Where(e => e.IsArray))
-    {
-        var N = p.Name;
-        var PL = p.Plural ?? (N + 's');
-        var T = p.Type;
-        var PN = p.Path;
-        var CT = T == "string" ? $"PropertyEntryPartialCollection(this, this.Path + \"{PN}\")"
-                            : p.OverridesPath ?  $"GraphObjectPartialCollection<{T}>(this, {PN})"
-                            : $"GraphObjectPartialCollection<{T}>(this, this.Path + \"{PN}\")";
+            if (p.IsArray)
+            {
 #>
-        #region <#= N #>
-
-<#
-        if (T == "string")
-        {
-#>
-        /// <summary>
-        /// Gets or sets <#= p.SummaryName #>.
-        /// </summary>
-        [DefaultValue(null)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public <#= T #> <#= N #>
-        {
-            get => GetLocalProperty("<#= PN #>");
-            set => SetLocalProperty("<#= PN #>", value);
-        }
 
         /// <summary>
         /// Gets or sets a list of <#= p.SummaryPlural #>.
@@ -204,6 +196,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
             set => SetLocalProperty("<#= PN #>", value);
         }
 <#
+            }
         }
         else
         {
@@ -249,11 +242,11 @@ foreach (var g in properties.GroupBy(p => p.Class))
 <#
         foreach (var p in children)
         {
-            if (p.OverridesPath)
+            if (p.IsAbsolute)
             {
 #>
             {
-                var p = <#= p.Path #>;
+                var p = <#= p.GetPropertyPath() #>;
                 matched = property == p;
                 if (matched || property.StartsWith(p))
                 {
@@ -277,24 +270,15 @@ foreach (var g in properties.GroupBy(p => p.Class))
         }
 <#
     }
-#>
-    }
-<#
-}
-#>
-    partial class Graph
+    if (C == "Graph")
     {
+#>
+
+        #region TypeObject
+
 <#
-
-var objectTypes = new []
-{
-    "MusicSong", "MusicAlbum", "MusicPlaylist", "MusicRadioStation",
-    "VideoMovie", "VideoEpisode", "VideoTVShow", "VideoOther",
-    "Article", "Book", "BookGenre", "Profile"
-};
-
-foreach (var T in objectTypes)
-{
+        foreach (var T in objectTypes)
+        {
 #>
         /// <summary>
         /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.<#= T #>" />.
@@ -308,10 +292,17 @@ foreach (var T in objectTypes)
         }
 
 <#
-}
+        }
+#>
 
+        #endregion TypeObject
+<#
+    }
 #>
     }
+<#
+}
+#>
 }<#+
 public class M
 {
@@ -332,7 +323,24 @@ public class M
     public string Name { get; set; }
     public string Type { get; set; }
     public bool IsArray { get; set; }
-    public bool OverridesPath { get; set; }
+    public bool IsAbsolute { get; set; }
+
+    public bool IsLocalValue
+    {
+        get
+        {
+            switch (Type)
+            {
+                case "string":
+                case "Boolean?":
+                case "Int32?":
+                case "Single?":
+                case "DateTime?":
+                    return true;
+            }
+            return false;
+        }
+    }
     
     public string Path
     {
@@ -365,6 +373,49 @@ public class M
         }
         set => _Path = value;
     }
+
+    public string GetPropertyPath()
+    {
+        var sb = new StringBuilder("new PropertyPath(");
+        
+        if (IsAbsolute)
+        {
+            sb.Append("NamespaceCollection.");
+            switch (Path.Substring(0, Path.IndexOf(':')))
+            {
+                case "fb":
+                    sb.Append("Facebook");
+                    break;
+
+                case "al":
+                    sb.Append("Applink");
+                    break;
+                    
+                default:
+                    throw new System.Exception();
+            }
+        }
+        else
+        {
+            sb.Append("null");
+        }
+        
+        sb.Append(", \"");
+        
+        if (IsAbsolute)
+        {
+            sb.Append(Path.Substring(Path.IndexOf(':') + 1));
+        }
+        else
+        {
+            sb.Append(Path);
+        }
+
+        sb.Append("\")");
+
+        return sb.ToString();
+    }
+
     public string Plural
     {
         get => _Plural ?? $"{Name}s";
