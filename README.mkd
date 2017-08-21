@@ -4,9 +4,9 @@ Open Graph Protocol Reader for .NET
 
 ## Installation
 
-Use NuGet.
+Use NuGet package [Shipwreck.OpenGraph](https://www.nuget.org/packages/Shipwreck.OpenGraph/).
 
-## Usage
+## Load Graph
 
 ### Load from well-formed XHTML
 
@@ -16,7 +16,7 @@ using Shipwreck.OpenGraph;
 Graph graph = Graph.FromXml(xml);
 ```
 
-### Load from XmlReader, XmlDocument, XDocument, HtmlAgilityPack.HtmlDocument
+### Load from XmlReader, XmlDocument, XDocument or HtmlAgilityPack.HtmlDocument
 
 ```
 Graph.FromXmlReader(xmlReader);
@@ -25,7 +25,7 @@ Graph.FromXPathNavigator(xDocument.CreateNavigator());
 Graph.FromXPathNavigable(htmlDocument);
 ```
 
-### Load from TextReader, Stream
+### Load from TextReader or Stream
 
 **TextReader or Stream must be well-formed.**
 
@@ -34,3 +34,42 @@ Graph.FromTextReader(textReader);
 Graph.FromStream(stream);
 ```
 
+## Accessing Raw Properties.
+
+The `Graph` and its descendants inherits `GraphObject` class. You can access `GraphObject`'s properties via `GraphObject.LocalProperties` and `GraphObject.Children`.
+
+### PropertyPath
+
+All properties in `GraphObject` are mapped by `PropertyPath` type which contains namespace URI and path. 
+
+Values of `PropertyEntry.Property` in `LocalProperties` are mostly relative. So it should be combined with `GraphObject.Path`.
+
+```
+var entry = obj.LocalProperties[i];
+var absolutePath = entry.Property.IsRelative ? ob.Path + entry.Property.Path : entry.Property;
+```
+
+Or you can use `GraphObject.GetLocalProperties()` to enumerate properties with absolute path.
+
+### TypeObject
+
+The `Graph` has `TypeObject` property that stores `og:type` depended properties. **As its properties are separated from `Graph`, `Graph.LocalProperties` and `Children` does not include `TypeObject` items.**
+
+## Accessing Typed Properties.
+
+You can access properties via various CLR properties.
+
+(TBD)
+
+All array properties contains both singular and collection properties. When multiple raw values exist, getting the singular will returns the first value. And setting it will clear existing entries.
+
+### TypeObject
+
+`Graph` has several properties that can access `TypeObject` as derived types.
+
+## Write Open Graph
+
+(TBD)
+
+- `Graph.GetPrefixAttribute()`
+- `Graph.WriteTo`
