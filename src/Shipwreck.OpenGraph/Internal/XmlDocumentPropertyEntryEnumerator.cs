@@ -6,14 +6,14 @@ using System.Xml;
 
 namespace Shipwreck.OpenGraph.Internal
 {
-    internal struct XmlDocumentGraphPropertyEnumerator : IGraphPropertyEnumerator
+    internal struct XmlDocumentPropertyEntryEnumerator : IPropertyEntryEnumerator
     {
         private XmlDocument _Document;
         private XmlElement _Head;
         private int _Index;
         private NamespaceCollection _Namespaces;
 
-        public XmlDocumentGraphPropertyEnumerator(XmlDocument xmlDocument)
+        public XmlDocumentPropertyEntryEnumerator(XmlDocument xmlDocument)
         {
             _Document = xmlDocument;
             _Head = null;
@@ -21,7 +21,7 @@ namespace Shipwreck.OpenGraph.Internal
             _Namespaces = null;
         }
 
-        public GraphProperty Current
+        public PropertyEntry Current
         {
             get
             {
@@ -29,9 +29,9 @@ namespace Shipwreck.OpenGraph.Internal
                 {
                     var e = (XmlElement)_Head.ChildNodes[_Index];
 
-                    return new GraphProperty(new PropertyPath(null, e.GetAttribute("property")), "content");
+                    return new PropertyEntry(new PropertyPath(null, e.GetAttribute("property")), "content");
                 }
-                return default(GraphProperty);
+                return default(PropertyEntry);
             }
         }
 

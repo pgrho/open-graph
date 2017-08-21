@@ -131,7 +131,7 @@ namespace Shipwreck.OpenGraph
         public static Graph FromXmlReader(XmlReader xmlReader)
         {
             var r = new Graph();
-            r.LoadProperties(new XmlReaderGraphPropertyEnumerator(xmlReader));
+            r.LoadProperties(new XmlReaderPropertyEntryEnumerator(xmlReader));
             return r;
         }
 
@@ -145,7 +145,7 @@ namespace Shipwreck.OpenGraph
         public static Graph FromXmlDocument(XmlDocument xmlDocument)
         {
             var r = new Graph();
-            r.LoadProperties(new XmlDocumentGraphPropertyEnumerator(xmlDocument));
+            r.LoadProperties(new XmlDocumentPropertyEntryEnumerator(xmlDocument));
             return r;
         }
 
@@ -252,7 +252,7 @@ namespace Shipwreck.OpenGraph
 
                         if (_TypeObject != null && ShouldSerializeLocalProperties())
                         {
-                            _TypeObject.LoadProperties(new WrappedGraphPropertyEnumerator(LocalProperties.Where(kv =>
+                            _TypeObject.LoadProperties(new WrappedPropertyEntryEnumerator(LocalProperties.Where(kv =>
                             {
                                 if (kv.Property == _TypeObject.Path)
                                 {
@@ -293,7 +293,7 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <inheritdoc />
-        public override IEnumerator<GraphProperty> GetEnumerator()
+        public override IEnumerator<PropertyEntry> GetEnumerator()
         {
             using (var iter = base.GetEnumerator())
             {

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph.Internal
 {
-    internal struct WrappedGraphPropertyEnumerator : IGraphPropertyEnumerator
+    internal struct WrappedPropertyEntryEnumerator : IPropertyEntryEnumerator
     {
-        private IEnumerator<GraphProperty> _Enumerator;
+        private IEnumerator<PropertyEntry> _Enumerator;
         private NamespaceCollection _Namespaces;
 
-        public WrappedGraphPropertyEnumerator(IEnumerable<GraphProperty> enumerable, NamespaceCollection namespaces = null)
+        public WrappedPropertyEntryEnumerator(IEnumerable<PropertyEntry> enumerable, NamespaceCollection namespaces = null)
         {
             _Enumerator = enumerable.GetEnumerator();
             _Namespaces = namespaces ?? NamespaceCollection.Default;
         }
 
-        public GraphProperty Current
-            => _Enumerator?.Current ?? default(GraphProperty);
+        public PropertyEntry Current
+            => _Enumerator?.Current ?? default(PropertyEntry);
 
         object IEnumerator.Current
             => Current;

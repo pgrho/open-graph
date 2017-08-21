@@ -5,7 +5,7 @@ namespace Shipwreck.OpenGraph.Internal
     /// <summary>
     /// Represents a collection that filters elements in <see cref="GraphObject.LocalProperties"/> which has specified property path.
     /// </summary>
-    internal sealed class GraphObjectPropertyCollection : PartialCollection<string, GraphProperty>
+    internal sealed class GraphObjectPropertyCollection : PartialCollection<string, PropertyEntry>
     {
         internal GraphObjectPropertyCollection(GraphObject @object, PropertyPath property)
         {
@@ -17,22 +17,22 @@ namespace Shipwreck.OpenGraph.Internal
         internal PropertyPath Property { get; }
 
         /// <inheritdoc />
-        internal override IList<GraphProperty> PeekInternalList()
+        internal override IList<PropertyEntry> PeekInternalList()
             => Object._LocalProperties;
 
         /// <inheritdoc />
-        internal override IList<GraphProperty> GetOrCreateInternalList()
+        internal override IList<PropertyEntry> GetOrCreateInternalList()
             => Object.LocalProperties;
 
         /// <inheritdoc />
-        internal override bool ShouldInclude(GraphProperty internalItem)
+        internal override bool ShouldInclude(PropertyEntry internalItem)
             => internalItem.Property == Property;
         /// <inheritdoc />
-        internal override string ToItem(GraphProperty internalItem)
+        internal override string ToItem(PropertyEntry internalItem)
             => internalItem.Content;
 
         /// <inheritdoc />
-        internal override GraphProperty ToInternalItem(string item)
-            => new GraphProperty(Property, item);
+        internal override PropertyEntry ToInternalItem(string item)
+            => new PropertyEntry(Property, item);
     }
 }

@@ -10,10 +10,10 @@ namespace Shipwreck.OpenGraph
     /// <summary>
     /// Provides a base type of Open Graph object.
     /// </summary>
-    public abstract partial class GraphObject : IEnumerable<GraphProperty>
+    public abstract partial class GraphObject : IEnumerable<PropertyEntry>
     {
         internal GraphObjectCollection _Children;
-        internal List<GraphProperty> _LocalProperties;
+        internal List<PropertyEntry> _LocalProperties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphObject" /> class with specified property path.
@@ -70,7 +70,7 @@ namespace Shipwreck.OpenGraph
 
                             if (p.StartsWith(_Path))
                             {
-                                _LocalProperties[i] = new GraphProperty
+                                _LocalProperties[i] = new PropertyEntry
                                     (
                                         value + (_Path.Path == null ? p.Path : p.Path.Substring(_Path.Path.Length + 1)),
                                         kv.Content);
@@ -145,7 +145,7 @@ namespace Shipwreck.OpenGraph
         /// Gets or sets a list of all local properties of this object.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IList<GraphProperty> LocalProperties
+        public IList<PropertyEntry> LocalProperties
         {
             get => CollectionHelper.GetCollection(ref _LocalProperties);
             set => CollectionHelper.SetCollection(ref _LocalProperties, value);
@@ -180,7 +180,7 @@ namespace Shipwreck.OpenGraph
         #endregion Properties
 
         internal void LoadProperties<T>(T properties)
-            where T : IGraphPropertyEnumerator
+            where T : IPropertyEntryEnumerator
         {
             var stack = new List<GraphObject>(3);
             stack.Add(this);
@@ -288,7 +288,7 @@ namespace Shipwreck.OpenGraph
                     return false;
                 }
 
-                LocalProperties.Add(new GraphProperty(property, content));
+                LocalProperties.Add(new PropertyEntry(property, content));
                 return true;
             }
             return false;
@@ -323,7 +323,7 @@ namespace Shipwreck.OpenGraph
             }
             if (content != null)
             {
-                LocalProperties.Add(new GraphProperty(Path + property, content));
+                LocalProperties.Add(new PropertyEntry(Path + property, content));
             }
         }
 
@@ -404,7 +404,7 @@ namespace Shipwreck.OpenGraph
             {
                 foreach (var v in values)
                 {
-                    LocalProperties.Add(new GraphProperty(Path + property, v));
+                    LocalProperties.Add(new PropertyEntry(Path + property, v));
                 }
             }
         }
@@ -415,7 +415,7 @@ namespace Shipwreck.OpenGraph
         /// Returns an enumerator that iterates properties of descendants of this object.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public virtual IEnumerator<GraphProperty> GetEnumerator()
+        public virtual IEnumerator<PropertyEntry> GetEnumerator()
         {
             if (_LocalProperties != null)
             {

@@ -5,16 +5,16 @@ namespace Shipwreck.OpenGraph
     /// <summary>
     /// Defines a property name/content pair that can be set or retrieved.
     /// </summary>
-    public struct GraphProperty : IEquatable<GraphProperty>
+    public struct PropertyEntry : IEquatable<PropertyEntry>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GraphProperty"/> struct with property name and content.
+        /// Initializes a new instance of <see cref="PropertyEntry"/> struct with property name and content.
         /// </summary>
         /// <param name="property">The name of this property.</param>
         /// <param name="content">The content for this property.</param>
-        public GraphProperty(PropertyPath property, string content)
+        public PropertyEntry(PropertyPath property, string content)
         {
             Property = property;
             Content = content;
@@ -39,30 +39,30 @@ namespace Shipwreck.OpenGraph
         #region Static Methods
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="GraphProperty" /> values are equal.
+        /// Returns a value that indicates whether two <see cref="PropertyEntry" /> values are equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(GraphProperty left, GraphProperty right)
+        public static bool operator ==(PropertyEntry left, PropertyEntry right)
             => left.Property == right.Property && left.Content == right.Content;
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="GraphProperty" /> values have difference equal.
+        /// Returns a value that indicates whether two <see cref="PropertyEntry" /> values have difference equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(GraphProperty left, GraphProperty right)
+        public static bool operator !=(PropertyEntry left, PropertyEntry right)
             => left.Property != right.Property || left.Content != right.Content;
 
         /// <summary>
-        /// Returns a value that indicates whether two <see cref="GraphProperty" /> values are equal.
+        /// Returns a value that indicates whether two <see cref="PropertyEntry" /> values are equal.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, <c>false</c>.</returns>
-        public static bool Equals(GraphProperty left, GraphProperty right)
+        public static bool Equals(PropertyEntry left, PropertyEntry right)
             => left == right;
 
         #endregion Static Methods
@@ -71,14 +71,14 @@ namespace Shipwreck.OpenGraph
 
         /// <inheritdoc />
         public override bool Equals(object obj)
-            => obj is GraphProperty && this == (GraphProperty)obj;
+            => obj is PropertyEntry && this == (PropertyEntry)obj;
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(GraphProperty other)
+        public bool Equals(PropertyEntry other)
             => this == other;
 
         /// <inheritdoc />

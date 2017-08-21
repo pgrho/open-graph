@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Shipwreck.OpenGraph.Internal
 {
-    internal interface IGraphPropertyEnumerator : IEnumerator<GraphProperty>
+    internal interface IPropertyEntryEnumerator : IEnumerator<PropertyEntry>
     {
         NamespaceCollection Namespaces { get; }
     }

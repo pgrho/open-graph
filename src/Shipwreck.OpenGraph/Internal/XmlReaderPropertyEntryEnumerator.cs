@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Shipwreck.OpenGraph.Internal
 {
-    internal struct XmlReaderGraphPropertyEnumerator : IGraphPropertyEnumerator
+    internal struct XmlReaderPropertyEntryEnumerator : IPropertyEntryEnumerator
     {
         private enum State : byte
         {
@@ -22,7 +22,7 @@ namespace Shipwreck.OpenGraph.Internal
         private string _Content;
         private NamespaceCollection _Namespaces;
 
-        public XmlReaderGraphPropertyEnumerator(XmlReader reader)
+        public XmlReaderPropertyEntryEnumerator(XmlReader reader)
         {
             _Reader = reader;
             _Level = 0;
@@ -31,8 +31,8 @@ namespace Shipwreck.OpenGraph.Internal
             _Namespaces = null;
         }
 
-        public GraphProperty Current
-            => new GraphProperty(new PropertyPath(null, _Property), _Content);
+        public PropertyEntry Current
+            => new PropertyEntry(new PropertyPath(null, _Property), _Content);
 
         object IEnumerator.Current
             => Current;
