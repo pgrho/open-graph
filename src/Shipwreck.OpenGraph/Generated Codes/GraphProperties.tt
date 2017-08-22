@@ -42,9 +42,10 @@ var properties = new []
     new M("Graph", "WindowsPhoneApp", "WindowsApplink", isArray: true) { Path = "al:windows_phone", IsAbsolute = true },
     new M("Graph", "WindowsUniversalApp", "WindowsApplink", isArray: true) { Path = "al:windows_universal", IsAbsolute = true },
     new M("Graph", "FacebookAdmin", "string", isArray: true) { Path = "fb:admins", IsAbsolute = true },
-    new M("Graph", "FacebookAppId", "string") { Path = "fb:app_id", IsAbsolute = true },
+    new M("Graph", "FacebookAppId", "Int64?") { Path = "fb:app_id", IsAbsolute = true },
     new M("Graph", "FacebookPage", "string", isArray: true) { Path = "fb:pages", IsAbsolute = true },
-    new M("Graph", "FacebookProfileId", "string") { Path = "fb:profile_id", IsAbsolute = true },
+    new M("Graph", "FacebookProfileId", "Int64?") { Path = "fb:profile_id", IsAbsolute = true },
+    new M("Graph", "Location", "GeoPoint", isArray: true) { Path = "place:location", IsAbsolute = true },
 
     new M("GraphAudio", "SecureUrl", "string"),
 
@@ -63,6 +64,20 @@ var properties = new []
     new M("GraphRestriction", "DisallowedContry", "string", isArray: true) { Plural = "DisallowedCountries", Path = "country:disallowed" },
     new M("GraphRestriction", "Age", "string"),
     new M("GraphRestriction", "Content", "string", isArray: true),
+
+    new M("ContactData", "StreetAdress", "string"),
+    new M("ContactData", "Locality", "string"),
+    new M("ContactData", "PostalCode", "string"),
+    new M("ContactData", "Region", "string"),
+    new M("ContactData", "CountryName", "string"),
+    new M("ContactData", "Email", "string"),
+    new M("ContactData", "PhoneNumber", "string"),
+    new M("ContactData", "FaxNumber", "string"),
+    new M("ContactData", "Website", "string"),
+    
+    new M("GeoPoint", "Latitude", "Single?"),
+    new M("GeoPoint", "Longitude", "Single?"),
+    new M("GeoPoint", "Altitude", "Single?"),
 
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
@@ -141,6 +156,13 @@ var properties = new []
     new M("WindowsApplink", "PackageFamilyName", "string"),
     new M("WindowsApplink", "AppId", "string"),
     new M("WindowsApplink", "AppName", "string"),
+
+    new M("Business", "ContactData", "ContactData", isArray: true),
+    new M("Business", "Hour", "BusinessHour", isArray: true),
+
+    new M("BusinessHour", "Day", "string"),
+    new M("BusinessHour", "Start", "string"),
+    new M("BusinessHour", "End", "string"),
 };
 
 var objectTypes = new []
@@ -310,6 +332,7 @@ public class M
                 case "string":
                 case "Boolean?":
                 case "Int32?":
+                case "Int64?":
                 case "Single?":
                 case "DateTime?":
                     return true;
@@ -357,7 +380,8 @@ public class M
         if (IsAbsolute)
         {
             sb.Append("NamespaceCollection.");
-            switch (Path.Substring(0, Path.IndexOf(':')))
+            var rest = Path.Substring(0, Path.IndexOf(':'));
+            switch (rest)
             {
                 case "fb":
                     sb.Append("Facebook");
@@ -368,7 +392,8 @@ public class M
                     break;
                     
                 default:
-                    throw new System.Exception();
+                    sb.Append(char.ToUpper(rest[0]) + rest.Substring(1));
+                    break;
             }
         }
         else

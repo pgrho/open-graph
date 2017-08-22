@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Generated Codes\Accessors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Accessors.cs</LastGenOutput>
+      <LastOutputs>.\Accessors.cs</LastOutputs>
+    </None>
     <None Update="Generated Codes\GraphProperties.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GraphProperties.cs</LastGenOutput>
@@ -39,6 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Generated Codes\Accessors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Accessors.tt</DependentUpon>
+    </Compile>
     <Compile Update="Generated Codes\GraphProperties.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

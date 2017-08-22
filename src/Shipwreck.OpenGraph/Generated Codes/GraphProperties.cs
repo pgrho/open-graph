@@ -564,9 +564,9 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string FacebookAppId
+        public Int64? FacebookAppId
         {
-            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "app_id"));
+            get => GetLocalPropertyAsInt64(new PropertyPath(NamespaceCollection.Facebook, "app_id"));
             set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "app_id"), value);
         }
 
@@ -604,13 +604,38 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string FacebookProfileId
+        public Int64? FacebookProfileId
         {
-            get => GetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "profile_id"));
+            get => GetLocalPropertyAsInt64(new PropertyPath(NamespaceCollection.Facebook, "profile_id"));
             set => SetLocalProperty(new PropertyPath(NamespaceCollection.Facebook, "profile_id"), value);
         }
 
         #endregion FacebookProfileId
+
+        #region Location
+
+        /// <summary>
+        /// Gets or sets a location.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public GeoPoint Location
+        {
+            get => Locations.FirstOrDefault();
+            set => Locations.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all locations.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<GeoPoint> Locations
+        {
+            get => new GraphObjectPartialCollection<GeoPoint>(this, new PropertyPath(NamespaceCollection.Place, "location"));
+            set => Locations.Set(value);
+        }
+
+        #endregion Location
 
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
@@ -677,6 +702,14 @@ namespace Shipwreck.OpenGraph
                 if (matched || property.StartsWith(p))
                 {
                     return new WindowsApplink(p);
+                }
+            }
+            {
+                var p = new PropertyPath(NamespaceCollection.Place, "location");
+                matched = property == p;
+                if (matched || property.StartsWith(p))
+                {
+                    return new GeoPoint(p);
                 }
             }
             return base.CreateNewChild(property, out matched);
@@ -932,6 +965,192 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion Content
+
+    }
+    partial class ContactData
+    {
+        #region StreetAdress
+
+        /// <summary>
+        /// Gets or sets a street adress.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string StreetAdress
+        {
+            get => GetLocalProperty("street_adress");
+            set => SetLocalProperty("street_adress", value);
+        }
+
+        #endregion StreetAdress
+
+        #region Locality
+
+        /// <summary>
+        /// Gets or sets a locality.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Locality
+        {
+            get => GetLocalProperty("locality");
+            set => SetLocalProperty("locality", value);
+        }
+
+        #endregion Locality
+
+        #region PostalCode
+
+        /// <summary>
+        /// Gets or sets a postal code.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string PostalCode
+        {
+            get => GetLocalProperty("postal_code");
+            set => SetLocalProperty("postal_code", value);
+        }
+
+        #endregion PostalCode
+
+        #region Region
+
+        /// <summary>
+        /// Gets or sets a region.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Region
+        {
+            get => GetLocalProperty("region");
+            set => SetLocalProperty("region", value);
+        }
+
+        #endregion Region
+
+        #region CountryName
+
+        /// <summary>
+        /// Gets or sets a country name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string CountryName
+        {
+            get => GetLocalProperty("country_name");
+            set => SetLocalProperty("country_name", value);
+        }
+
+        #endregion CountryName
+
+        #region Email
+
+        /// <summary>
+        /// Gets or sets an email.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Email
+        {
+            get => GetLocalProperty("email");
+            set => SetLocalProperty("email", value);
+        }
+
+        #endregion Email
+
+        #region PhoneNumber
+
+        /// <summary>
+        /// Gets or sets a phone number.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string PhoneNumber
+        {
+            get => GetLocalProperty("phone_number");
+            set => SetLocalProperty("phone_number", value);
+        }
+
+        #endregion PhoneNumber
+
+        #region FaxNumber
+
+        /// <summary>
+        /// Gets or sets a fax number.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FaxNumber
+        {
+            get => GetLocalProperty("fax_number");
+            set => SetLocalProperty("fax_number", value);
+        }
+
+        #endregion FaxNumber
+
+        #region Website
+
+        /// <summary>
+        /// Gets or sets a website.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Website
+        {
+            get => GetLocalProperty("website");
+            set => SetLocalProperty("website", value);
+        }
+
+        #endregion Website
+
+    }
+    partial class GeoPoint
+    {
+        #region Latitude
+
+        /// <summary>
+        /// Gets or sets a latitude.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? Latitude
+        {
+            get => GetLocalPropertyAsSingle("latitude");
+            set => SetLocalProperty("latitude", value);
+        }
+
+        #endregion Latitude
+
+        #region Longitude
+
+        /// <summary>
+        /// Gets or sets a longitude.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? Longitude
+        {
+            get => GetLocalPropertyAsSingle("longitude");
+            set => SetLocalProperty("longitude", value);
+        }
+
+        #endregion Longitude
+
+        #region Altitude
+
+        /// <summary>
+        /// Gets or sets an altitude.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? Altitude
+        {
+            get => GetLocalPropertyAsSingle("altitude");
+            set => SetLocalProperty("altitude", value);
+        }
+
+        #endregion Altitude
 
     }
     partial class MusicSong
@@ -2267,6 +2486,120 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion AppName
+
+    }
+    partial class Business
+    {
+        #region ContactData
+
+        /// <summary>
+        /// Gets or sets a contact data.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ContactData ContactData
+        {
+            get => ContactDatas.FirstOrDefault();
+            set => ContactDatas.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all contact datas.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<ContactData> ContactDatas
+        {
+            get => new GraphObjectPartialCollection<ContactData>(this, "contact_data");
+            set => ContactDatas.Set(value);
+        }
+
+        #endregion ContactData
+
+        #region Hour
+
+        /// <summary>
+        /// Gets or sets a hour.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public BusinessHour Hour
+        {
+            get => Hours.FirstOrDefault();
+            set => Hours.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all hours.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<BusinessHour> Hours
+        {
+            get => new GraphObjectPartialCollection<BusinessHour>(this, "hour");
+            set => Hours.Set(value);
+        }
+
+        #endregion Hour
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "contact_data", out matched, skipCompareProperty: true))
+            {
+                return new ContactData(Path + "contact_data");
+            }
+            if (property.StartsWith(Path, "hour", out matched, skipCompareProperty: true))
+            {
+                return new BusinessHour(Path + "hour");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
+    partial class BusinessHour
+    {
+        #region Day
+
+        /// <summary>
+        /// Gets or sets a day.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Day
+        {
+            get => GetLocalProperty("day");
+            set => SetLocalProperty("day", value);
+        }
+
+        #endregion Day
+
+        #region Start
+
+        /// <summary>
+        /// Gets or sets a start.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Start
+        {
+            get => GetLocalProperty("start");
+            set => SetLocalProperty("start", value);
+        }
+
+        #endregion Start
+
+        #region End
+
+        /// <summary>
+        /// Gets or sets an end.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string End
+        {
+            get => GetLocalProperty("end");
+            set => SetLocalProperty("end", value);
+        }
+
+        #endregion End
 
     }
 }

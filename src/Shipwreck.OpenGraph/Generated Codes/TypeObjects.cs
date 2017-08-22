@@ -138,6 +138,16 @@ namespace Shipwreck.OpenGraph
             set => TypeObject = value ?? (_TypeObject is VideoOther ? null : _TypeObject);
         }
 
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Business" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Business Business
+        {
+            get => _TypeObject as Business;
+            set => TypeObject = value ?? (_TypeObject is Business ? null : _TypeObject);
+        }
 
         private GraphObject CreateTypeObject()
         {
@@ -184,6 +194,9 @@ namespace Shipwreck.OpenGraph
 
                 case "video.other":
                     return new VideoOther(new PropertyPath(NamespaceCollection.Video));
+
+                case "business.business":
+                    return new Business(new PropertyPath(NamespaceCollection.Business));
 
             }
 

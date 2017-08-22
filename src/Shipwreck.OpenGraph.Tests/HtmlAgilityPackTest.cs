@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net.Http;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph

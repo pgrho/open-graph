@@ -344,71 +344,7 @@ namespace Shipwreck.OpenGraph
                 LocalProperties.Add(new PropertyEntry(new PropertyPath(null, property), content));
             }
         }
-
-        /// <summary>
-        /// Returns a first value of the specified property as boolean value.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
-        public bool? GetLocalPropertyAsBoolean(string property)
-            => bool.TryParse(GetLocalProperty(property), out bool i) ? i : (bool?)null;
-
-        /// <summary>
-        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <param name="value">A new value to set.</param>
-        public void SetLocalProperty(string property, bool? value)
-            => SetLocalProperty(property, value == null ? null : value == true ? "true" : "false");
-
-        /// <summary>
-        /// Returns a first value of the specified property as integer value.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
-        public int? GetLocalPropertyAsInt32(string property)
-            => int.TryParse(GetLocalProperty(property), out int i) ? i : (int?)null;
-
-        /// <summary>
-        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <param name="value">A new value to set.</param>
-        public void SetLocalProperty(string property, int? value)
-            => SetLocalProperty(property, value?.ToString("D"));
-
-        /// <summary>
-        /// Returns a first value of the specified property as float value.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
-        public float? GetLocalPropertyAsSingle(string property)
-            => float.TryParse(GetLocalProperty(property), out float i) ? i : (float?)null;
-
-        /// <summary>
-        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <param name="value">A new value to set.</param>
-        public void SetLocalProperty(string property, float? value)
-            => SetLocalProperty(property, value?.ToString("R"));
-
-        /// <summary>
-        /// Returns a first value of the specified property as <see cref="DateTime"/> value.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
-        public DateTime? GetLocalPropertyAsDateTime(string property)
-            => DateTime.TryParse(GetLocalProperty(property), out DateTime i) ? i : (DateTime?)null;
-
-        /// <summary>
-        /// Removes current <see cref="LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
-        /// </summary>
-        /// <param name="property">The local name of the property.</param>
-        /// <param name="value">A new value to set.</param>
-        public void SetLocalProperty(string property, DateTime? value)
-            => SetLocalProperty(property, value?.ToString("o"));
-
+        
         internal void SetLocalProperty(string property, IEnumerable<string> values)
         {
             var pc = values as PropertyEntryPartialCollection;

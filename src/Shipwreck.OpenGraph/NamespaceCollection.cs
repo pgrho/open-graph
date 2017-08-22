@@ -57,6 +57,16 @@ namespace Shipwreck.OpenGraph
         /// </summary>
         public const string Applink = "http://ogp.me/ns/al#";
 
+        /// <summary>
+        /// Defined Namespace URI for `business.*` type.
+        /// </summary>
+        public const string Business = "http://ogp.me/ns/business#";
+
+        /// <summary>
+        /// Defined Namespace URI for `place:*` properties.
+        /// </summary>
+        public const string Place = "http://ogp.me/ns/place#";
+
         #endregion Constants
 
         private static readonly Regex _SplitPattern = new Regex("(?<!:)\\s+");

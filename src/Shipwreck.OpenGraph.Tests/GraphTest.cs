@@ -872,13 +872,13 @@ namespace Shipwreck.OpenGraph
         {
             var html = @"<html prefix='og: http://ogp.me/ns#'>
 <head>
-<meta property='fb:app_id' content='The Rock' />
+<meta property='fb:app_id' content='1234567890' />
 </head>
 </html>";
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal("The Rock", target.FacebookAppId);
+            Assert.Equal(1234567890L, target.FacebookAppId);
         }
 
         #endregion FacebookAppId
@@ -924,13 +924,13 @@ namespace Shipwreck.OpenGraph
         {
             var html = @"<html prefix='og: http://ogp.me/ns#'>
 <head>
-<meta property='fb:profile_id' content='The Rock' />
+<meta property='fb:profile_id' content='1234567890' />
 </head>
 </html>";
 
             var target = Graph.FromXml(html);
 
-            Assert.Equal("The Rock", target.FacebookProfileId);
+            Assert.Equal(1234567890L, target.FacebookProfileId);
         }
 
         #endregion FacebookProfileId

@@ -23,6 +23,8 @@ var types = new []
     new T("video.episode"),
     new T("video.tv_show") { Type = "VideoTVShow" },
     new T("video.other"),
+    
+    new T("business.business") { Type = "Business" },
 };
 
 #>
@@ -52,7 +54,6 @@ foreach (var T in types.Select(t => t.Type).Distinct())
 <#
 }
 #>
-
         private GraphObject CreateTypeObject()
         {
             switch (Type)

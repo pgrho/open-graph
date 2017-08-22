@@ -1,0 +1,73 @@
+<#@ template language="C#" debug="True" #>
+<#@ output extension="cs" #>
+using System;
+
+namespace Shipwreck.OpenGraph
+{
+<#
+var types = new []
+{
+    new T("Boolean") { String = v => $"{v} == null ? null : {v} == true ? \"true\" : \"false\"" },
+    new T("Int32"),
+    new T("Int64"),
+    new T("Single") { String = v => $"{v}?.ToString(\"0.#######\")" },
+    new T("DateTime") { String = v => $"{v}?.ToString(\"o\")" }
+};
+for (var i = 0; i < 2; i++)
+{
+    var PT = i == 0 ? "string" : "PropertyPath";
+    var PS = i == 0 ? "local name of the property" : "path of the property";
+#>
+    partial class <#= i == 0 ? "GraphObject" : "Graph" #>
+    {
+<#
+    foreach (var t in types)
+    {
+        var T = t.Type;
+#>
+        /// <summary>
+        /// Returns a first value of the specified <#= PS #> as <see cref="<#= T #>" /> value.
+        /// </summary>
+        /// <param name="property">The <#= PS #>.</param>
+        /// <returns>The value of the first entry in <see cref="GraphObject.LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public <#= T #>? GetLocalPropertyAs<#= T #>(<#= PT #> property)
+            => <#= T #>.TryParse(GetLocalProperty(property), out var v) ? v : (<#= T #>?)null;
+
+        /// <summary>
+        /// Removes current <see cref="GraphObject.LocalProperties"/> items that name is <paramref name="property"/> and adds a item that value is <paramref name="value"/>.
+        /// </summary>
+        /// <param name="property">The <#= PS #>.</param>
+        /// <param name="value">A new value to set.</param>
+        public void SetLocalProperty(<#= PT #> property, <#= T #>? value)
+            => SetLocalProperty(property, <#= t.String("value") #>);
+
+<#
+    }
+#>
+    }
+<#
+}
+#>
+}<#+
+public class T
+{
+    private Func<string, string> _String;
+    public T(string t)
+    {
+        Type = t;
+    }
+    public string Type { get; }
+    public Func<string, string> String
+    {
+        get
+        {
+            if (_String != null)
+            {
+                return _String;
+            }
+            return v => $"{v}?.ToString()";
+        }
+        set => _String = value;
+    }
+}
+#>
