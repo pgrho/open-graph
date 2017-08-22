@@ -189,6 +189,9 @@ var properties = new []
     
     new M("FitnessSplits", "Unit", "string"),
     new M("FitnessSplits", "Value", "Quantity", isArray: true),
+    
+    new M("GameAchievement", "Points", "Int32?"),
+    new M("GameAchievement", "Secret", "Boolean?"),
 };
 
 var objectTypes = new []

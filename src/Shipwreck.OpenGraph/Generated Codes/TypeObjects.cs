@@ -160,6 +160,17 @@ namespace Shipwreck.OpenGraph
             set => TypeObject = value ?? (_TypeObject is FitnessCourse ? null : _TypeObject);
         }
 
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.GameAchievement" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public GameAchievement GameAchievement
+        {
+            get => _TypeObject as GameAchievement;
+            set => TypeObject = value ?? (_TypeObject is GameAchievement ? null : _TypeObject);
+        }
+
         private GraphObject CreateTypeObject()
         {
             switch (Type)
@@ -211,6 +222,9 @@ namespace Shipwreck.OpenGraph
 
                 case "fitness.course":
                     return new FitnessCourse(new PropertyPath(NamespaceCollection.Fitness));
+
+                case "game.achievement":
+                    return new GameAchievement(new PropertyPath(NamespaceCollection.Game));
 
             }
 

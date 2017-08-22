@@ -3097,4 +3097,37 @@ namespace Shipwreck.OpenGraph
             return base.CreateNewChild(property, out matched);
         }
     }
+    partial class GameAchievement
+    {
+        #region Points
+
+        /// <summary>
+        /// Gets or sets a points.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Points
+        {
+            get => GetLocalPropertyAsInt32("points");
+            set => SetLocalProperty("points", value);
+        }
+
+        #endregion Points
+
+        #region Secret
+
+        /// <summary>
+        /// Gets or sets a secret.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Boolean? Secret
+        {
+            get => GetLocalPropertyAsBoolean("secret");
+            set => SetLocalProperty("secret", value);
+        }
+
+        #endregion Secret
+
+    }
 }

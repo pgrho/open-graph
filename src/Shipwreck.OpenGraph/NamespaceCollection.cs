@@ -68,6 +68,11 @@ namespace Shipwreck.OpenGraph
         public const string Fitness = "http://ogp.me/ns/fitness#";
 
         /// <summary>
+        /// Defined Namespace URI for `game:*` types.
+        /// </summary>
+        public const string Game = "http://ogp.me/ns/game#";
+
+        /// <summary>
         /// Defined Namespace URI for `place:*` properties.
         /// </summary>
         public const string Place = "http://ogp.me/ns/place#";
