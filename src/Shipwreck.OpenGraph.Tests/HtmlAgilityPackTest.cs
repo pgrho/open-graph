@@ -5,84 +5,16 @@ using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph
 {
-    public class HtmlAgilityPackTest
+    public class HtmlAgilityPackTest : GraphObjectTestBase
     {
-        private void Run(string url, Graph expected)
-        {
-            // TODO: Network failure must be treated as inconclusive
-            Graph actual;
-            using (var hc = new HttpClient())
-            {
-                var html = hc.GetStringAsync(url).GetAwaiter().GetResult();
-                var hd = new HtmlAgilityPack.HtmlDocument();
-                hd.LoadHtml(html);
-
-                actual = Graph.FromXPathNavigable(hd);
-            }
-
-            AssertObject(expected, actual);
-        }
-
-        private void AssertObject(GraphObject expected, GraphObject actual)
-        {
-            Assert.Equal(expected.GetType(), actual.GetType());
-            Assert.Equal(expected.Path, actual.Path);
-
-            foreach (var pn in expected.GetLocalProperties().Concat(actual.GetLocalProperties()).Select(p => p.Property).Distinct())
-            {
-                var evs = expected.GetLocalProperties().Where(p => p.Property == pn).ToArray();
-
-                if (!evs.Any())
-                {
-                    _Output.WriteLine($"Unexpected property: {pn} at {actual.Path}");
-                    continue;
-                }
-
-                Assert.Equal(evs, actual.GetLocalProperties().Where(p => p.Property == pn));
-            }
-
-            foreach (var pn in expected.Children.Concat(actual.Children).Select(p => p.Path).Distinct())
-            {
-                var evs = expected.Children.Where(p => p.Path == pn).ToArray();
-
-                if (!evs.Any())
-                {
-                    _Output.WriteLine($"Unexpected child: {pn}");
-                    continue;
-                }
-
-                var avs = actual.Children.Where(p => p.Path == pn).ToArray();
-
-                Assert.Equal(evs.Length, avs.Length);
-
-                for (int i = 0; i < evs.Length; i++)
-                {
-                    AssertObject(evs[i], avs[i]);
-                }
-            }
-
-            var to = (expected as Graph)?.TypeObject;
-            var ato = (actual as Graph)?.TypeObject;
-            if (to != null)
-            {
-                AssertObject(to, ato);
-            }
-            else
-            {
-                Assert.Null(ato);
-            }
-        }
-
-        private readonly ITestOutputHelper _Output;
-
         public HtmlAgilityPackTest(ITestOutputHelper output)
+            : base(output)
         {
-            _Output = output;
         }
 
         [Fact]
         public void BookTest()
-            => Run("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/master/book-isbn10.html",
+            => TestUrl("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/master/book-isbn10.html",
                 new Graph()
                 {
                     Title = "Steve Jobs",
@@ -110,7 +42,7 @@ namespace Shipwreck.OpenGraph
 
         [Fact]
         public void VideoMovieTest()
-            => Run("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/77e4710fc3791a212c92739f52e32d9d48ccba30/video-movie.html",
+            => TestUrl("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/77e4710fc3791a212c92739f52e32d9d48ccba30/video-movie.html",
                 new Graph()
                 {
                     Title = "Arrival of a Train at La Ciotat",
