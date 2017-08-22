@@ -91,6 +91,7 @@ namespace Shipwreck.OpenGraph
                 ["books"] = Books,
                 ["profile"] = Profile,
                 ["al"] = Applink,
+                ["place"] = Place,
             };
         }
 

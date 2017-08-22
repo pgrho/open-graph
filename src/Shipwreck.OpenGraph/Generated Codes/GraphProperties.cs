@@ -969,20 +969,20 @@ namespace Shipwreck.OpenGraph
     }
     partial class ContactData
     {
-        #region StreetAdress
+        #region StreetAddress
 
         /// <summary>
-        /// Gets or sets a street adress.
+        /// Gets or sets a street address.
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string StreetAdress
+        public string StreetAddress
         {
-            get => GetLocalProperty("street_adress");
-            set => SetLocalProperty("street_adress", value);
+            get => GetLocalProperty("street_address");
+            set => SetLocalProperty("street_address", value);
         }
 
-        #endregion StreetAdress
+        #endregion StreetAddress
 
         #region Locality
 

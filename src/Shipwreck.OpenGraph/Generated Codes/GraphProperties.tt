@@ -65,7 +65,7 @@ var properties = new []
     new M("GraphRestriction", "Age", "string"),
     new M("GraphRestriction", "Content", "string", isArray: true),
 
-    new M("ContactData", "StreetAdress", "string"),
+    new M("ContactData", "StreetAddress", "string"),
     new M("ContactData", "Locality", "string"),
     new M("ContactData", "PostalCode", "string"),
     new M("ContactData", "Region", "string"),

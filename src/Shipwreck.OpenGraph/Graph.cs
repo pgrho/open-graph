@@ -220,7 +220,7 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <inheritdoc />
-        internal override bool TryAddMetadata(PropertyPath property, string content)
+        internal override bool TryAddMetadata(PropertyPath property, string content, out GraphObject targetObject)
         {
             if (property.StartsWith(Path))
             {
@@ -262,13 +262,14 @@ namespace Shipwreck.OpenGraph
                         }
                     }
 
+                    targetObject = this;
                     return true;
                 }
             }
 
             if (_TypeObject != null)
             {
-                if (_TypeObject.TryAddMetadata(property, content) == true)
+                if (_TypeObject.TryAddMetadata(property, content, out targetObject) == true)
                 {
                     return true;
                 }
@@ -278,7 +279,7 @@ namespace Shipwreck.OpenGraph
                 }
             }
 
-            return base.TryAddMetadata(property, content);
+            return base.TryAddMetadata(property, content, out targetObject);
         }
 
         /// <inheritdoc />

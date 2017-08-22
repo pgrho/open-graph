@@ -57,7 +57,7 @@ namespace Shipwreck.OpenGraph
                 {
                     if (Output != null)
                     {
-                        Output.WriteLine(@"Assert failed at {pn}");
+                        Output.WriteLine($"Assert failed at {pn}");
                         Output.WriteLine("Expected:");
                         foreach (var c in evs)
                         {
@@ -69,12 +69,12 @@ namespace Shipwreck.OpenGraph
                             Output.WriteLine($"    {c}");
                         }
                         Output.WriteLine("All Expected Children:");
-                        foreach (var c in evs)
+                        foreach (var c in expected.GetLocalProperties())
                         {
                             Output.WriteLine($"    {c}");
                         }
                         Output.WriteLine("All Actual Children:");
-                        foreach (var c in avs)
+                        foreach (var c in actual.GetLocalProperties())
                         {
                             Output.WriteLine($"    {c}");
                         }
@@ -103,7 +103,7 @@ namespace Shipwreck.OpenGraph
                 {
                     if (Output != null)
                     {
-                        Output.WriteLine(@"Assert failed at {pn}");
+                        Output.WriteLine($"Assert failed at {pn}");
                         Output.WriteLine("Expected:");
                         foreach (var c in evs)
                         {

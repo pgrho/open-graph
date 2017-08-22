@@ -194,11 +194,8 @@ namespace Shipwreck.OpenGraph
         internal void LoadProperties<T>(T properties)
             where T : IPropertyEntryEnumerator
         {
-            var stack = new List<GraphObject>(3);
-            stack.Add(this);
-
             NamespaceCollection ns = null;
-
+            var obj = this;
             using (properties)
             {
                 while (properties.MoveNext())
@@ -248,45 +245,46 @@ namespace Shipwreck.OpenGraph
                         continue;
                     }
 
-                    for (int i = stack.Count - 1; i >= 0; i--)
+                    obj = obj ?? this;
+
+                    while (obj != null)
                     {
-                        var obj = stack[i];
-
-                        if (obj.TryAddMetadata(kv.Property, kv.Content))
+                        if (obj.TryAddMetadata(kv.Property, kv.Content, out var t))
                         {
-                            stack.RemoveRange(i + 1, stack.Count - i - 1);
-
-                            var c = obj._Children?.LastOrDefault();
-
-                            while (c != null)
-                            {
-                                stack.Add(c);
-
-                                c = c._Children?.LastOrDefault();
-                            }
+                            obj = t;
                             break;
                         }
-                        else if (i > 0)
-                        {
-                            stack.RemoveRange(i, stack.Count - i);
-                        }
+                        obj = obj.Parent;
                     }
                 }
             }
         }
 
-        internal virtual bool TryAddMetadata(PropertyPath property, string content)
+        internal virtual bool TryAddMetadata(PropertyPath property, string content, out GraphObject targetObject)
         {
             var pathMatched = property.StartsWith(Path, out var b) && !b;
 
             if (pathMatched || Parent == null)
             {
-                var child = CreateNewChild(property, out var matched);
+                targetObject = CreateNewChild(property, out var matched);
 
-                if (child != null)
+                if (targetObject != null)
                 {
-                    Children.Add(child);
-                    child.AddMetadataOrSetUrl(matched, property, content);
+                    Children.Add(targetObject);
+
+                    if (matched)
+                    {
+                        if (targetObject.Url == null)
+                        {
+                            targetObject.Url = content;
+                        }
+                    }
+                    else
+                    {
+                        targetObject.TryAddMetadata(property, content, out var c);
+                        targetObject = c ?? targetObject;
+                    }
+
                     return true;
                 }
 
@@ -295,14 +293,18 @@ namespace Shipwreck.OpenGraph
                     if (Url == null)
                     {
                         Url = content;
+                        targetObject = this;
                         return true;
                     }
+                    targetObject = null;
                     return false;
                 }
 
                 LocalProperties.Add(new PropertyEntry(property, content));
+                targetObject = this;
                 return true;
             }
+            targetObject = null;
             return false;
         }
 
@@ -344,7 +346,7 @@ namespace Shipwreck.OpenGraph
                 LocalProperties.Add(new PropertyEntry(new PropertyPath(null, property), content));
             }
         }
-        
+
         internal void SetLocalProperty(string property, IEnumerable<string> values)
         {
             var pc = values as PropertyEntryPartialCollection;
