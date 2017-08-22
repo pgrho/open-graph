@@ -65,6 +65,11 @@ namespace Shipwreck.OpenGraph
         /// <summary>
         /// Defined Namespace URI for `place:*` properties.
         /// </summary>
+        public const string Fitness = "http://ogp.me/ns/fitness#";
+
+        /// <summary>
+        /// Defined Namespace URI for `place:*` properties.
+        /// </summary>
         public const string Place = "http://ogp.me/ns/place#";
 
         #endregion Constants
@@ -91,6 +96,7 @@ namespace Shipwreck.OpenGraph
                 ["books"] = Books,
                 ["profile"] = Profile,
                 ["al"] = Applink,
+                ["fitness"] = Fitness,
                 ["place"] = Place,
             };
         }

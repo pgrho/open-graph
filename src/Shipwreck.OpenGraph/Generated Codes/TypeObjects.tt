@@ -25,6 +25,8 @@ var types = new []
     new T("video.other"),
     
     new T("business.business") { Type = "Business" },
+    
+    new T("fitness.course") { Type = "FitnessCourse" },
 };
 
 #>

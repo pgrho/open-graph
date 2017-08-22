@@ -149,6 +149,17 @@ namespace Shipwreck.OpenGraph
             set => TypeObject = value ?? (_TypeObject is Business ? null : _TypeObject);
         }
 
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.FitnessCourse" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FitnessCourse FitnessCourse
+        {
+            get => _TypeObject as FitnessCourse;
+            set => TypeObject = value ?? (_TypeObject is FitnessCourse ? null : _TypeObject);
+        }
+
         private GraphObject CreateTypeObject()
         {
             switch (Type)
@@ -197,6 +208,9 @@ namespace Shipwreck.OpenGraph
 
                 case "business.business":
                     return new Business(new PropertyPath(NamespaceCollection.Business));
+
+                case "fitness.course":
+                    return new FitnessCourse(new PropertyPath(NamespaceCollection.Fitness));
 
             }
 

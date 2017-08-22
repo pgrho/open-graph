@@ -1153,6 +1153,39 @@ namespace Shipwreck.OpenGraph
         #endregion Altitude
 
     }
+    partial class Quantity
+    {
+        #region Value
+
+        /// <summary>
+        /// Gets or sets a value.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? Value
+        {
+            get => GetLocalPropertyAsSingle("value");
+            set => SetLocalProperty("value", value);
+        }
+
+        #endregion Value
+
+        #region Units
+
+        /// <summary>
+        /// Gets or sets an units.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Units
+        {
+            get => GetLocalProperty("units");
+            set => SetLocalProperty("units", value);
+        }
+
+        #endregion Units
+
+    }
     partial class MusicSong
     {
         #region Album
@@ -2601,5 +2634,467 @@ namespace Shipwreck.OpenGraph
 
         #endregion End
 
+    }
+    partial class FitnessCourse
+    {
+        #region Calories
+
+        /// <summary>
+        /// Gets or sets a calories.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Calories
+        {
+            get => GetLocalPropertyAsInt32("calories");
+            set => SetLocalProperty("calories", value);
+        }
+
+        #endregion Calories
+
+        #region CustomUnitEnergy
+
+        /// <summary>
+        /// Gets or sets a custom unit energy.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity CustomUnitEnergy
+        {
+            get => CustomUnitEnergys.FirstOrDefault();
+            set => CustomUnitEnergys.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all custom unit energys.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> CustomUnitEnergys
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "custom_unit_energy");
+            set => CustomUnitEnergys.Set(value);
+        }
+
+        #endregion CustomUnitEnergy
+
+        #region Distance
+
+        /// <summary>
+        /// Gets or sets a distance.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Distance
+        {
+            get => Distances.FirstOrDefault();
+            set => Distances.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all distances.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Distances
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "distance");
+            set => Distances.Set(value);
+        }
+
+        #endregion Distance
+
+        #region Duration
+
+        /// <summary>
+        /// Gets or sets a duration.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Duration
+        {
+            get => Durations.FirstOrDefault();
+            set => Durations.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all durations.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Durations
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "duration");
+            set => Durations.Set(value);
+        }
+
+        #endregion Duration
+
+        #region LiveText
+
+        /// <summary>
+        /// Gets or sets a live text.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string LiveText
+        {
+            get => GetLocalProperty("live_text");
+            set => SetLocalProperty("live_text", value);
+        }
+
+        #endregion LiveText
+
+        #region Metric
+
+        /// <summary>
+        /// Gets or sets a metric.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FitnessActivityDataPoint Metric
+        {
+            get => Metrics.FirstOrDefault();
+            set => Metrics.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all metrics.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<FitnessActivityDataPoint> Metrics
+        {
+            get => new GraphObjectPartialCollection<FitnessActivityDataPoint>(this, "metric");
+            set => Metrics.Set(value);
+        }
+
+        #endregion Metric
+
+        #region Pace
+
+        /// <summary>
+        /// Gets or sets a pace.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Pace
+        {
+            get => Paces.FirstOrDefault();
+            set => Paces.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all paces.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Paces
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "pace");
+            set => Paces.Set(value);
+        }
+
+        #endregion Pace
+
+        #region Speed
+
+        /// <summary>
+        /// Gets or sets a speed.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Speed
+        {
+            get => Speeds.FirstOrDefault();
+            set => Speeds.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all speeds.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Speeds
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "speed");
+            set => Speeds.Set(value);
+        }
+
+        #endregion Speed
+
+        #region Split
+
+        /// <summary>
+        /// Gets or sets a split.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FitnessSplits Split
+        {
+            get => Splits.FirstOrDefault();
+            set => Splits.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all splits.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<FitnessSplits> Splits
+        {
+            get => new GraphObjectPartialCollection<FitnessSplits>(this, "split");
+            set => Splits.Set(value);
+        }
+
+        #endregion Split
+
+        #region Steps
+
+        /// <summary>
+        /// Gets or sets a steps.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Obsolete("Deprecated in Open Graph Protocol")]
+        public Int32? Steps
+        {
+            get => GetLocalPropertyAsInt32("steps");
+            set => SetLocalProperty("steps", value);
+        }
+
+        #endregion Steps
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "metric", out matched, skipCompareProperty: true))
+            {
+                return new FitnessActivityDataPoint(Path + "metric");
+            }
+            if (property.StartsWith(Path, "split", out matched, skipCompareProperty: true))
+            {
+                return new FitnessSplits(Path + "split");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
+    partial class FitnessActivityDataPoint
+    {
+        #region Calories
+
+        /// <summary>
+        /// Gets or sets a calories.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Calories
+        {
+            get => GetLocalPropertyAsInt32("calories");
+            set => SetLocalProperty("calories", value);
+        }
+
+        #endregion Calories
+
+        #region CustomUnitEnergy
+
+        /// <summary>
+        /// Gets or sets a custom unit energy.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity CustomUnitEnergy
+        {
+            get => CustomUnitEnergys.FirstOrDefault();
+            set => CustomUnitEnergys.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all custom unit energys.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> CustomUnitEnergys
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "custom_unit_energy");
+            set => CustomUnitEnergys.Set(value);
+        }
+
+        #endregion CustomUnitEnergy
+
+        #region Distance
+
+        /// <summary>
+        /// Gets or sets a distance.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Distance
+        {
+            get => Distances.FirstOrDefault();
+            set => Distances.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all distances.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Distances
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "distance");
+            set => Distances.Set(value);
+        }
+
+        #endregion Distance
+
+        #region Location
+
+        /// <summary>
+        /// Gets or sets a location.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public GeoPoint Location
+        {
+            get => Locations.FirstOrDefault();
+            set => Locations.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all locations.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<GeoPoint> Locations
+        {
+            get => new GraphObjectPartialCollection<GeoPoint>(this, "location");
+            set => Locations.Set(value);
+        }
+
+        #endregion Location
+
+        #region Steps
+
+        /// <summary>
+        /// Gets or sets a steps.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int32? Steps
+        {
+            get => GetLocalPropertyAsInt32("steps");
+            set => SetLocalProperty("steps", value);
+        }
+
+        #endregion Steps
+
+        #region Speed
+
+        /// <summary>
+        /// Gets or sets a speed.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Speed
+        {
+            get => Speeds.FirstOrDefault();
+            set => Speeds.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all speeds.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Speeds
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "speed");
+            set => Speeds.Set(value);
+        }
+
+        #endregion Speed
+
+        #region Timestamp
+
+        /// <summary>
+        /// Gets or sets a timestamp.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? Timestamp
+        {
+            get => GetLocalPropertyAsDateTime("timestamp");
+            set => SetLocalProperty("timestamp", value);
+        }
+
+        #endregion Timestamp
+
+        #region Pace
+
+        /// <summary>
+        /// Gets or sets a pace.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Pace
+        {
+            get => Paces.FirstOrDefault();
+            set => Paces.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all paces.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Paces
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "pace");
+            set => Paces.Set(value);
+        }
+
+        #endregion Pace
+
+    }
+    partial class FitnessSplits
+    {
+        #region Unit
+
+        /// <summary>
+        /// Gets or sets an unit.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Unit
+        {
+            get => GetLocalProperty("unit");
+            set => SetLocalProperty("unit", value);
+        }
+
+        #endregion Unit
+
+        #region Value
+
+        /// <summary>
+        /// Gets or sets a value.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Value
+        {
+            get => Values.FirstOrDefault();
+            set => Values.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all values.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Values
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "value");
+            set => Values.Set(value);
+        }
+
+        #endregion Value
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "value", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "value");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
 }

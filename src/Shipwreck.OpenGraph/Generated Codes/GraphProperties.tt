@@ -79,6 +79,9 @@ var properties = new []
     new M("GeoPoint", "Longitude", "Single?"),
     new M("GeoPoint", "Altitude", "Single?"),
 
+    new M("Quantity", "Value", "Single?"),
+    new M("Quantity", "Units", "string"),
+
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
     new M("MusicSong", "Preview", "GraphAudio", isArray: true) { Path = "preview_url" },
@@ -163,6 +166,29 @@ var properties = new []
     new M("BusinessHour", "Day", "string"),
     new M("BusinessHour", "Start", "string"),
     new M("BusinessHour", "End", "string"),
+    
+    new M("FitnessCourse", "Calories", "Int32?"),
+    new M("FitnessCourse", "CustomUnitEnergy", "Quantity"),
+    new M("FitnessCourse", "Distance", "Quantity"),
+    new M("FitnessCourse", "Duration", "Quantity"),
+    new M("FitnessCourse", "LiveText", "string"),
+    new M("FitnessCourse", "Metric", "FitnessActivityDataPoint", isArray: true),
+    new M("FitnessCourse", "Pace", "Quantity"),
+    new M("FitnessCourse", "Speed", "Quantity"),
+    new M("FitnessCourse", "Split", "FitnessSplits", isArray: true),
+    new M("FitnessCourse", "Steps", "Int32?") { IsDeprecated = true },
+    
+    new M("FitnessActivityDataPoint", "Calories", "Int32?"),
+    new M("FitnessActivityDataPoint", "CustomUnitEnergy", "Quantity"),
+    new M("FitnessActivityDataPoint", "Distance", "Quantity"),
+    new M("FitnessActivityDataPoint", "Location", "GeoPoint"),
+    new M("FitnessActivityDataPoint", "Steps", "Int32?"),
+    new M("FitnessActivityDataPoint", "Speed", "Quantity"),
+    new M("FitnessActivityDataPoint", "Timestamp", "DateTime?"),
+    new M("FitnessActivityDataPoint", "Pace", "Quantity"),
+    
+    new M("FitnessSplits", "Unit", "string"),
+    new M("FitnessSplits", "Value", "Quantity", isArray: true),
 };
 
 var objectTypes = new []
@@ -188,7 +214,6 @@ foreach (var g in properties.GroupBy(p => p.Class))
         var PN = p.Path;
         var pathExpression = p.IsAbsolute ? p.GetPropertyPath() : $"\"{p.Path}\"";
         var CT = $"{(T == "string" ? "PropertyEntryPartialCollection" : $"GraphObjectPartialCollection<{T}>")}(this, {pathExpression})";
-
 #>
         #region <#= N #>
 
@@ -202,6 +227,14 @@ foreach (var g in properties.GroupBy(p => p.Class))
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+<#
+            if (p.IsDeprecated)
+            {
+#>
+        [Obsolete("Deprecated in Open Graph Protocol")]
+<#
+            }
+        #>
         public <#= T #> <#= N #>
         {
             get => GetLocalProperty<#= T == "string" ? "" : $"As{T.TrimEnd('?')}" #>(<#= pathExpression #>);
@@ -216,6 +249,14 @@ foreach (var g in properties.GroupBy(p => p.Class))
         /// Gets or sets a list of <#= p.SummaryPlural #>.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+<#
+                if (p.IsDeprecated)
+                {
+#>
+        [Obsolete("Deprecated in Open Graph Protocol")]
+<#
+                }
+        #>
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>;
@@ -232,6 +273,14 @@ foreach (var g in properties.GroupBy(p => p.Class))
         /// </summary>
         [DefaultValue(null)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+<#
+            if (p.IsDeprecated)
+            {
+#>
+        [Obsolete("Deprecated in Open Graph Protocol")]
+<#
+            }
+        #>
         public <#= T #> <#= N #>
         {
             get => <#= PL #>.FirstOrDefault();
@@ -242,6 +291,14 @@ foreach (var g in properties.GroupBy(p => p.Class))
         /// Gets or sets a list of <#= p.SummaryPlural #>.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+<#
+            if (p.IsDeprecated)
+            {
+#>
+        [Obsolete("Deprecated in Open Graph Protocol")]
+<#
+            }
+        #>
         public IList<<#= T #>> <#= PL #>
         {
             get => new <#= CT #>;
@@ -322,6 +379,7 @@ public class M
     public string Type { get; set; }
     public bool IsArray { get; set; }
     public bool IsAbsolute { get; set; }
+    public bool IsDeprecated { get; set; }
 
     public bool IsLocalValue
     {
