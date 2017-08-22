@@ -3775,4 +3775,22 @@ namespace Shipwreck.OpenGraph
             return base.CreateNewChild(property, out matched);
         }
     }
+    partial class ProductGroup
+    {
+        #region RetailerGroupId
+
+        /// <summary>
+        /// Gets or sets a retailer group id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerGroupId
+        {
+            get => GetLocalProperty("retailer_group_id");
+            set => SetLocalProperty("retailer_group_id", value);
+        }
+
+        #endregion RetailerGroupId
+
+    }
 }

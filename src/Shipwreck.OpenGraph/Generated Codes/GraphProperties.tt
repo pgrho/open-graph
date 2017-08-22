@@ -230,6 +230,8 @@ var properties = new []
     new M("Product", "TargetGender", "string"),
     new M("Product", "UniversalProductCode", "string") { Path = "upc" },
     new M("Product", "Weight", "Quantity"),
+    
+    new M("ProductGroup", "RetailerGroupId", "string"),
 
 };
 

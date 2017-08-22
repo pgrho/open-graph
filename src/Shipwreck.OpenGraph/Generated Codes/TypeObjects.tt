@@ -18,7 +18,9 @@ var types = new []
     new T("music.radio_station"),
     
     new T("profile"),
+    
     new T("product"),
+    new T("product.group"),
 
     new T("video.movie"),
     new T("video.episode"),
