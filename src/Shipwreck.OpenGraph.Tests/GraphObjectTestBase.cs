@@ -14,6 +14,9 @@ namespace Shipwreck.OpenGraph
             Output = output;
         }
 
+        protected void TestXml(string xml, Graph expected)
+            => AssertObject(expected, Graph.FromXml(xml));
+
         protected void TestUrl(string url, Graph expected)
         {
             // TODO: Network failure must be treated as inconclusive
@@ -45,7 +48,40 @@ namespace Shipwreck.OpenGraph
                     continue;
                 }
 
-                Assert.Equal(evs, actual.GetLocalProperties().Where(p => p.Property == pn));
+                var avs = actual.GetLocalProperties().Where(p => p.Property == pn).ToArray();
+                try
+                {
+                    Assert.Equal(evs, avs);
+                }
+                catch
+                {
+                    if (Output != null)
+                    {
+                        Output.WriteLine(@"Assert failed at {pn}");
+                        Output.WriteLine("Expected:");
+                        foreach (var c in evs)
+                        {
+                            Output.WriteLine($"    {c}");
+                        }
+                        Output.WriteLine("Actual:");
+                        foreach (var c in avs)
+                        {
+                            Output.WriteLine($"    {c}");
+                        }
+                        Output.WriteLine("All Expected Children:");
+                        foreach (var c in evs)
+                        {
+                            Output.WriteLine($"    {c}");
+                        }
+                        Output.WriteLine("All Actual Children:");
+                        foreach (var c in avs)
+                        {
+                            Output.WriteLine($"    {c}");
+                        }
+                    }
+
+                    throw;
+                }
             }
 
             foreach (var pn in expected.Children.Concat(actual.Children).Select(p => p.Path).Distinct())
@@ -59,9 +95,39 @@ namespace Shipwreck.OpenGraph
                 }
 
                 var avs = actual.Children.Where(p => p.Path == pn).ToArray();
+                try
+                {
+                    Assert.Equal(evs.Length, avs.Length);
+                }
+                catch
+                {
+                    if (Output != null)
+                    {
+                        Output.WriteLine(@"Assert failed at {pn}");
+                        Output.WriteLine("Expected:");
+                        foreach (var c in evs)
+                        {
+                            Output.WriteLine($"    {c.Path}: {c}");
+                        }
+                        Output.WriteLine("Actual:");
+                        foreach (var c in avs)
+                        {
+                            Output.WriteLine($"    {c.Path}: {c}");
+                        }
+                        Output.WriteLine("All Expected Children:");
+                        foreach (var c in evs)
+                        {
+                            Output.WriteLine($"    {c.Path}: {c}");
+                        }
+                        Output.WriteLine("All Actual Children:");
+                        foreach (var c in avs)
+                        {
+                            Output.WriteLine($"    {c.Path}: {c}");
+                        }
+                    }
 
-                Assert.Equal(evs.Length, avs.Length);
-
+                    throw;
+                }
                 for (int i = 0; i < evs.Length; i++)
                 {
                     AssertObject(evs[i], avs[i]);
