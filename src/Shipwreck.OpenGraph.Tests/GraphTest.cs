@@ -1,11 +1,48 @@
 ﻿using System.IO;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph
 {
-    public class GraphTest
+    public class GraphTest : GraphObjectTestBase
     {
+        public GraphTest(ITestOutputHelper output)
+            : base(output)
+        {
+        }
+
+        #region Reference HTML
+
+        [Fact]
+        public void ReferenceSampleTest_Place()
+            => TestXml(@"<html> <head prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# place: http://ogp.me/ns/place#'>
+  <meta property='fb:app_id'                content='302184056577324' />
+  <meta property='og:type'                  content='place' />
+  <meta property='og:url'                   content='Put your own URL to the object here' />
+  <meta property='og:title'                 content='Sample Place' />
+  <meta property='og:image'                 content='https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' />
+  <meta property='place:location:latitude'  content='123.45' />
+  <meta property='place:location:longitude' content='67.89' /> </head></html>",
+                new Graph()
+                {
+                    FacebookAppId = 302184056577324L,
+                    Type = "place",
+                    Url = "Put your own URL to the object here",
+                    Title = "Sample Place",
+                    Image = new GraphImage()
+                    {
+                        Url = "https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png"
+                    },
+                    Location = new GeoPoint()
+                    {
+                        Latitude = 123.45f,
+                        Longitude = 67.89f
+                    }
+                });
+
+        #endregion Reference HTML
+
         #region Title
 
         [Fact]
