@@ -222,6 +222,8 @@ var properties = new []
     new M("Product", "RetailerCategory", "string"),
     new M("Product", "RetailerPartNo", "string"),
     new M("Product", "RetailerTitle", "string"),
+    new M("Product", "RetailerGroupId", "string"),
+    new M("Product", "RetailerItemId", "string"),
     new M("Product", "SalePrice", "Currency"),
     new M("Product", "SalePriceDates", "Currency") { Plural = "AllSalePriceDates" },
     new M("Product", "ShippingCost", "Currency", isArray: true),
@@ -230,8 +232,11 @@ var properties = new []
     new M("Product", "TargetGender", "string"),
     new M("Product", "UniversalProductCode", "string") { Path = "upc" },
     new M("Product", "Weight", "Quantity"),
+    new M("Product", "Group", "ProductGroup") { Path = "group_ref" },
+    new M("Product", "GTIN", "string") { Path = "gtin" },
     
     new M("ProductGroup", "RetailerGroupId", "string"),
+    
 
 };
 

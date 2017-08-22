@@ -3583,6 +3583,36 @@ namespace Shipwreck.OpenGraph
 
         #endregion RetailerTitle
 
+        #region RetailerGroupId
+
+        /// <summary>
+        /// Gets or sets a retailer group id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerGroupId
+        {
+            get => GetLocalProperty("retailer_group_id");
+            set => SetLocalProperty("retailer_group_id", value);
+        }
+
+        #endregion RetailerGroupId
+
+        #region RetailerItemId
+
+        /// <summary>
+        /// Gets or sets a retailer item id.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerItemId
+        {
+            get => GetLocalProperty("retailer_item_id");
+            set => SetLocalProperty("retailer_item_id", value);
+        }
+
+        #endregion RetailerItemId
+
         #region SalePrice
 
         /// <summary>
@@ -3752,6 +3782,46 @@ namespace Shipwreck.OpenGraph
         }
 
         #endregion Weight
+
+        #region Group
+
+        /// <summary>
+        /// Gets or sets a group.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ProductGroup Group
+        {
+            get => Groups.FirstOrDefault();
+            set => Groups.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all groups.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<ProductGroup> Groups
+        {
+            get => new GraphObjectPartialCollection<ProductGroup>(this, "group_ref");
+            set => Groups.Set(value);
+        }
+
+        #endregion Group
+
+        #region GTIN
+
+        /// <summary>
+        /// Gets or sets a g t i n.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string GTIN
+        {
+            get => GetLocalProperty("gtin");
+            set => SetLocalProperty("gtin", value);
+        }
+
+        #endregion GTIN
 
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)

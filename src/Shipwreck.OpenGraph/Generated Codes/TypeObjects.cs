@@ -233,6 +233,9 @@ namespace Shipwreck.OpenGraph
                 case "product.group":
                     return new ProductGroup(new PropertyPath(NamespaceCollection.Product));
 
+                case "product.item":
+                    return new Product(new PropertyPath(NamespaceCollection.Product));
+
                 case "video.movie":
                     return new VideoMovie(new PropertyPath(NamespaceCollection.Video));
 

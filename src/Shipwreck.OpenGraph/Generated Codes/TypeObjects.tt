@@ -21,6 +21,7 @@ var types = new []
     
     new T("product"),
     new T("product.group"),
+    new T("product.item") { Type = "Product" },
 
     new T("video.movie"),
     new T("video.episode"),
