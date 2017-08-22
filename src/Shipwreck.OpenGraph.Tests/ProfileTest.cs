@@ -1,10 +1,39 @@
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph
 {
-    public class ProfileTest
+    public class ProfileTest : GraphObjectTestBase
     {
+        public ProfileTest(ITestOutputHelper output)
+            : base(output)
+        {
+        }
+
+        [Fact]
+        public void ReferenceSampleTest()
+            => TestXml(@"<html> <head prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#'>
+  <meta property='fb:app_id' content='302184056577324' /> 
+  <meta property='og:type'   content='profile' /> 
+  <meta property='og:url'    content='Put your own URL to the object here' /> 
+  <meta property='og:title'  content='Sample Profile' /> 
+  <meta property='og:image'  content='https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' /></head></html>",
+                new Graph()
+                {
+                    FacebookAppId = 302184056577324L,
+                    Type = "profile",
+                    Url = "Put your own URL to the object here",
+                    Title = "Sample Profile",
+                    Image = new GraphImage()
+                    {
+                        Url = "https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png"
+                    },
+                    Profile = new Profile
+                    {
+
+                    }
+                });
         [Fact]
         public void FirstNameTest()
         {
