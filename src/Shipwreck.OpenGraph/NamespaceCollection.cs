@@ -63,7 +63,7 @@ namespace Shipwreck.OpenGraph
         public const string Business = "http://ogp.me/ns/business#";
 
         /// <summary>
-        /// Defined Namespace URI for `place:*` properties.
+        /// Defined Namespace URI for `fitness:*` types.
         /// </summary>
         public const string Fitness = "http://ogp.me/ns/fitness#";
 

@@ -3,9 +3,9 @@ using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph
 {
-    public class FitnessTest : GraphObjectTestBase
+    public class FitnessCourseTest : GraphObjectTestBase
     {
-        public FitnessTest(ITestOutputHelper output)
+        public FitnessCourseTest(ITestOutputHelper output)
             : base(output)
         {
         }
