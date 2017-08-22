@@ -16,8 +16,9 @@ var types = new []
     new T("music.album"),
     new T("music.playlist"),
     new T("music.radio_station"),
-
+    
     new T("profile"),
+    new T("product"),
 
     new T("video.movie"),
     new T("video.episode"),

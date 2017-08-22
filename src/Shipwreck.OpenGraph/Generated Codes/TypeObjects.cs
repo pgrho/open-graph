@@ -95,6 +95,17 @@ namespace Shipwreck.OpenGraph
         }
 
         /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.Product" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Product Product
+        {
+            get => _TypeObject as Product;
+            set => TypeObject = value ?? (_TypeObject is Product ? null : _TypeObject);
+        }
+
+        /// <summary>
         /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.VideoMovie" />.
         /// </summary>
         [DefaultValue(null)]
@@ -204,6 +215,9 @@ namespace Shipwreck.OpenGraph
 
                 case "profile":
                     return new Profile(new PropertyPath(NamespaceCollection.Profile));
+
+                case "product":
+                    return new Product(new PropertyPath(NamespaceCollection.Product));
 
                 case "video.movie":
                     return new VideoMovie(new PropertyPath(NamespaceCollection.Video));

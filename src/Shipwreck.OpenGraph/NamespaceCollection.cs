@@ -53,6 +53,11 @@ namespace Shipwreck.OpenGraph
         public const string Profile = "http://ogp.me/ns/profile#";
 
         /// <summary>
+        /// Defined Namespace URI for `product` type.
+        /// </summary>
+        public const string Product = "http://ogp.me/ns/product#";
+
+        /// <summary>
         /// Defined Namespace URI for `al.*` type.
         /// </summary>
         public const string Applink = "http://ogp.me/ns/al#";
@@ -100,6 +105,7 @@ namespace Shipwreck.OpenGraph
                 ["book"] = Book,
                 ["books"] = Books,
                 ["profile"] = Profile,
+                ["product"] = Product,
                 ["al"] = Applink,
                 ["fitness"] = Fitness,
                 ["place"] = Place,

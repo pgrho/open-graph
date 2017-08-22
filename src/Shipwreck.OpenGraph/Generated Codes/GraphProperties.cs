@@ -1186,6 +1186,72 @@ namespace Shipwreck.OpenGraph
         #endregion Units
 
     }
+    partial class Currency
+    {
+        #region Amount
+
+        /// <summary>
+        /// Gets or sets an amount.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Single? Amount
+        {
+            get => GetLocalPropertyAsSingle("amount");
+            set => SetLocalProperty("amount", value);
+        }
+
+        #endregion Amount
+
+        #region Units
+
+        /// <summary>
+        /// Gets or sets an units.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Units
+        {
+            get => GetLocalProperty("currency");
+            set => SetLocalProperty("currency", value);
+        }
+
+        #endregion Units
+
+    }
+    partial class DateTimeRange
+    {
+        #region Start
+
+        /// <summary>
+        /// Gets or sets a start.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? Start
+        {
+            get => GetLocalPropertyAsDateTime("start");
+            set => SetLocalProperty("start", value);
+        }
+
+        #endregion Start
+
+        #region End
+
+        /// <summary>
+        /// Gets or sets an end.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? End
+        {
+            get => GetLocalPropertyAsDateTime("end");
+            set => SetLocalProperty("end", value);
+        }
+
+        #endregion End
+
+    }
     partial class MusicSong
     {
         #region Album
@@ -3129,5 +3195,584 @@ namespace Shipwreck.OpenGraph
 
         #endregion Secret
 
+    }
+    partial class Product
+    {
+        #region AgeGroup
+
+        /// <summary>
+        /// Gets or sets an age group.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string AgeGroup
+        {
+            get => GetLocalProperty("age_group");
+            set => SetLocalProperty("age_group", value);
+        }
+
+        #endregion AgeGroup
+
+        #region Availability
+
+        /// <summary>
+        /// Gets or sets an availability.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Availability
+        {
+            get => GetLocalProperty("availability");
+            set => SetLocalProperty("availability", value);
+        }
+
+        #endregion Availability
+
+        #region Brand
+
+        /// <summary>
+        /// Gets or sets a brand.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Brand
+        {
+            get => GetLocalProperty("brand");
+            set => SetLocalProperty("brand", value);
+        }
+
+        #endregion Brand
+
+        #region Category
+
+        /// <summary>
+        /// Gets or sets a category.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Category
+        {
+            get => GetLocalProperty("category");
+            set => SetLocalProperty("category", value);
+        }
+
+        #endregion Category
+
+        #region Color
+
+        /// <summary>
+        /// Gets or sets a color.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Color
+        {
+            get => GetLocalProperty("color");
+            set => SetLocalProperty("color", value);
+        }
+
+        #endregion Color
+
+        #region Condition
+
+        /// <summary>
+        /// Gets or sets a condition.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Condition
+        {
+            get => GetLocalProperty("condition");
+            set => SetLocalProperty("condition", value);
+        }
+
+        #endregion Condition
+
+        #region EAN
+
+        /// <summary>
+        /// Gets or sets an e a n.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string EAN
+        {
+            get => GetLocalProperty("ean");
+            set => SetLocalProperty("ean", value);
+        }
+
+        #endregion EAN
+
+        #region ExpirationTime
+
+        /// <summary>
+        /// Gets or sets an expiration time.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public DateTime? ExpirationTime
+        {
+            get => GetLocalPropertyAsDateTime("expiration_time");
+            set => SetLocalProperty("expiration_time", value);
+        }
+
+        #endregion ExpirationTime
+
+        #region IsProductShareable
+
+        /// <summary>
+        /// Gets or sets an is product shareable.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Boolean? IsProductShareable
+        {
+            get => GetLocalPropertyAsBoolean("is_product_shareable");
+            set => SetLocalProperty("is_product_shareable", value);
+        }
+
+        #endregion IsProductShareable
+
+        #region ISBN
+
+        /// <summary>
+        /// Gets or sets an i s b n.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ISBN
+        {
+            get => GetLocalProperty("isbn");
+            set => SetLocalProperty("isbn", value);
+        }
+
+        #endregion ISBN
+
+        #region Material
+
+        /// <summary>
+        /// Gets or sets a material.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Material
+        {
+            get => GetLocalProperty("material");
+            set => SetLocalProperty("material", value);
+        }
+
+        #endregion Material
+
+        #region ManufacturerPartNo
+
+        /// <summary>
+        /// Gets or sets a manufacturer part no.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ManufacturerPartNo
+        {
+            get => GetLocalProperty("mfr_part_no");
+            set => SetLocalProperty("mfr_part_no", value);
+        }
+
+        #endregion ManufacturerPartNo
+
+        #region OriginalPrice
+
+        /// <summary>
+        /// Gets or sets an original price.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency OriginalPrice
+        {
+            get => OriginalPrices.FirstOrDefault();
+            set => OriginalPrices.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all original prices.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> OriginalPrices
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "original_price");
+            set => OriginalPrices.Set(value);
+        }
+
+        #endregion OriginalPrice
+
+        #region Pattern
+
+        /// <summary>
+        /// Gets or sets a pattern.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Pattern
+        {
+            get => GetLocalProperty("pattern");
+            set => SetLocalProperty("pattern", value);
+        }
+
+        #endregion Pattern
+
+        #region PluralTitle
+
+        /// <summary>
+        /// Gets or sets a plural title.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string PluralTitle
+        {
+            get => GetLocalProperty("plural_title");
+            set => SetLocalProperty("plural_title", value);
+        }
+
+        #endregion PluralTitle
+
+        #region PretaxPrice
+
+        /// <summary>
+        /// Gets or sets a pretax price.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency PretaxPrice
+        {
+            get => PretaxPrices.FirstOrDefault();
+            set => PretaxPrices.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all pretax prices.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> PretaxPrices
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "pretax_price");
+            set => PretaxPrices.Set(value);
+        }
+
+        #endregion PretaxPrice
+
+        #region Price
+
+        /// <summary>
+        /// Gets or sets a price.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency Price
+        {
+            get => Prices.FirstOrDefault();
+            set => Prices.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all prices.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> Prices
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "price");
+            set => Prices.Set(value);
+        }
+
+        #endregion Price
+
+        #region ProductLink
+
+        /// <summary>
+        /// Gets or sets a product link.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ProductLink
+        {
+            get => GetLocalProperty("product_link");
+            set => SetLocalProperty("product_link", value);
+        }
+
+        #endregion ProductLink
+
+        #region PurchaseLimit
+
+        /// <summary>
+        /// Gets or sets a purchase limit.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Int64? PurchaseLimit
+        {
+            get => GetLocalPropertyAsInt64("purchase_limit");
+            set => SetLocalProperty("purchase_limit", value);
+        }
+
+        #endregion PurchaseLimit
+
+        #region Retailer
+
+        /// <summary>
+        /// Gets or sets a retailer.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Profile Retailer
+        {
+            get => Retailers.FirstOrDefault();
+            set => Retailers.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all retailers.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Profile> Retailers
+        {
+            get => new GraphObjectPartialCollection<Profile>(this, "retailer");
+            set => Retailers.Set(value);
+        }
+
+        #endregion Retailer
+
+        #region RetailerCategory
+
+        /// <summary>
+        /// Gets or sets a retailer category.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerCategory
+        {
+            get => GetLocalProperty("retailer_category");
+            set => SetLocalProperty("retailer_category", value);
+        }
+
+        #endregion RetailerCategory
+
+        #region RetailerPartNo
+
+        /// <summary>
+        /// Gets or sets a retailer part no.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerPartNo
+        {
+            get => GetLocalProperty("retailer_part_no");
+            set => SetLocalProperty("retailer_part_no", value);
+        }
+
+        #endregion RetailerPartNo
+
+        #region RetailerTitle
+
+        /// <summary>
+        /// Gets or sets a retailer title.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string RetailerTitle
+        {
+            get => GetLocalProperty("retailer_title");
+            set => SetLocalProperty("retailer_title", value);
+        }
+
+        #endregion RetailerTitle
+
+        #region SalePrice
+
+        /// <summary>
+        /// Gets or sets a sale price.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency SalePrice
+        {
+            get => SalePrices.FirstOrDefault();
+            set => SalePrices.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all sale prices.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> SalePrices
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "sale_price");
+            set => SalePrices.Set(value);
+        }
+
+        #endregion SalePrice
+
+        #region SalePriceDates
+
+        /// <summary>
+        /// Gets or sets a sale price dates.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency SalePriceDates
+        {
+            get => AllSalePriceDates.FirstOrDefault();
+            set => AllSalePriceDates.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all all sale price dates.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> AllSalePriceDates
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "sale_price_dates");
+            set => AllSalePriceDates.Set(value);
+        }
+
+        #endregion SalePriceDates
+
+        #region ShippingCost
+
+        /// <summary>
+        /// Gets or sets a shipping cost.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency ShippingCost
+        {
+            get => ShippingCosts.FirstOrDefault();
+            set => ShippingCosts.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all shipping costs.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> ShippingCosts
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "shipping_cost");
+            set => ShippingCosts.Set(value);
+        }
+
+        #endregion ShippingCost
+
+        #region ShippingWeight
+
+        /// <summary>
+        /// Gets or sets a shipping weight.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity ShippingWeight
+        {
+            get => ShippingWeights.FirstOrDefault();
+            set => ShippingWeights.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all shipping weights.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> ShippingWeights
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "shipping_weight");
+            set => ShippingWeights.Set(value);
+        }
+
+        #endregion ShippingWeight
+
+        #region Size
+
+        /// <summary>
+        /// Gets or sets a size.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Size
+        {
+            get => GetLocalProperty("size");
+            set => SetLocalProperty("size", value);
+        }
+
+        #endregion Size
+
+        #region TargetGender
+
+        /// <summary>
+        /// Gets or sets a target gender.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string TargetGender
+        {
+            get => GetLocalProperty("target_gender");
+            set => SetLocalProperty("target_gender", value);
+        }
+
+        #endregion TargetGender
+
+        #region UniversalProductCode
+
+        /// <summary>
+        /// Gets or sets an universal product code.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string UniversalProductCode
+        {
+            get => GetLocalProperty("upc");
+            set => SetLocalProperty("upc", value);
+        }
+
+        #endregion UniversalProductCode
+
+        #region Weight
+
+        /// <summary>
+        /// Gets or sets a weight.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Quantity Weight
+        {
+            get => Weights.FirstOrDefault();
+            set => Weights.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all weights.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Quantity> Weights
+        {
+            get => new GraphObjectPartialCollection<Quantity>(this, "weight");
+            set => Weights.Set(value);
+        }
+
+        #endregion Weight
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "original_price", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "original_price");
+            }
+            if (property.StartsWith(Path, "pretax_price", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "pretax_price");
+            }
+            if (property.StartsWith(Path, "price", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "price");
+            }
+            if (property.StartsWith(Path, "shipping_cost", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "shipping_cost");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
 }

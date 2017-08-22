@@ -82,6 +82,12 @@ var properties = new []
     new M("Quantity", "Value", "Single?"),
     new M("Quantity", "Units", "string"),
 
+    new M("Currency", "Amount", "Single?"),
+    new M("Currency", "Units", "string") { Path = "currency" },
+    
+    new M("DateTimeRange", "Start", "DateTime?"),
+    new M("DateTimeRange", "End", "DateTime?"),
+
     new M("MusicSong", "Album", "MusicAlbum", isArray: true),
     new M("MusicSong", "Musician", "Profile", isArray: true),
     new M("MusicSong", "Preview", "GraphAudio", isArray: true) { Path = "preview_url" },
@@ -192,6 +198,39 @@ var properties = new []
     
     new M("GameAchievement", "Points", "Int32?"),
     new M("GameAchievement", "Secret", "Boolean?"),
+    
+    new M("Product", "AgeGroup", "string"),
+    new M("Product", "Availability", "string"),
+    new M("Product", "Brand", "string"),
+    new M("Product", "Category", "string"),
+    new M("Product", "Color", "string"),
+    new M("Product", "Condition", "string"),
+    new M("Product", "EAN", "string") { Path = "ean" },
+    new M("Product", "ExpirationTime", "DateTime?"),
+    new M("Product", "IsProductShareable", "Boolean?"),
+    new M("Product", "ISBN", "string") { Path = "isbn" },
+    new M("Product", "Material", "string"),
+    new M("Product", "ManufacturerPartNo", "string") { Path = "mfr_part_no" },
+    new M("Product", "OriginalPrice", "Currency", isArray: true),
+    new M("Product", "Pattern", "string"),
+    new M("Product", "PluralTitle", "string"),
+    new M("Product", "PretaxPrice", "Currency", isArray: true),
+    new M("Product", "Price", "Currency", isArray: true),
+    new M("Product", "ProductLink", "string"),
+    new M("Product", "PurchaseLimit", "Int64?"),
+    new M("Product", "Retailer", "Profile"),
+    new M("Product", "RetailerCategory", "string"),
+    new M("Product", "RetailerPartNo", "string"),
+    new M("Product", "RetailerTitle", "string"),
+    new M("Product", "SalePrice", "Currency"),
+    new M("Product", "SalePriceDates", "Currency") { Plural = "AllSalePriceDates" },
+    new M("Product", "ShippingCost", "Currency", isArray: true),
+    new M("Product", "ShippingWeight", "Quantity"),
+    new M("Product", "Size", "string"),
+    new M("Product", "TargetGender", "string"),
+    new M("Product", "UniversalProductCode", "string") { Path = "upc" },
+    new M("Product", "Weight", "Quantity"),
+
 };
 
 var objectTypes = new []
