@@ -31,8 +31,12 @@ var types = new []
     new T("business.business") { Type = "Business" },
     
     new T("fitness.course") { Type = "FitnessCourse" },
-
+    
     new T("game.achievement"),
+    
+    new T("restaurant.menu"),
+    new T("restaurant.menu_item"),
+    new T("restaurant.menu_section"),
 };
 
 #>

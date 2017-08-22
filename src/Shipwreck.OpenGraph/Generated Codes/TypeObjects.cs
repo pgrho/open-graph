@@ -193,6 +193,39 @@ namespace Shipwreck.OpenGraph
             set => TypeObject = value ?? (_TypeObject is GameAchievement ? null : _TypeObject);
         }
 
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.RestaurantMenu" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenu RestaurantMenu
+        {
+            get => _TypeObject as RestaurantMenu;
+            set => TypeObject = value ?? (_TypeObject is RestaurantMenu ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.RestaurantMenuItem" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuItem RestaurantMenuItem
+        {
+            get => _TypeObject as RestaurantMenuItem;
+            set => TypeObject = value ?? (_TypeObject is RestaurantMenuItem ? null : _TypeObject);
+        }
+
+        /// <summary>
+        /// Gets or sets a value of <see cref="TypeObject" /> as <see cref="OpenGraph.RestaurantMenuSection" />.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuSection RestaurantMenuSection
+        {
+            get => _TypeObject as RestaurantMenuSection;
+            set => TypeObject = value ?? (_TypeObject is RestaurantMenuSection ? null : _TypeObject);
+        }
+
         private GraphObject CreateTypeObject()
         {
             switch (Type)
@@ -256,6 +289,15 @@ namespace Shipwreck.OpenGraph
 
                 case "game.achievement":
                     return new GameAchievement(new PropertyPath(NamespaceCollection.Game));
+
+                case "restaurant.menu":
+                    return new RestaurantMenu(new PropertyPath(NamespaceCollection.Restaurant));
+
+                case "restaurant.menu_item":
+                    return new RestaurantMenuItem(new PropertyPath(NamespaceCollection.Restaurant));
+
+                case "restaurant.menu_section":
+                    return new RestaurantMenuSection(new PropertyPath(NamespaceCollection.Restaurant));
 
             }
 

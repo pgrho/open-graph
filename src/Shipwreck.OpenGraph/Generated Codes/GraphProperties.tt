@@ -237,7 +237,17 @@ var properties = new []
     
     new M("ProductGroup", "RetailerGroupId", "string"),
     
-
+    new M("RestaurantMenu", "Restaurant", "Business"),
+    new M("RestaurantMenu", "Section", "RestaurantMenuSection", isArray: true),
+    
+    new M("RestaurantMenuSection", "Menu", "RestaurantMenu"),
+    new M("RestaurantMenuSection", "Item", "RestaurantMenuItem", isArray: true),
+    
+    new M("RestaurantMenuItem", "Section", "RestaurantMenuSection"),
+    new M("RestaurantMenuItem", "Variation", "RestaurantMenuVariation", isArray: true),
+    
+    new M("RestaurantMenuVariation", "Price", "Currency"),
+    new M("RestaurantMenuVariation", "Name", "string"),
 };
 
 var objectTypes = new []
@@ -362,7 +372,7 @@ foreach (var g in properties.GroupBy(p => p.Class))
 <#
     }
 
-    var children = g.Where(p => p.IsArray && p.Type != "string").ToArray();
+    var children = g.Where(p => !p.IsLocalValue).ToArray();
 
     if (children.Any())
     {

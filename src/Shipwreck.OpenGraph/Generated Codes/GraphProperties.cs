@@ -2927,9 +2927,29 @@ namespace Shipwreck.OpenGraph
         /// <inheritdoc />
         internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
         {
+            if (property.StartsWith(Path, "custom_unit_energy", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "custom_unit_energy");
+            }
+            if (property.StartsWith(Path, "distance", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "distance");
+            }
+            if (property.StartsWith(Path, "duration", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "duration");
+            }
             if (property.StartsWith(Path, "metric", out matched, skipCompareProperty: true))
             {
                 return new FitnessActivityDataPoint(Path + "metric");
+            }
+            if (property.StartsWith(Path, "pace", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "pace");
+            }
+            if (property.StartsWith(Path, "speed", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "speed");
             }
             if (property.StartsWith(Path, "split", out matched, skipCompareProperty: true))
             {
@@ -3110,6 +3130,31 @@ namespace Shipwreck.OpenGraph
 
         #endregion Pace
 
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "custom_unit_energy", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "custom_unit_energy");
+            }
+            if (property.StartsWith(Path, "distance", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "distance");
+            }
+            if (property.StartsWith(Path, "location", out matched, skipCompareProperty: true))
+            {
+                return new GeoPoint(Path + "location");
+            }
+            if (property.StartsWith(Path, "speed", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "speed");
+            }
+            if (property.StartsWith(Path, "pace", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "pace");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
     partial class FitnessSplits
     {
@@ -3838,9 +3883,33 @@ namespace Shipwreck.OpenGraph
             {
                 return new Currency(Path + "price");
             }
+            if (property.StartsWith(Path, "retailer", out matched, skipCompareProperty: true))
+            {
+                return new Profile(Path + "retailer");
+            }
+            if (property.StartsWith(Path, "sale_price", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "sale_price");
+            }
+            if (property.StartsWith(Path, "sale_price_dates", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "sale_price_dates");
+            }
             if (property.StartsWith(Path, "shipping_cost", out matched, skipCompareProperty: true))
             {
                 return new Currency(Path + "shipping_cost");
+            }
+            if (property.StartsWith(Path, "shipping_weight", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "shipping_weight");
+            }
+            if (property.StartsWith(Path, "weight", out matched, skipCompareProperty: true))
+            {
+                return new Quantity(Path + "weight");
+            }
+            if (property.StartsWith(Path, "group_ref", out matched, skipCompareProperty: true))
+            {
+                return new ProductGroup(Path + "group_ref");
             }
             return base.CreateNewChild(property, out matched);
         }
@@ -3862,5 +3931,255 @@ namespace Shipwreck.OpenGraph
 
         #endregion RetailerGroupId
 
+    }
+    partial class RestaurantMenu
+    {
+        #region Restaurant
+
+        /// <summary>
+        /// Gets or sets a restaurant.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Business Restaurant
+        {
+            get => Restaurants.FirstOrDefault();
+            set => Restaurants.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all restaurants.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Business> Restaurants
+        {
+            get => new GraphObjectPartialCollection<Business>(this, "restaurant");
+            set => Restaurants.Set(value);
+        }
+
+        #endregion Restaurant
+
+        #region Section
+
+        /// <summary>
+        /// Gets or sets a section.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuSection Section
+        {
+            get => Sections.FirstOrDefault();
+            set => Sections.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all sections.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<RestaurantMenuSection> Sections
+        {
+            get => new GraphObjectPartialCollection<RestaurantMenuSection>(this, "section");
+            set => Sections.Set(value);
+        }
+
+        #endregion Section
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "restaurant", out matched, skipCompareProperty: true))
+            {
+                return new Business(Path + "restaurant");
+            }
+            if (property.StartsWith(Path, "section", out matched, skipCompareProperty: true))
+            {
+                return new RestaurantMenuSection(Path + "section");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
+    partial class RestaurantMenuSection
+    {
+        #region Menu
+
+        /// <summary>
+        /// Gets or sets a menu.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenu Menu
+        {
+            get => Menus.FirstOrDefault();
+            set => Menus.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all menus.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<RestaurantMenu> Menus
+        {
+            get => new GraphObjectPartialCollection<RestaurantMenu>(this, "menu");
+            set => Menus.Set(value);
+        }
+
+        #endregion Menu
+
+        #region Item
+
+        /// <summary>
+        /// Gets or sets an item.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuItem Item
+        {
+            get => Items.FirstOrDefault();
+            set => Items.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all items.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<RestaurantMenuItem> Items
+        {
+            get => new GraphObjectPartialCollection<RestaurantMenuItem>(this, "item");
+            set => Items.Set(value);
+        }
+
+        #endregion Item
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "menu", out matched, skipCompareProperty: true))
+            {
+                return new RestaurantMenu(Path + "menu");
+            }
+            if (property.StartsWith(Path, "item", out matched, skipCompareProperty: true))
+            {
+                return new RestaurantMenuItem(Path + "item");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
+    partial class RestaurantMenuItem
+    {
+        #region Section
+
+        /// <summary>
+        /// Gets or sets a section.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuSection Section
+        {
+            get => Sections.FirstOrDefault();
+            set => Sections.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all sections.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<RestaurantMenuSection> Sections
+        {
+            get => new GraphObjectPartialCollection<RestaurantMenuSection>(this, "section");
+            set => Sections.Set(value);
+        }
+
+        #endregion Section
+
+        #region Variation
+
+        /// <summary>
+        /// Gets or sets a variation.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public RestaurantMenuVariation Variation
+        {
+            get => Variations.FirstOrDefault();
+            set => Variations.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all variations.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<RestaurantMenuVariation> Variations
+        {
+            get => new GraphObjectPartialCollection<RestaurantMenuVariation>(this, "variation");
+            set => Variations.Set(value);
+        }
+
+        #endregion Variation
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "section", out matched, skipCompareProperty: true))
+            {
+                return new RestaurantMenuSection(Path + "section");
+            }
+            if (property.StartsWith(Path, "variation", out matched, skipCompareProperty: true))
+            {
+                return new RestaurantMenuVariation(Path + "variation");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
+    }
+    partial class RestaurantMenuVariation
+    {
+        #region Price
+
+        /// <summary>
+        /// Gets or sets a price.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Currency Price
+        {
+            get => Prices.FirstOrDefault();
+            set => Prices.Set(value);
+        }
+
+        /// <summary>
+        /// Gets or sets a list of all prices.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IList<Currency> Prices
+        {
+            get => new GraphObjectPartialCollection<Currency>(this, "price");
+            set => Prices.Set(value);
+        }
+
+        #endregion Price
+
+        #region Name
+
+        /// <summary>
+        /// Gets or sets a name.
+        /// </summary>
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Name
+        {
+            get => GetLocalProperty("name");
+            set => SetLocalProperty("name", value);
+        }
+
+        #endregion Name
+
+        /// <inheritdoc />
+        internal override GraphObject CreateNewChild(PropertyPath property, out bool matched)
+        {
+            if (property.StartsWith(Path, "price", out matched, skipCompareProperty: true))
+            {
+                return new Currency(Path + "price");
+            }
+            return base.CreateNewChild(property, out matched);
+        }
     }
 }
