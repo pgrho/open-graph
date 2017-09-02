@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Threading.Tasks;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Shipwreck.OpenGraph
@@ -11,7 +12,7 @@ namespace Shipwreck.OpenGraph
         }
 
         [Fact]
-        public void BookTest()
+        public Task BookTest()
             => TestUrl("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/master/book-isbn10.html",
                 new Graph()
                 {
@@ -39,7 +40,7 @@ namespace Shipwreck.OpenGraph
                 });
 
         [Fact]
-        public void VideoMovieTest()
+        public Task VideoMovieTest()
             => TestUrl("https://raw.githubusercontent.com/niallkennedy/open-graph-protocol-examples/77e4710fc3791a212c92739f52e32d9d48ccba30/video-movie.html",
                 new Graph()
                 {

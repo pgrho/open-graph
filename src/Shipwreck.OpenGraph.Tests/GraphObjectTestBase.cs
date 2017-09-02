@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,13 +18,13 @@ namespace Shipwreck.OpenGraph
         protected void TestXml(string xml, Graph expected)
             => AssertObject(expected, Graph.FromXml(xml));
 
-        protected void TestUrl(string url, Graph expected, bool allowUnexpected = true)
+        protected async Task TestUrl(string url, Graph expected, bool allowUnexpected = true)
         {
             // TODO: Network failure must be treated as inconclusive
             Graph actual;
             using (var hc = new HttpClient())
             {
-                var html = hc.GetStringAsync(url).GetAwaiter().GetResult();
+                var html = await hc.GetStringAsync(url).ConfigureAwait(false);
                 var hd = new HtmlAgilityPack.HtmlDocument();
                 hd.LoadHtml(html);
 

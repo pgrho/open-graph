@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,7 +12,7 @@ namespace Shipwreck.OpenGraph
         }
 
         [Fact]
-        public void ContentRatingTest()
+        public Task ContentRatingTest()
             => TestUrl("http://www.dlsite.com/pro/work/=/product_id/VJ008001.html", new Graph()
             {
                 [Mixi.ContentRating] = "1"
