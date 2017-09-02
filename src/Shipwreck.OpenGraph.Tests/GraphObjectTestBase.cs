@@ -17,7 +17,7 @@ namespace Shipwreck.OpenGraph
         protected void TestXml(string xml, Graph expected)
             => AssertObject(expected, Graph.FromXml(xml));
 
-        protected void TestUrl(string url, Graph expected)
+        protected void TestUrl(string url, Graph expected, bool allowUnexpected = true)
         {
             // TODO: Network failure must be treated as inconclusive
             Graph actual;
@@ -30,10 +30,10 @@ namespace Shipwreck.OpenGraph
                 actual = Graph.FromXPathNavigable(hd);
             }
 
-            AssertObject(expected, actual);
+            AssertObject(expected, actual, allowUnexpected);
         }
 
-        protected void AssertObject(GraphObject expected, GraphObject actual)
+        protected void AssertObject(GraphObject expected, GraphObject actual, bool allowUnexpected = true)
         {
             Assert.Equal(expected.GetType(), actual.GetType());
             Assert.Equal(expected.Path, actual.Path);
@@ -130,7 +130,7 @@ namespace Shipwreck.OpenGraph
                 }
                 for (int i = 0; i < evs.Length; i++)
                 {
-                    AssertObject(evs[i], avs[i]);
+                    AssertObject(evs[i], avs[i], allowUnexpected);
                 }
             }
 
@@ -138,9 +138,9 @@ namespace Shipwreck.OpenGraph
             var ato = (actual as Graph)?.TypeObject;
             if (to != null)
             {
-                AssertObject(to, ato);
+                AssertObject(to, ato, allowUnexpected);
             }
-            else
+            else if (!allowUnexpected)
             {
                 Assert.Null(ato);
             }

@@ -55,6 +55,17 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        /// <summary>
+        /// Gets or sets a first value of the specified property.
+        /// </summary>
+        /// <param name="property">The path of the property.</param>
+        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        public string this[PropertyPath property]
+        {
+            get => GetLocalProperty(property);
+            set => SetLocalProperty(property, value);
+        }
+
         #region Namespaces
 
         private NamespaceCollection _Namespaces;
@@ -116,19 +127,36 @@ namespace Shipwreck.OpenGraph
             }
         }
 
+        #region From*** Static methods
+
+        #region FromXml
+
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified XHTML text.
         /// </summary>
         /// <param name="xml">XHTML text that contains Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXml(string xml)
+            => FromXml(xml, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified XHTML text and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="xml">XHTML text that contains Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXml(string xml, NamespaceCollection namespaces)
         {
             using (var sr = new StringReader(xml))
             using (var xr = XmlReader.Create(sr))
             {
-                return FromXmlReader(xr);
+                return FromXmlReader(xr, namespaces);
             }
         }
+
+        #endregion FromXml
+
+        #region FromStream
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified data stream.
@@ -136,15 +164,28 @@ namespace Shipwreck.OpenGraph
         /// <param name="stream">A <see cref="Stream"/> that contains the XHTML for Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromStream(Stream stream)
+            => FromStream(stream, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified data stream and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> that contains the XHTML for Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromStream(Stream stream, NamespaceCollection namespaces)
         {
             using (var xr = XmlReader.Create(stream, new XmlReaderSettings()
             {
                 CloseInput = false
             }))
             {
-                return FromXmlReader(xr);
+                return FromXmlReader(xr, namespaces);
             }
         }
+
+        #endregion FromStream
+
+        #region FromTextReader
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified <see cref="TextReader"/>.
@@ -152,15 +193,28 @@ namespace Shipwreck.OpenGraph
         /// <param name="textReader">A <see cref="TextReader"/> that contains the XHTML for Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromTextReader(TextReader textReader)
+            => FromTextReader(textReader, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="TextReader"/> and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="textReader">A <see cref="TextReader"/> that contains the XHTML for Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromTextReader(TextReader textReader, NamespaceCollection namespaces)
         {
             using (var xr = XmlReader.Create(textReader, new XmlReaderSettings()
             {
                 CloseInput = false
             }))
             {
-                return FromXmlReader(xr);
+                return FromXmlReader(xr, namespaces);
             }
         }
+
+        #endregion FromTextReader
+
+        #region FromXmlReader
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified <see cref="XmlReader"/>.
@@ -168,35 +222,71 @@ namespace Shipwreck.OpenGraph
         /// <param name="xmlReader">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXmlReader(XmlReader xmlReader)
+            => FromXmlReader(xmlReader, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XmlReader"/> and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="xmlReader">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXmlReader(XmlReader xmlReader, NamespaceCollection namespaces)
         {
+            if (namespaces == NamespaceCollection.Default)
+            {
+                throw new ArgumentException("Can't specify the default NamespaceCollection");
+            }
             var r = new Graph();
+            r._Namespaces = namespaces;
             r.LoadProperties(new XmlReaderPropertyEntryEnumerator(xmlReader));
             return r;
         }
+
+        #endregion FromXmlReader
+
+        #region FromXmlDocument
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified <see cref="XmlDocument"/>.
         /// </summary>
         /// <param name="xmlDocument">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXmlDocument(XmlDocument xmlDocument)
+            => FromXmlDocument(xmlDocument, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XmlDocument"/> and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="xmlDocument">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
 #if NETSTANDARD1_3
 
-        public static Graph FromXmlDocument(XmlDocument xmlDocument)
+        public static Graph FromXmlDocument(XmlDocument xmlDocument, NamespaceCollection namespaces)
         {
+            if (namespaces == NamespaceCollection.Default)
+            {
+                throw new ArgumentException("Can't specify the default NamespaceCollection");
+            }
             var r = new Graph();
+            r._Namespaces = namespaces;
             r.LoadProperties(new XmlDocumentPropertyEntryEnumerator(xmlDocument));
             return r;
         }
 
 #else
-        public static Graph FromXmlDocument(XmlDocument xmlDocument)
+        public static Graph FromXmlDocument(XmlDocument xmlDocument, NamespaceCollection namespaces)
         {
             using (var r = new XmlNodeReader(xmlDocument))
             {
-                return FromXmlReader(r);
+                return FromXmlReader(r, namespaces);
             }
         }
 #endif
+
+        #endregion FromXmlDocument
+
+        #region FromXPathNavigable
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified <see cref="IXPathNavigable"/>.
@@ -204,7 +294,20 @@ namespace Shipwreck.OpenGraph
         /// <param name="xPathNavigable">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXPathNavigable(IXPathNavigable xPathNavigable)
-            => FromXPathNavigator(xPathNavigable.CreateNavigator());
+            => FromXPathNavigable(xPathNavigable, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="IXPathNavigable"/> and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="xPathNavigable">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXPathNavigable(IXPathNavigable xPathNavigable, NamespaceCollection namespaces)
+            => FromXPathNavigator(xPathNavigable.CreateNavigator(), namespaces);
+
+        #endregion FromXPathNavigable
+
+        #region FromXPathNavigator
 
         /// <summary>
         /// Creates a <see cref="Graph" /> from the specified <see cref="XPathNavigator"/>.
@@ -212,12 +315,53 @@ namespace Shipwreck.OpenGraph
         /// <param name="xPathNavigator">A <see cref="XmlReader"/> that contains the Open Graph.</param>
         /// <returns>The <see cref="Graph" /> this method creates.</returns>
         public static Graph FromXPathNavigator(XPathNavigator xPathNavigator)
+            => FromXPathNavigator(xPathNavigator, null);
+
+        /// <summary>
+        /// Creates a <see cref="Graph" /> from the specified <see cref="XPathNavigator"/> and the <see cref="NamespaceCollection"/>.
+        /// </summary>
+        /// <param name="xPathNavigator">A <see cref="XmlReader"/> that contains the Open Graph.</param>
+        /// <param name="namespaces">The <see cref="NamespaceCollection"/> to use.</param>
+        /// <returns>The <see cref="Graph" /> this method creates.</returns>
+        public static Graph FromXPathNavigator(XPathNavigator xPathNavigator, NamespaceCollection namespaces)
         {
+            // prefetch namespaces due to XPathNavigator's poor implementation.
+            var html = xPathNavigator.SelectSingleNode("//*[local-name()='html' or local-name()='HTML' or local-name()='Html']");
+            if (html != null)
+            {
+                var head = html.SelectSingleNode("*[local-name()='head' or local-name()='HEAD' or local-name()='head']");
+
+                while (html.MoveToNextAttribute())
+                {
+                    if (html.LocalName.StartsWith("xmlns:"))
+                    {
+                        (namespaces ?? (namespaces = new NamespaceCollection()))[html.LocalName.Substring(6)] = html.Value;
+                    }
+                }
+
+                if (head != null)
+                {
+                    while (head.MoveToNextAttribute())
+                    {
+                        if (head.LocalName.StartsWith("xmlns:"))
+                        {
+                            (namespaces ?? (namespaces = new NamespaceCollection()))[head.LocalName.Substring(6)] = head.Value;
+                        }
+                    }
+                }
+            }
+
+            xPathNavigator.MoveToRoot();
+
             using (var r = xPathNavigator.ReadSubtree())
             {
-                return FromXmlReader(r);
+                return FromXmlReader(r, namespaces);
             }
         }
+
+        #endregion FromXPathNavigator
+
+        #endregion From*** Static methods
 
         /// <inheritdoc />
         internal override bool TryAddMetadata(PropertyPath property, string content, out GraphObject targetObject)
