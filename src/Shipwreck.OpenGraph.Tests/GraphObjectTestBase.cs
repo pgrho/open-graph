@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Shipwreck.OpenGraph
         protected void TestXml(string xml, Graph expected)
             => AssertObject(expected, Graph.FromXml(xml));
 
-        protected async Task TestUrl(string url, Graph expected, bool allowUnexpected = true)
+        protected async Task TestUrl(string url, Graph expected, bool allowUnexpected = true, Action<Graph, Graph> assertion = null)
         {
             // TODO: Network failure must be treated as inconclusive
             Graph actual;
@@ -32,6 +33,7 @@ namespace Shipwreck.OpenGraph
             }
 
             AssertObject(expected, actual, allowUnexpected);
+            assertion?.Invoke(expected, actual);
         }
 
         protected void AssertObject(GraphObject expected, GraphObject actual, bool allowUnexpected = true)

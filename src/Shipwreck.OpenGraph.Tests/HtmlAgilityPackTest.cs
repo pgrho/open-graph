@@ -99,5 +99,14 @@ namespace Shipwreck.OpenGraph
                         Tags = new[] { "La Ciotat", "train" }
                     }
                 });
+
+        [Theory]
+        [InlineData("http://store.steampowered.com/app/648100/_/")]
+        public Task NotImplementedTest(string url)
+            => TestUrl(url, new Graph(), assertion: (e, a) =>
+            {
+                Assert.Equal(e.SiteName, a.SiteName);
+            });
+
     }
 }

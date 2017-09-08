@@ -198,7 +198,7 @@ namespace Shipwreck.OpenGraph
             var i = (property.Path?.Length + 1) ?? 0;
             var tl = i + path.Length;
 
-            if (skipCompareProperty ? pl >= tl : StartsWith(property))
+            if (pl >= tl && (skipCompareProperty || StartsWith(property)))
             {
                 for (var j = 0; j < path.Length; j++)
                 {
