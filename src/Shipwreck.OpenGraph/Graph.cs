@@ -59,7 +59,7 @@ namespace Shipwreck.OpenGraph
         /// Gets or sets a first value of the specified property.
         /// </summary>
         /// <param name="property">The path of the property.</param>
-        /// <returns>The value of the first entry in <see cref="LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
+        /// <returns>The value of the first entry in <see cref="GraphObject.LocalProperties" /> that name is <paramref name="property"/>; otherwise, <c>null</c>.</returns>
         public string this[PropertyPath property]
         {
             get => GetLocalProperty(property);
